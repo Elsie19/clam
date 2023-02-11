@@ -1,0 +1,23 @@
+#!/bin/bash
+
+function msg() {
+    echo -e ":: $*"
+}
+
+function create_application() {
+    local name="$1"
+    mkdir -p "${name}"
+    cd "${name}"
+    echo -e "enable=require-variable-braces\ndisable=SC2164" >> .shellcheckrc
+    mkdir -p src/
+    echo -e "#!/bin/bash\n\necho 'Hello world!'" >> src/main.sh
+    git init > /dev/null
+    git add .
+}
+
+case "${1}" in
+    new)
+        create_application "${2:?}"
+        msg "Created appliation \`${2}\`"
+        ;;
+esac
