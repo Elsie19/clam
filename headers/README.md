@@ -47,3 +47,48 @@ msg 'hello'
 ```
 
 `err` will also redirect to `stderr`, which will allow programs to filter through information without seeing any extra messages.
+
+#### `assert.sh`
+`assert.sh` is used for testing and comparing output.
+
+You now have access to the following functions:
+
+`assert_eq`, `assert_not_eq`, `assert_contains`, `assert_not_contains`.
+
+`assert_eq` will test if two outputs are identical, and if not, return a value of `1`.
+
+Example:
+```bash
+var1="$(( 10 / 2 ))"
+var2="$(bc <<< '10 / 2')"
+assert_eq "${var1}" "${var2}"
+
+# Returns 0
+
+var1="$(( 10 / 2 ))"
+var2="$(( 10 / 3 ))"
+assert_eq "${var1}" "${var2}"
+
+# Returns 1
+```
+
+`assert_not_eq` flips the return value of `assert_eq`
+
+`assert_contains` checks for the existence of a variable inside an array, and if not, return a value of `1`.
+
+Example:
+```bash
+needle="barley"
+haystack=("oats" "grains" "barley")
+
+assert_contains "${needle}" "${haystack[@]}"
+
+# Returns 0
+
+needle="cat"
+assert_contains "${needle}" "${haystack[@]}"
+
+# Returns 1
+```
+
+`assert_not_contains` flips the return value of `assert_contains`
