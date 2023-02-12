@@ -31,6 +31,17 @@ function msg() {
     echo -e "${BWhite}::${NC} $*"
 }
 
+function help_print() {
+	local shortname="$(basename "$0")"
+	echo -e "${shortname}, version 0.0.1"
+	echo -e "Usage: ${shortname} [option]"
+	echo -e "Options:"
+	echo -e "\tnew [name] -- create project called 'name'"
+	echo -e "\tcompile -- compile project"
+	echo -e "\trun -- compile project, then run it"
+	echo -e "\tfmt -- format project files"
+}
+
 function create_application() {
     local name="$1"
     mkdir -p "${name}"
@@ -75,4 +86,8 @@ case "${1}" in
         echo -e "\n===Running ${PWD##*/}===\n"
         ./build/"${PWD##*/}"
         ;;
+    *)
+	help_print
+	exit
+	;;
 esac
