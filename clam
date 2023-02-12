@@ -32,14 +32,14 @@ function msg() {
 }
 
 function help_print() {
-	local shortname="$(basename "$0")"
-	echo -e "${shortname}, version 0.0.1"
-	echo -e "Usage: ${shortname} [option]"
-	echo -e "Options:"
-	echo -e "\tnew [name] -- create project called 'name'"
-	echo -e "\tcompile -- compile project"
-	echo -e "\trun -- compile project, then run it"
-	echo -e "\tfmt -- format project files"
+    local shortname="$(basename "$0")"
+    echo -e "${shortname}, version 0.0.1"
+    echo -e "Usage: ${shortname} [option]"
+    echo -e "Options:"
+    echo -e "\tnew [name] -- create project called 'name'"
+    echo -e "\tcompile -- compile project"
+    echo -e "\trun -- compile project, then run it"
+    echo -e "\tfmt -- format project files"
 }
 
 function create_application() {
@@ -65,6 +65,7 @@ case "${1}" in
         fi
         mkdir -p build/
         rm -rf build/*
+        "$0" fmt || exit $?
         cp -f src/main.sh build/main.sh
         BASH_PREPROC_LOCAL="$PWD/src" bash_preproc build/main.sh || exit 1
         shellcheck build/main.sh || { msg "Failed checks found!" && exit 1; }
@@ -78,7 +79,7 @@ case "${1}" in
             msg 'No file `src/main.sh` found!'
             exit 1
         fi
-        shfmt -bn -ci -sr -s -i 4 -w src/*.sh
+        shfmt -bn -ci -sr -s -i 4 -w src/*.sh || exit $?
         msg "Done formatting" src/*.sh
         ;;
     run)
@@ -87,7 +88,7 @@ case "${1}" in
         ./build/"${PWD##*/}"
         ;;
     *)
-	help_print
-	exit
-	;;
+        help_print
+        exit
+        ;;
 esac
