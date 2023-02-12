@@ -46,7 +46,7 @@ function create_application() {
     local name="$1"
     mkdir -p "${name}"
     cd "${name}"
-   echo -e "enable=require-variable-braces" >> .shellcheckrc
+    echo -e "enable=require-variable-braces" >> .shellcheckrc
     echo -e "build/" >> .gitignore
     mkdir -p src/
     echo -e "#!/bin/bash\n\necho 'Hello world!'\n\n# vim:set ft=sh ts=4 sw=4 et:" >> src/main.sh
@@ -68,7 +68,7 @@ case "${1}" in
         rm -rf build/*
         "$0" fmt || exit $?
         cp -f src/main.sh build/main.sh
-        BASH_PREPROC_LOCAL="$PWD/src" bash_preproc build/main.sh || exit 1
+        BASH_PREPROC_LOCAL="$PWD/src" bash_preproc build/main.sh > /dev/null || exit 1
         shellcheck build/main.sh || { msg "Failed checks found!" && exit 1; }
         shc -f build/main.sh -o "build/${PWD##*/}" || { msg "Failed to compile binary!" && exit 1; }
         rm -f "build/main.sh.x.c"
@@ -86,7 +86,8 @@ case "${1}" in
     run)
         "$0" compile || exit $?
         echo -e "\n===Running ${PWD##*/}===\n"
-        ./build/"${PWD##*/}"
+        time ./build/"${PWD##*/}"
+        echo "Exited with error code: $?"
         ;;
     *)
         help_print
