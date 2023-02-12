@@ -1,7 +1,34 @@
 #!/bin/bash
 
+# Colors
+BOLD=$(tput bold)
+export BOLD
+NORMAL=$(tput sgr0)
+export NORMAL
+export NC='\033[0m'
+
+# Regular Colors
+export BLACK='\033[0;30m'  # Black
+export RED='\033[0;31m'    # Red
+export GREEN='\033[0;32m'  # Green
+export YELLOW='\033[0;33m' # Yellow
+export BLUE='\033[0;34m'   # Blue
+export PURPLE='\033[0;35m' # Purple
+export CYAN='\033[0;36m'   # Cyan
+export WHITE='\033[0;37m'  # White
+
+# Bold
+export BBlack='\033[1;30m'  # Black
+export BRed='\033[1;31m'    # Red
+export BGreen='\033[1;32m'  # Green
+export BYellow='\033[1;33m' # Yellow
+export BBlue='\033[1;34m'   # Blue
+export BPurple='\033[1;35m' # Purple
+export BCyan='\033[1;36m'   # Cyan
+export BWhite='\033[1;37m'  # White
+
 function msg() {
-    echo -e ":: $*"
+    echo -e "${BWhite}::${NC} $*"
 }
 
 function create_application() {
@@ -26,13 +53,14 @@ case "${1}" in
             exit 1
         fi
         mkdir -p build/
+        rm -rf build/*
         cp -f src/main.sh build/main.sh
         BASH_PREPROC_LOCAL="$PWD/src" bash_preproc build/main.sh || exit 1
         shellcheck build/main.sh || { msg "Failed checks found!" && exit 1; }
         shc -f build/main.sh -o "build/${PWD##*/}" || { msg "Failed to compile binary!" && exit 1; }
         rm -f "build/main.sh.x.c"
         rm -f "build/main.sh"
-        msg "Compiled \`${PWD}/build/${PWD##*/}\`"
+        msg "Compiled \`${BGreen}${PWD}/build/${PWD##*/}${NC}\`"
         ;;
     fmt)
         if [[ ! -f src/main.sh ]]; then
@@ -41,5 +69,10 @@ case "${1}" in
         fi
         shfmt -bn -ci -sr -s -i 4 -w src/*.sh
         msg "Done formatting" src/*.sh
+        ;;
+    run)
+        "$0" compile || exit $?
+        echo -e "\n===Running ${PWD##*/}===\n"
+        ./build/"${PWD##*/}"
         ;;
 esac
