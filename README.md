@@ -8,3 +8,5 @@
 
 ### Features
 * Header files (https://github.com/Henryws/bash_preproc)
+* Enforced, objective formatting with `shfmt`
+* Creates binaries from your code with `shc`
