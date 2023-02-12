@@ -50,6 +50,7 @@ function create_application() {
     echo -e "build/" >> .gitignore
     mkdir -p src/
     echo -e "#!/bin/bash\n\necho 'Hello world!'\n\n# vim:set ft=sh ts=4 sw=4 et:" >> src/main.sh
+    chmod +x src/main.sh
     git init > /dev/null
     git add .
 }
