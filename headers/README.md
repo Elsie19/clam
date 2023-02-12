@@ -15,7 +15,7 @@ Headers are generally grouped together into one meta-header, just like meta-pack
 ### Header docs
 
 #### `colors.sh`
-`colors.sh` implements a lot of colors and styles, and has builtin support for the `$NO_COLOR` variable (https://no-color.org/).
+`colors.sh` implements a lot of colors and styles, and has builtin support for the `$NO_COLOR` variable (https://no-color.org/), which will set every color variable to empty.
 
 First off, you now have access to the `$BOLD`, `$NORMAL` and `$NC` variables. `$BOLD` will set the current color to be bolded. `$NC` will clear the formatting of any string. `$NORMAL` is functionally the same as `$NC`, but uses `tput` as the backend instead of raw ascii codes. It is recommended to use `$NC` unless you for some reason **must** use a `tput` backend to clear color codes.
 
@@ -35,3 +35,15 @@ Every format after the base colors will use the base color names.
 * Background: Prepend the text `On_` to your sentence case base color variable (`$On_Red`, `$On_Blue`, etc)
 * High intensity: Prepend the letter `I` to your sentence case base color variable (`$IRed`, `$IBlue`, etc)
 * High intensity background: Prepend the text `On_I` to your sentence case base color variable (`$On_IRed`, `$On_IBlue`, etc)
+
+#### `msg.sh`
+`msg.sh` implements visually pleasing, and correctly redirected output.
+
+You have access to `msg` and `err` functions now. `msg` will print out text with the `>` being bolded green, and `err` will print out text with the `>` being bolded red:
+```bash
+msg 'hello'
+
+# > hello
+```
+
+`err` will also redirect to `stderr`, which will allow programs to filter through information without seeing any extra messages.
