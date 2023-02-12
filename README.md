@@ -9,4 +9,5 @@
 ### Features
 * Header files (https://github.com/Henryws/bash_preproc)
 * Enforced, objective formatting with `shfmt`
+* Shellcheck to prevent potentially broken code from running
 * Creates binaries from your code with `shc`
