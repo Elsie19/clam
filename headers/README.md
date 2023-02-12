@@ -6,6 +6,6 @@ Headers are generally grouped together into one meta-header, just like meta-pack
 
 | Name 	       | Usage     | Meta-header|
 |--------------|-----------|------------|
-| `stdout.sh`  | Used for all fancy output needs | ✅ |
+| `stdout.sh`  | Used for all fancy output needs | ✔️ |
 | `colors.sh`  | Implements a variety of colors + `$NO_COLOR` support | ❌ |
 | `msg.sh`     | Implements visually pleading output | ❌ |
