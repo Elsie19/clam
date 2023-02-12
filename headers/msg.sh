@@ -1,9 +1,9 @@
 #!/bin/bash
 
 function msg() {
-    printf "${BGreen}>${NC} %s\n" "$@"
+    echo -e "${BGreen}>${NC} $*"
 }
 
 function err() {
-    printf "${BRed}>${NC} %s\n" "$@" >&2
+    echo -e "${BRed}>${NC} $*" >&2
 }
