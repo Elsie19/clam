@@ -20,4 +20,18 @@ case "${1}" in
         create_application "${2:?}"
         msg "Created appliation \`${2}\`"
         ;;
+    compile)
+        if [[ ! -f src/main.sh ]]; then
+            msg 'No file `src/main.sh` found!'
+            exit 1
+        fi
+        mkdir -p build/
+        cp -f src/main.sh build/main.sh
+        bash_preproc build/main.sh || exit 1
+        shellcheck build/main.sh || { msg "Failed checks found!" && exit 1; }
+        shc -f build/main.sh -o "build/${PWD##*/}" || { msg "Failed to compile binary!" && exit 1; }
+        rm -f "build/main.sh.x.c"
+        rm -f "build/main.sh"
+        msg "Compiled \`${PWD}/build/${PWD##*/}\`"
+        ;;
 esac
