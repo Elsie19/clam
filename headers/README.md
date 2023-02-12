@@ -12,9 +12,9 @@ Headers are generally grouped together into one meta-header, just like meta-pack
 | `msg.sh`     | Implements visually pleading output | ❌ | Part of `stdout.sh` |
 | `assert.sh`  | Implements assertion testing | ❌ | Part of `stdtest.sh` |
 
-#### Header docs
+### Header docs
 
-##### `colors.sh`
+#### `colors.sh`
 `colors.sh` implements a lot of colors and styles, and has builtin support for the `$NO_COLOR` variable (https://no-color.org/).
 
 First off, you now have access to the `$BOLD`, `$NORMAL` and `$NC` variables. `$BOLD` will set the current color to be bolded. `$NC` will clear the formatting of any string. `$NORMAL` is functionally the same as `$NC`, but uses `tput` as the backend instead of raw ascii codes. It is recommended to use `$NC` unless you for some reason **must** use a `tput` backend to clear color codes.
