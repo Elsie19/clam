@@ -10,6 +10,7 @@ Headers are generally grouped together into one meta-header, just like meta-pack
 | `stdtest.sh` | Used for assertions    | ✔️ | None |
 | `colors.sh`  | Implements a variety of colors + `$NO_COLOR` support | ❌ | Part of `stdout.sh` |
 | `msg.sh`     | Implements visually pleading output | ❌ | Part of `stdout.sh` |
+| `prompt.sh`  | Implements visually pleading prompts | ❌ | Part of `stdout.sh` |
 | `assert.sh`  | Implements assertion testing | ❌ | Part of `stdtest.sh` |
 
 ### Header docs
@@ -72,7 +73,7 @@ assert_eq "${var1}" "${var2}"
 # Returns 1
 ```
 
-`assert_not_eq` flips the return value of `assert_eq`
+`assert_not_eq` flips the return value of `assert_eq`.
 
 `assert_contains` checks for the existence of a variable inside an array, and if not, return a value of `1`.
 
@@ -91,4 +92,35 @@ assert_contains "${needle}" "${haystack[@]}"
 # Returns 1
 ```
 
-`assert_not_contains` flips the return value of `assert_contains`
+`assert_not_contains` flips the return value of `assert_contains`.
+
+#### `prompt.sh`
+`prompt.sh` is used for creating pleasing and correct prompts.
+
+You now have access to `prompt_input` and `prompt_yes_no`. `prompt_input` is used for general prompts, whereas `prompt_yes_no` is used for creating yes/no prompts.
+
+`prompt_yes_no` takes the form of `prompt_yes_no "My prompt" variable_to_save_to`. If it recieves input that is not a form of the letters `Y` or `N`, it will return with a value of `1`, which is why that possible exception *must* be handled in your code. If a `Y` is given, `variable_to_save_to` will be set to `Y`, and vice versa for `N`.
+
+Example:
+```bash
+if ! prompt_yes_no "Do you like crayfish" like_crayfish; then
+    err "Failed to get input!"
+    exit 1
+fi
+
+# Note the `:?` in case any bugs slip through that leave the variable empty
+case "${like_crayfish:?}" in
+    "Y") msg "You do like crayfish" ;;
+    "N") msg "You don't like crayfish" ;;
+esac
+```
+
+`prompt_input` is simpler. It takes the form of `prompt_input "My prompt" variable_to_save_to`. It has no guarantees about what the input may be (including the absence of input).
+
+Example:
+```bash
+prompt_input "What is the meaning of life" fourty_two
+
+# shellcheck disable=SC2154
+msg "According to you, the meaning of life is ${fourty_two}"
+```
