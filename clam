@@ -76,8 +76,13 @@ case "${1}" in
         cp -f src/main.sh "${BUILDDIR}/main.sh"
         BASH_PREPROC_LOCAL="$PWD/src" bash_preproc "${BUILDDIR}/main.sh" > /dev/null || exit 1
         shellcheck "${BUILDDIR}/main.sh" || { msg "Failed checks found!" && exit 1; }
-        shc -r -f "${BUILDDIR}/main.sh" -o "${BUILDDIR}/${PWD##*/}" || { msg "Failed to compile binary!" && exit 1; }
-        rm -f "${BUILDDIR}/main.sh.x.c" "${BUILDDIR}/main.sh"
+        if [[ ${1} == "--release" ]]; then
+            shc -r -f "${BUILDDIR}/main.sh" -o "${BUILDDIR}/${PWD##*/}" || { msg "Failed to compile binary!" && exit 1; }
+            rm -f "${BUILDDIR}/main.sh.x.c" "${BUILDDIR}/main.sh"
+        else
+            cp "${BUILDDIR}/main.sh" "${BUILDDIR}/${PWD##*/}"
+            chmod +x "${BUILDDIR}/${PWD##*/}"
+        fi
         msg "Compiled \`${BGreen}${PWD}/${BUILDDIR}${PWD##*/}${NC}\`"
         ;;
     fmt)
