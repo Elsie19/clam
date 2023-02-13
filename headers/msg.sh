@@ -1,9 +1,19 @@
 #!/bin/bash
 
 function msg() {
-    echo -e "${BGreen}>${NC} $*"
+    local flags=("-e")
+    if [[ ${1} == "-n" ]]; then
+        local flags+=("-n")
+    	shift
+    fi
+    echo "${flags[@]}" "${BGreen}>${NC} $*"
 }
 
 function err() {
-    echo -e "${BRed}>${NC} $*" >&2
+    local flags=("-e")
+    if [[ ${1} == "-n" ]]; then
+        local flags+=("-n")
+    	shift
+    fi
+    echo "${flags[@]}" "${BRed}>${NC} $*" >&2
 }

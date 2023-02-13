@@ -49,6 +49,8 @@ msg 'hello'
 
 `err` will also redirect to `stderr`, which will allow programs to filter through information without seeing any extra messages.
 
+Both functions can take the `-n` argument for printing without a newline.
+
 #### `assert.sh`
 `assert.sh` is used for testing and comparing output.
 
