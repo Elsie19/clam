@@ -61,18 +61,24 @@ case "${1}" in
         msg "Created appliation \`${2}\`"
         ;;
     compile)
+        shift
         if [[ ! -f src/main.sh ]]; then
             msg 'No file `src/main.sh` found!'
             exit 1
         fi
-        mkdir -p build/
-        rm -rf build/*
-        cp -f src/main.sh build/main.sh
-        BASH_PREPROC_LOCAL="$PWD/src" bash_preproc build/main.sh > /dev/null || exit 1
-        shellcheck build/main.sh || { msg "Failed checks found!" && exit 1; }
-        shc -r -f build/main.sh -o "build/${PWD##*/}" || { msg "Failed to compile binary!" && exit 1; }
-        rm -f "build/main.sh.x.c" "build/main.sh"
-        msg "Compiled \`${BGreen}${PWD}/build/${PWD##*/}${NC}\`"
+        if [[ ${1} == "--release" ]]; then
+            BUILDDIR="build/release/"
+        else
+            BUILDDIR="build/debug/"
+        fi
+        mkdir -p "${BUILDDIR}"
+        rm -rf "${BUILDDIR:?}"/*
+        cp -f src/main.sh "${BUILDDIR}/main.sh"
+        BASH_PREPROC_LOCAL="$PWD/src" bash_preproc "${BUILDDIR}/main.sh" > /dev/null || exit 1
+        shellcheck "${BUILDDIR}/main.sh" || { msg "Failed checks found!" && exit 1; }
+        shc -r -f "${BUILDDIR}/main.sh" -o "${BUILDDIR}/${PWD##*/}" || { msg "Failed to compile binary!" && exit 1; }
+        rm -f "${BUILDDIR}/main.sh.x.c" "${BUILDDIR}/main.sh"
+        msg "Compiled \`${BGreen}${PWD}/${BUILDDIR}${PWD##*/}${NC}\`"
         ;;
     fmt)
         if [[ ! -f src/main.sh ]]; then
@@ -85,7 +91,7 @@ case "${1}" in
     run)
         "$0" compile || exit $?
         echo -e "\n===[ Running ${PWD##*/} ]===\n"
-        time ./build/"${PWD##*/}"
+        time ./build/debug/"${PWD##*/}"
         err=$?
         echo -e "\n===[ Finished ${PWD##*/} ]===\n"
         echo -e "Exited with error code: $err"
