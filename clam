@@ -87,7 +87,8 @@ case "${1}" in
         echo -e "\n===Running ${PWD##*/}===\n"
         time ./build/"${PWD##*/}"
         err=$?
-        echo "Exited with error code: $err"
+        echo -e "\n===Finished ${PWD##*/}===\n"
+        echo -e "Exited with error code: $err"
         exit "$err"
         ;;
     *)
