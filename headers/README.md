@@ -123,4 +123,6 @@ prompt_input "What is the meaning of life" fourty_two
 
 # shellcheck disable=SC2154
 msg "According to you, the meaning of life is ${fourty_two}"
+# Or if you want to fail if the input is empty:
+msg "According to you, the meaning of life is ${fourty_two:?Error explanation}"
 ```
