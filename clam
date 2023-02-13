@@ -70,7 +70,7 @@ case "${1}" in
         cp -f src/main.sh build/main.sh
         BASH_PREPROC_LOCAL="$PWD/src" bash_preproc build/main.sh > /dev/null || exit 1
         shellcheck build/main.sh || { msg "Failed checks found!" && exit 1; }
-        shc -f build/main.sh -o "build/${PWD##*/}" || { msg "Failed to compile binary!" && exit 1; }
+        shc -r -f build/main.sh -o "build/${PWD##*/}" || { msg "Failed to compile binary!" && exit 1; }
         rm -f "build/main.sh.x.c" "build/main.sh"
         msg "Compiled \`${BGreen}${PWD}/build/${PWD##*/}${NC}\`"
         ;;
