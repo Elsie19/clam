@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function prompt_input() {
+function prompt.input() {
     local prompt="${1:?variable for prompt for prompt_input not given}"
     local var_to_store_to="${2:?variable to store output for prompt_input not given}"
     echo -ne "${1}: "
@@ -10,7 +10,7 @@ function prompt_input() {
     return 0
 }
 
-function prompt_yes_no() {
+function prompt.yes_no() {
     local prompt="${1:?variable for prompt for prompt_yes_no not given}"
     local var_to_store_to="${2:?variable to store output for prompt_yes_no not given}"
     echo -ne "${prompt} [${BGreen}y${NC}/${BRed}n${NC}]: "

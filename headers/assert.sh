@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function assert_eq() {
+function assert.assert_eq() {
     local input1="${1:?}"
     local input2="${2:?}"
 
@@ -11,11 +11,11 @@ function assert_eq() {
     fi
 }
 
-function assert_not_eq() {
-    ! assert_eq "${1:?}" "${2:?}"
+function assert.assert_not_eq() {
+    ! assert.assert_eq "${1:?}" "${2:?}"
 }
 
-function assert_contain() {
+function assert.assert_contain() {
     local item="${1:?}"
     shift
     local to_search=("${@:?}")
@@ -27,9 +27,9 @@ function assert_contain() {
     return 1
 }
 
-function assert_not_contain() {
+function assert.assert_not_contain() {
     local input1="${1:?}"
     shift
     local input2=("${@:?}")
-    ! assert_contain "${1}" "${input2[@]}"
+    ! assert.assert_contain "${1}" "${input2[@]}"
 }
