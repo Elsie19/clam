@@ -9,7 +9,8 @@ export NC='\033[0m'
 # Courtesy of https://stackoverflow.com/a/28938235/13449010
 
 # https://no-color.org/
-if [[ -z ${NO_COLOR} ]]; then
+# shellcheck disable=SC2236
+if [[ ! -n ${NO_COLOR} ]]; then
     # Regular Colors
     export BLACK='\033[0;30m'  # Black
     export RED='\033[0;31m'    # Red
