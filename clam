@@ -84,10 +84,10 @@ case "${1}" in
         ;;
     run)
         "$0" compile || exit $?
-        echo -e "\n===Running ${PWD##*/}===\n"
+        echo -e "\n===[ Running ${PWD##*/} ]===\n"
         time ./build/"${PWD##*/}"
         err=$?
-        echo -e "\n===Finished ${PWD##*/}===\n"
+        echo -e "\n===[ Finished ${PWD##*/} ]===\n"
         echo -e "Exited with error code: $err"
         exit "$err"
         ;;
