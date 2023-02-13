@@ -7,6 +7,7 @@ function prompt_input() {
     read -r prompt_output
     declare -g "${var_to_store_to}=${prompt_output}"
     unset prompt_output
+    return 0
 }
 
 function prompt_yes_no() {
