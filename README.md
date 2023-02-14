@@ -68,4 +68,4 @@ msg info 'Hello world!'
 ```
 
 #### Doc generation
-Familiarize yourself with how to use [shdoc](https://github.com/reconquest/shdoc#features) first. When you are done creating your definitions, run `clam docs` to create a markdown file with all your definitions in one file in `docs/main.md`.
+Familiarize yourself with how to use [shdoc](https://github.com/reconquest/shdoc#features) first. When you are done creating your definitions, run `clam docs` to create markdown files with all your definitions in `docs/${file}.md`.

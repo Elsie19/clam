@@ -108,7 +108,9 @@ case "${1}" in
             exit 1
         fi
         mkdir -p docs/
-        shdoc < src/*.sh > docs/main.md
+        for docfile in src/*.sh; do
+            shdoc < "${docfile}" > "docs/$(basename "$docfile" .sh).md"
+        done
         msg "Done generating docs for" src/*.sh
         ;;
     *)
