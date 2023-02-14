@@ -102,6 +102,15 @@ case "${1}" in
         echo -e "Exited with error code: $err"
         exit "$err"
         ;;
+    docs)
+        if [[ ! -f src/main.sh ]]; then
+            msg 'No file `src/main.sh` found!'
+            exit 1
+        fi
+        mkdir -p docs/
+        shdoc < src/*.sh > docs/main.md
+        msg "Done generating docs for" src/*.sh
+        ;;
     *)
         help_print
         exit

@@ -7,7 +7,8 @@
 <p align="center"><b>A programming environment for shell scripts</b></p>
 
 ### Features
-* Header files (https://github.com/Henryws/bash_preproc)
+* Header files with [bash_preproc](https://github.com/Henryws/bash_preproc)
+* Documentation generation with [shdoc](https://github.com/reconquest/shdoc)
 * Enforced, objective formatting with `shfmt`
 * Shellcheck to prevent potentially broken code from running
 * Creates binaries from your code with `shc`
