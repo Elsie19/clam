@@ -77,6 +77,7 @@ case "${1}" in
         BASH_PREPROC_LOCAL="$PWD/src" bash_preproc "${BUILDDIR}/main.sh" > /dev/null || exit 1
         shellcheck "${BUILDDIR}/main.sh" || { msg "Failed checks found!" && exit 1; }
         if [[ ${1} == "--release" ]]; then
+            shfmt -mn -w "${BUILDDIR}/main.sh"
             shc -r -f "${BUILDDIR}/main.sh" -o "${BUILDDIR}/${PWD##*/}" || { msg "Failed to compile binary!" && exit 1; }
             rm -f "${BUILDDIR}/main.sh.x.c" "${BUILDDIR}/main.sh"
         else
