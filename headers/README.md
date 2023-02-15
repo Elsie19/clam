@@ -56,7 +56,7 @@ Both functions can take the `-n` argument for printing without a newline.
 
 You now have access to the following functions:
 
-`assert.assert_eq`, `assert.assert_not_eq`, `assert.assert_contains`, `assert.assert_not_contains`.
+`assert.assert_eq`, `assert.assert_not_eq`, `assert.assert_contains`, `assert.assert_not_contains`, `assert.is_root`.
 
 `assert.assert_eq` will test if two outputs are identical, and if not, return a value of `1`.
 
@@ -95,6 +95,16 @@ assert.assert_contains "${needle}" "${haystack[@]}"
 ```
 
 `assert.assert_not_contains` flips the return value of `assert.assert_contains`.
+
+`assert.is_root` checks if the current user has an `$EUID` of `0`, and if so, will return `0`, and if not, will return `1`.
+
+Example:
+```bash
+if assert.is_root; then
+    err 'You are running as root!'
+    exit 1
+fi
+```
 
 #### `prompt.sh`
 `prompt.sh` is used for creating pleasing and correct prompts.

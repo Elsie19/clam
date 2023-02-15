@@ -33,3 +33,11 @@ function assert.assert_not_contain() {
     local input2=("${@:?}")
     ! assert.assert_contain "${1}" "${input2[@]}"
 }
+
+function assert.is_root() {
+    if (("${EUID}" != 0)); then
+        return 0
+    else
+        return 1
+    fi
+}
