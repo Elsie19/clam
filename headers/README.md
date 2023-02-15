@@ -96,7 +96,7 @@ assert.assert_contains "${needle}" "${haystack[@]}"
 
 `assert.assert_not_contains` flips the return value of `assert.assert_contains`.
 
-`assert.is_root` checks if the current user has an `$EUID` of `0`, and if so, will return `0`, and if not, will return `1`.
+`assert.is_root` checks if the current user has an `$EUID` of `0`, and if so, will return `1`, and if not, will return `0`.
 
 Example:
 ```bash

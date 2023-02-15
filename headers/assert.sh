@@ -36,8 +36,8 @@ function assert.assert_not_contain() {
 
 function assert.is_root() {
     if (("${EUID}" != 0)); then
-        return 0
-    else
         return 1
+    else
+        return 0
     fi
 }
