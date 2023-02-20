@@ -77,24 +77,24 @@ assert.assert_eq "${var1}" "${var2}"
 
 `assert.assert_not_eq` flips the return value of `assert.assert_eq`.
 
-`assert.assert_contains` checks for the existence of a variable inside an array, and if not, return a value of `1`.
+`assert.assert_contain` checks for the existence of a variable inside an array, and if not, return a value of `1`.
 
 Example:
 ```bash
 needle="barley"
 haystack=("oats" "grains" "barley")
 
-assert.assert_contains "${needle}" "${haystack[@]}"
+assert.assert_contain "${needle}" "${haystack[@]}"
 
 # Returns 0
 
 needle="cat"
-assert.assert_contains "${needle}" "${haystack[@]}"
+assert.assert_contain "${needle}" "${haystack[@]}"
 
 # Returns 1
 ```
 
-`assert.assert_not_contains` flips the return value of `assert.assert_contains`.
+`assert.assert_not_contain` flips the return value of `assert.assert_contain`.
 
 `assert.is_root` checks if the current user has an `$EUID` of `0`, and if so, will return `1`, and if not, will return `0`.
 
