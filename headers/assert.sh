@@ -1,8 +1,8 @@
 #!/bin/bash
 
 function assert.assert_eq() {
-    local input1="${1:?}"
-    local input2="${2:?}"
+    local input1="${1:?No \$1 input given to assert.assert_eq}"
+    local input2="${2:?No \$2 input given to assert.assert_eq}"
 
     if [[ ${input1} == "${input2}" ]]; then
         return 0
@@ -16,9 +16,9 @@ function assert.assert_not_eq() {
 }
 
 function assert.assert_contain() {
-    local item="${1:?}"
+    local item="${1:?No \$1 input given to assert.assert_contain}"
     shift
-    local to_search=("${@:?}")
+    local to_search=("${@:?No \$@ given to assert.assert_contain}")
     for i in "${to_search[@]}"; do
         if [[ ${item} == "${i}" ]]; then
             return 0

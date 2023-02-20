@@ -6,8 +6,9 @@ declare -r BOLD
 NORMAL=$(tput sgr0)
 declare -r NORMAL
 declare -r NC='\033[0m'
+declare -r BLINK='\e[5m'
 
-export BOLD NORMAL NC
+export BOLD NORMAL NC BLINK
 # Courtesy of https://stackoverflow.com/a/28938235/13449010
 
 # https://no-color.org/

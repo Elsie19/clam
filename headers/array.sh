@@ -1,8 +1,8 @@
 #!/bin/bash
 
 function array.string_to_array() {
-    local input="${1:?}"
-    local array_to="${2:?}"
+    local input="${1:?No input given to array.string_to_array}"
+    local array_to="${2:?No out array given to array.string_to_array}"
     local built_array=()
 
     while IFS= read -r -n1 character; do
