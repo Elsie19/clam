@@ -12,6 +12,7 @@ Headers are generally grouped together into one meta-header, just like meta-pack
 | `msg.sh`     | Implements visually pleading output | ❌ | Part of `stdout.sh` |
 | `prompt.sh`  | Implements visually pleading prompts | ❌ | Part of `stdout.sh` |
 | `assert.sh`  | Implements assertion testing | ❌ | Part of `stdtest.sh` |
+| `array.sh`   | Implements useful array tools| ❌ | None |
 
 ### Header docs
 
@@ -137,4 +138,30 @@ prompt.input "What is the meaning of life" fourty_two
 msg "According to you, the meaning of life is ${fourty_two}"
 # Or if you want to fail if the input is empty:
 msg "According to you, the meaning of life is ${fourty_two:?Error explanation}"
+```
+
+#### `array.sh`
+`array.sh` is used for converting strings to arrays.
+
+You now have access to `array.string_to_array`.
+
+`array.string_to_array` takes the form of `array.string_to_array "mystring" array_to_save_to`. Whitespace will be counted and added to the array as an empty element.
+
+Example:
+```bash
+mystring="foo baz"
+array.string_to_array "${mystring}" foobarray
+
+for char in "${foobarray}"; do
+    echo "${char}"
+done
+
+# Output
+# f
+# o
+# o
+# 
+# b
+# a
+# z
 ```
