@@ -19,7 +19,7 @@ Headers are generally grouped together into one meta-header, just like meta-pack
 #### `colors.sh`
 `colors.sh` implements a lot of colors and styles, and has builtin support for the `$NO_COLOR` variable (https://no-color.org/), which will set every color variable to empty.
 
-First off, you now have access to the `$BOLD`, `$NORMAL`, `$NC` and `$BLINK` variables. `$BOLD` will set the current color to be bolded. `$NC` will clear the formatting of any string. `$NORMAL` is functionally the same as `$NC`, but uses `tput` as the backend instead of raw ascii codes. It is recommended to use `$NC` unless you for some reason **must** use a `tput` backend to clear color codes. `$BLINK` will blink text (on supported terminals).
+First off, you now have access to the `$BOLD`, `$NORMAL`, `$NC`, `$BLINK`, `$ITALIC`, and `$CROSS_OUT` variables. `$BOLD` will set the current color to be bolded. `$NC` will clear the formatting of any string. `$NORMAL` is functionally the same as `$NC`, but uses `tput` as the backend instead of raw ascii codes. It is recommended to use `$NC` unless you for some reason **must** use a `tput` backend to clear color codes. `$BLINK` will blink text (on supported terminals), `$ITALIC` is used to produce italic text (on supported terminals), and the same is for `$CROSS_OUT`.
 
 ```bash
 # The `-e` must be included, *or* use `msg.sh`
