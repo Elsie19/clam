@@ -6,7 +6,7 @@ function msg() {
         local flags+=("-n")
     	shift
     fi
-    echo "${flags[@]}" "${BGreen}>${NC} $*"
+    echo "${flags[@]}" "${BGreen:-}>${NC} $*"
 }
 
 function err() {
@@ -15,5 +15,5 @@ function err() {
         local flags+=("-n")
     	shift
     fi
-    echo "${flags[@]}" "${BRed}>${NC} $*" >&2
+    echo "${flags[@]}" "${BRed:-}>${NC} $*" >&2
 }
