@@ -13,6 +13,8 @@ Headers are generally grouped together into one meta-header, just like meta-pack
 | `prompt.sh`  | Implements visually pleading prompts | ❌ | Part of `stdout.sh` |
 | `assert.sh`  | Implements assertion testing | ❌ | Part of `stdtest.sh` |
 | `array.sh`   | Implements useful array tools| ❌ | None |
+| `tuple.sh`   | Implements tuples | ❌ | None |
+| `error.sh`   | Implements standard error messages | ❌ | None |
 
 ### Header docs
 
@@ -41,16 +43,14 @@ Every format after the base colors will use the base color names.
 #### `msg.sh`
 `msg.sh` implements visually pleasing, and correctly redirected output.
 
-You have access to `msg` and `err` functions now. `msg` will print out text with the `>` being bolded green, and `err` will print out text with the `>` being bolded red:
+You have access to the `msg` now. `msg` will print out text with the `>` being bolded green.
 ```bash
 msg 'hello'
 
 # > hello
 ```
 
-`err` will also redirect to `stderr`, which will allow programs to filter through information without seeing any extra messages.
-
-Both functions can take the `-n` argument for printing without a newline.
+`msg` can take the `-n` argument for printing without a newline.
 
 #### `assert.sh`
 `assert.sh` is used for testing and comparing output.
@@ -164,4 +164,33 @@ done
 # b
 # a
 # z
+```
+
+#### `tuple.sh`
+`tuple.sh` is used for creating [tuples](https://en.wikipedia.org/wiki/Tuple).
+
+You now have access to `tuple`.
+
+`tuple` accepts at mininum, 2 inputs: the tuple variable name (`$1`), and it's input (`$@`).
+
+Example:
+```bash
+tuple my_tuple 1 "String" "${another_array[@]}"
+
+my_tuple+=("FAILS!")
+```
+
+#### `error.sh`
+`error.sh` is used for raising errors with standard bash-like error messages.
+
+You now have access to `error.error`, which shows errors, and `error.fail`, which will fail them out.
+
+`error.error` accepts 1 input, that being the error message. `error.fail` accepts 2, an error message and an *optional* exit code.
+
+Example:
+```bash
+possible_missing_cmd || error.error "Could not find $cmd. Cleaning up" && {
+    cleanup_function
+    error.fail "Could not sucessfully run $cmd"
+}
 ```
