@@ -192,7 +192,7 @@ my_tuple+=("FAILS!")
 ```
 
 #### `error.sh`
-`error.sh` is used for raising errors with standard bash-like error messages.
+`error.sh` is used for raising errors with standard bash-like error messages with `shopt -s gnu_errfmt` support.
 
 You now have access to `error.error`.
 
