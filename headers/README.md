@@ -15,6 +15,7 @@ Headers are generally grouped together into one meta-header, just like meta-pack
 | `array.sh`   | Implements useful array tools| ❌ | None |
 | `tuple.sh`   | Implements tuples | ❌ | None |
 | `error.sh`   | Implements standard error messages | ❌ | None |
+| `use.sh`     | Implements `using` from C++ | ❌ | None |
 
 ### Header docs
 
@@ -206,4 +207,16 @@ possible_missing_cmd || error.error "Could not find $cmd. Cleaning up" && {
     cleanup_function
     error.error "Could not sucessfully run $cmd" 1
 }
+```
+
+#### `use.sh`
+
+You now have access to `use`.
+
+`use` accepts 1 input, that being the function you want to shorten.
+
+Example:
+```bash
+use prompt.yes_no # Will be shortened to yes_no
+use prompt.yes_no as yesno # Will be shortened to yesno
 ```
