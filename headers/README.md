@@ -57,7 +57,7 @@ msg 'hello'
 
 You now have access to the following functions:
 
-`assert.assert_eq`, `assert.assert_not_eq`, `assert.assert_contains`, `assert.assert_not_contains`, `assert.is_root`.
+`assert.assert_eq`, `assert.assert_not_eq`, and `assert.is_root`.
 
 `assert.assert_eq` will test if two outputs are identical, and if not, return a value of `1`.
 
@@ -77,25 +77,6 @@ assert.assert_eq "${var1}" "${var2}"
 ```
 
 `assert.assert_not_eq` flips the return value of `assert.assert_eq`.
-
-`assert.assert_contain` checks for the existence of a variable inside an array, and if not, return a value of `1`.
-
-Example:
-```bash
-needle="barley"
-haystack=("oats" "grains" "barley")
-
-assert.assert_contain "${needle}" "${haystack[@]}"
-
-# Returns 0
-
-needle="cat"
-assert.assert_contain "${needle}" "${haystack[@]}"
-
-# Returns 1
-```
-
-`assert.assert_not_contain` flips the return value of `assert.assert_contain`.
 
 `assert.is_root` checks if the current user has an `$EUID` of `0`, and if so, will return `1`, and if not, will return `0`.
 
@@ -143,9 +124,10 @@ msg "According to you, the meaning of life is ${fourty_two:?Error explanation}"
 #### `array.sh`
 `array.sh` is used for converting strings to arrays.
 
-You now have access to `array.string_to_array`, `array.pop`, and `array.remove`.
+You now have access to `array.string_to_array`, `array.pop`, `array.remove`, and `array.contain`.
 
 > **Note**
+
 > `array.pop` and `array.remove` are functional with associated arrays
 
 `array.string_to_array` takes the form of `array.string_to_array "mystring" array_to_save_to`. Whitespace will be counted and added to the array as an empty element.
@@ -153,6 +135,8 @@ You now have access to `array.string_to_array`, `array.pop`, and `array.remove`.
 `array.pop` takes the form of `array.pop my_array index`.
 
 `array.remove` takes the form of `array.pop my_array key`.
+
+`array.contain` checks for the existence of a variable inside an array, and if not, return a value of `1`.
 
 Example:
 ```bash
@@ -180,6 +164,20 @@ declare -p foo
 declare -A colors=([red]="#ff0000" [green]="#00ff00" [blue]="#0000ff")
 array.remove colors "#00ff00"
 # declare -A colors=([red]="#ff0000" [blue]="#0000ff")
+
+needle="barley"
+haystack=("oats" "grains" "barley")
+
+array.contain "${needle}" "${haystack[@]}"
+
+# Returns 0
+
+needle="cat"
+array.contain "${needle}" "${haystack[@]}"
+
+# Returns 1
+```
+
 ```
 
 #### `tuple.sh`

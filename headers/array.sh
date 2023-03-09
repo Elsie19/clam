@@ -57,3 +57,15 @@ function array.remove() {
     fi
     return 0
 }
+
+function array.contain() {
+    local item="${1:?No \$1 input given to array.contain}"
+    shift
+    local to_search=("${@:?No \$@ given to array.contain}")
+    for i in "${to_search[@]}"; do
+        if [[ ${item} == "${i}" ]]; then
+            return 0
+        fi
+    done
+    return 1
+}
