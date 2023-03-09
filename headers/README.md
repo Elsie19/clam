@@ -83,7 +83,7 @@ assert.assert_eq "${var1}" "${var2}"
 Example:
 ```bash
 if assert.is_root; then
-    error.fail "You are not root" 1
+    error.error "You are not root" 1
 fi
 ```
 
@@ -97,7 +97,7 @@ You now have access to `prompt.input` and `prompt.yes_no`. `prompt.input` is use
 Example:
 ```bash
 if ! prompt.yes_no "Do you like crayfish" like_crayfish; then
-    error.fail "Failed to get input!" 1
+    error.error "Failed to get input!" 1
     exit 1
 fi
 
@@ -194,14 +194,14 @@ my_tuple+=("FAILS!")
 #### `error.sh`
 `error.sh` is used for raising errors with standard bash-like error messages.
 
-You now have access to `error.error`, which shows errors, and `error.fail`, which will fail them out.
+You now have access to `error.error`.
 
-`error.error` accepts 1 input, that being the error message. `error.fail` accepts 2, an error message and an *optional* exit code.
+`error.error` accepts 2, an error message and an *optional* exit code.
 
 Example:
 ```bash
 possible_missing_cmd || error.error "Could not find $cmd. Cleaning up" && {
     cleanup_function
-    error.fail "Could not sucessfully run $cmd"
+    error.error "Could not sucessfully run $cmd" 1
 }
 ```
