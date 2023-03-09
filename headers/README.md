@@ -83,8 +83,7 @@ assert.assert_eq "${var1}" "${var2}"
 Example:
 ```bash
 if assert.is_root; then
-    err 'You are running as root!'
-    exit 1
+    error.fail "You are not root" 1
 fi
 ```
 
@@ -98,7 +97,7 @@ You now have access to `prompt.input` and `prompt.yes_no`. `prompt.input` is use
 Example:
 ```bash
 if ! prompt.yes_no "Do you like crayfish" like_crayfish; then
-    err "Failed to get input!"
+    error.fail "Failed to get input!" 1
     exit 1
 fi
 
@@ -176,8 +175,6 @@ needle="cat"
 array.contain "${needle}" "${haystack[@]}"
 
 # Returns 1
-```
-
 ```
 
 #### `tuple.sh`
