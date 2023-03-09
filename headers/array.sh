@@ -19,11 +19,14 @@ function array.pop() {
     declare -n array_name="${1:?No array given to array.pop}"
     # shellcheck disable=SC2034
     local to_pop="${2:?No index given to array.pop}"
-    unset "array_name[${to_pop}]"
+    if ! (unset array_name 2> /dev/null); then
+        # Is readonly
+        return 1
+    fi
+    unset "array_name[${to_pop}]" || return 1
     if [[ ${array_name@a} != 'A' ]]; then
         array_name=("${array_name[@]}")
     fi
-    return $?
 }
 
 function array.remove() {
@@ -31,6 +34,11 @@ function array.remove() {
     declare -n array_name="${1:?No array given to array.remove}"
     local to_remove="${2:?No element given to array.remove}"
     local tmp_delete=("${to_remove}")
+
+    if ! (unset array_name 2> /dev/null); then
+        # Is readonly
+        return 1
+    fi
 
     # If we're dealing with associative arrays
     if [[ ${array_name@a} == 'A' ]]; then

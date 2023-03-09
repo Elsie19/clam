@@ -135,6 +135,8 @@ You now have access to `array.string_to_array`, `array.pop`, `array.remove`, and
 
 `array.remove` takes the form of `array.pop my_array key`.
 
+Both `pop` and `remove` will `return 1` if an array is `readonly`.
+
 `array.contain` checks for the existence of a variable inside an array, and if not, return a value of `1`.
 
 Example:
