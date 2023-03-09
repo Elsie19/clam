@@ -143,9 +143,16 @@ msg "According to you, the meaning of life is ${fourty_two:?Error explanation}"
 #### `array.sh`
 `array.sh` is used for converting strings to arrays.
 
-You now have access to `array.string_to_array`.
+You now have access to `array.string_to_array`, `array.pop`, and `array.remove`.
+
+> **Note**
+> `array.pop` and `array.remove` are functional with associated arrays
 
 `array.string_to_array` takes the form of `array.string_to_array "mystring" array_to_save_to`. Whitespace will be counted and added to the array as an empty element.
+
+`array.pop` takes the form of `array.pop my_array index`.
+
+`array.remove` takes the form of `array.pop my_array key`.
 
 Example:
 ```bash
@@ -164,6 +171,15 @@ done
 # b
 # a
 # z
+
+foo=(1 2 3)
+array.pop foo 0
+declare -p foo
+# declare -a foo=([0]="2" [1]="3")
+
+declare -A colors=([red]="#ff0000" [green]="#00ff00" [blue]="#0000ff")
+array.remove colors "#00ff00"
+# declare -A colors=([red]="#ff0000" [blue]="#0000ff")
 ```
 
 #### `tuple.sh`
