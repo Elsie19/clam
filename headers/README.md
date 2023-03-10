@@ -16,6 +16,7 @@ Headers are generally grouped together into one meta-header, just like meta-pack
 | `tuple.sh`   | Implements tuples | ❌ | None |
 | `error.sh`   | Implements standard error messages | ❌ | None |
 | `use.sh`     | Implements `using` from C++ | ❌ | None |
+| `log.sh`     | Implements logging functionality | ❌ | None |
 
 ### Header docs
 
@@ -219,4 +220,33 @@ Example:
 ```bash
 use prompt.yes_no # Will be shortened to yes_no
 use prompt.yes_no as yesno # Will be shortened to yesno
+```
+
+#### `log.sh`
+`log.sh` is used for logging information to logfiles and for debugging purposes.
+
+You now have access to `log.init`, `log.info`, `log.warn`, `log.error` and `log.cleanup`.
+
+`log.init` accepts no arguments and will create a logfile using `mktemp` if available, and using a combination of `tr`, `/dev/urandom` and `head` to generate a file similar to the naming of `mktemp`. The variable `LOGFILE` is now globally available, but should not be used whenever possible.
+
+`log.info`, `log.warn`, and `log.error` all accept 1 argument, and that is the text that you wish to log.
+
+`log.cleanup` will simply delete `LOGFILE`
+
+If the variable `DEBUG` is defined, `log.{info,warn,error}` will be outputed to the screen, with `colors.sh` support if included.
+
+Example:
+```bash
+log.init
+
+if ! prompt.yes_no "Do you like crayfish" like_crayfish; then
+    error.error "Failed to get input!" 1
+    exit 1
+fi
+
+log.info "The user responded ${like_crayfish:?}"
+DEBUG=1
+log.warn "Debugging mode was enabled!!"
+# 2023-03-09_22:11:10 [warn]: Debugging mode was enabled!!
+log.cleanup
 ```
