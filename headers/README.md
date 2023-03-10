@@ -2,17 +2,17 @@
 
 These headers are included with every version of Clam.
 
-| Name 	       | Usage     | Meta-header| Relations |
-|:------------:|-----------|:----------:|:---------:|
-| `colors.sh`  | Implements a variety of colors + `$NO_COLOR` support | ❌ | Part of `stdout.sh` |
-| `msg.sh`     | Implements visually pleading output | ❌ | Part of `stdout.sh` |
-| `prompt.sh`  | Implements visually pleading prompts | ❌ | Part of `stdout.sh` |
-| `assert.sh`  | Implements assertion testing | ❌ | Part of `stdtest.sh` |
-| `array.sh`   | Implements useful array tools| ❌ | None |
-| `tuple.sh`   | Implements tuples | ❌ | None |
-| `error.sh`   | Implements standard error messages | ❌ | None |
-| `use.sh`     | Implements `using` from C++ | ❌ | None |
-| `log.sh`     | Implements logging functionality | ❌ | None |
+| Name 	       | Usage     |
+|:------------:|-----------|
+| `colors.sh`  | Implements a variety of colors + `$NO_COLOR` support |
+| `msg.sh`     | Implements visually pleading output |
+| `prompt.sh`  | Implements visually pleading prompts |
+| `assert.sh`  | Implements assertion testing |
+| `array.sh`   | Implements useful array tools|
+| `tuple.sh`   | Implements tuples |
+| `error.sh`   | Implements standard error messages |
+| `use.sh`     | Implements `using` from C++ |
+| `log.sh`     | Implements logging functionality |
 
 ### Header docs
 
