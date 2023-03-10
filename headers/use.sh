@@ -21,6 +21,9 @@ function use() {
         shopt -u extdebug
         exit 1
     fi
+    # We do **not** want the alias to be expanded at when it runs.
+    # What we want is for it to be expanded right now,
+    # So that it won't be checked for `full_name` at run.
     # shellcheck disable=SC2139
     alias "${to_be}"="${full_name}"
 }
