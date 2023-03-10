@@ -33,7 +33,6 @@ function array.remove() {
     local array_name
     declare -n array_name="${1:?No array given to array.remove}"
     local to_remove="${2:?No element given to array.remove}"
-    local tmp_delete=("${to_remove}")
 
     if ! (unset array_name 2> /dev/null); then
         # Is readonly
@@ -42,25 +41,20 @@ function array.remove() {
 
     # If we're dealing with associative arrays
     if [[ ${array_name@a} == 'A' ]]; then
-        for target in "${tmp_delete[@]}"; do
-            # Loop over indices instead of elements
-            for i in "${!array_name[@]}"; do
-                if [[ ${array_name[${i}]} == "${target}" ]]; then
-                    unset "array_name[${i}]" || return 1
-                    break 2
-                fi
-            done
+        for i in "${!array_name[@]}"; do
+            if [[ ${array_name[${i}]} == "${to_remove}" ]]; then
+                unset "array_name[${i}]" || return 1
+                break 2
+            fi
         done
     else
-        for target in "${tmp_delete[@]}"; do
-            for i in "${!array_name[@]}"; do
-                if [[ ${array_name[i]} == "${target}" ]]; then
-                    unset "array_name[${i}]" || return 1
-                    # Adjust the indices so there are none are jumped
-                    array_name=("${array_name[@]}")
-                    break 2
-                fi
-            done
+        for i in "${!array_name[@]}"; do
+            if [[ ${array_name[i]} == "${to_remove}" ]]; then
+                unset "array_name[${i}]" || return 1
+                # Adjust the indices so there are none are jumped
+                array_name=("${array_name[@]}")
+                break 2
+            fi
         done
     fi
     return 0
