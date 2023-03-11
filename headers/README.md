@@ -5,14 +5,15 @@ These headers are included with every version of Clam.
 | Name 	       | Usage     |
 |:------------:|-----------|
 | `colors.sh`  | Implements a variety of colors + `$NO_COLOR` support |
-| `msg.sh`     | Implements visually pleading output |
-| `prompt.sh`  | Implements visually pleading prompts |
-| `assert.sh`  | Implements assertion testing |
-| `array.sh`   | Implements useful array tools|
-| `tuple.sh`   | Implements tuples |
-| `error.sh`   | Implements standard error messages |
-| `use.sh`     | Implements `using` from C++ |
-| `log.sh`     | Implements logging functionality |
+| `msg.sh`     | Implements visually pleading output                  |
+| `prompt.sh`  | Implements visually pleading prompts                 |
+| `assert.sh`  | Implements assertion testing                         |
+| `array.sh`   | Implements useful array tools                        |
+| `tuple.sh`   | Implements tuples                                    |
+| `error.sh`   | Implements standard error messages                   |
+| `use.sh`     | Implements `using` from C++                          |
+| `log.sh`     | Implements logging functionality                     |
+| `types.sh`   | Implements stylized variable creations               |
 
 ### Header docs
 
@@ -245,4 +246,18 @@ DEBUG=1
 log.warn "Debugging mode was enabled!!"
 # 2023-03-09_22:11:10 [warn]: Debugging mode was enabled!!
 log.cleanup
+```
+
+#### `types.sh`
+
+`types.sh` is used for stylized variable declarations. It's important to remember that an integer in Bash is just a string with numbers, and can easily be used like a string (such as `int foo=1 ; foo+="bar" # -> '1bar'`).
+
+You now have access to `int`, `string`, `array`, and `hashmap`.
+
+Example:
+```bash
+int foo=1
+string foo="lestring"
+array foo=(1 2 3)
+hashmap foo=([foo]=1 [bar]=2 [baz]=3)
 ```
