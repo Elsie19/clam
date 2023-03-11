@@ -34,10 +34,12 @@ function log._base() {
         error) local colortype='BRed' && local color="${!colortype}" ;;
         *) ;;
     esac
+    # shellcheck disable=SC2155
+    local datetime="$(printf '%(%F_%T)T')"
     if [[ -n ${DEBUG} ]]; then
-        echo -e "$(date +%F_%T) [${color-}${type}${NC-}]: ${color-}${rest}${NC-}" | tee -a "${LOGFILE:?LOGFILE not defined}"
+        echo -e "${datetime} [${color-}${type}${NC-}]: ${color-}${rest}${NC-}" | tee -a "${LOGFILE:?LOGFILE not defined}"
     else
-        echo -e "$(date +%F_%T) [${type}]: ${rest:?No input given to log.${FUNCNAME[0]}}" >> "${LOGFILE:?LOGFILE not defined}"
+        echo -e "${datetime} [${type}]: ${rest:?No input given to log.${FUNCNAME[0]}}" >> "${LOGFILE:?LOGFILE not defined}"
     fi
 }
 
