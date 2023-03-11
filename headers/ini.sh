@@ -1,15 +1,5 @@
 #!/bin/bash
 
-function ini._remove_comments() {
-    set -x
-    local input="${1}"
-    if [[ -z ${input} ]]; then
-        echo ""
-    fi
-    echo "${input%#*}"
-    set +x
-}
-
 function ini._parse_out_section() {
     local input="${1:?No input given to ini._parse_out_section}"
     # Do we have a valid [section] in terms of []

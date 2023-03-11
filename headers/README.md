@@ -274,7 +274,7 @@ Example:
 
 ```ini
 # configuration.ini
-; supports # and ; for comments
+# supports # and ; for comments
 name = "Henry"
 optional_whitespace="yup"
 even_this    =          "quite so"
