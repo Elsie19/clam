@@ -7,7 +7,7 @@ function log.init() {
     if ! command -v mktemp &> /dev/null; then
         # shellcheck disable=SC2155
         local random_string="$(tr -dc A-Za-z0-9 < /dev/urandom | head -c 10)"
-        touch "/tmp/tmp.${random_string}"
+        :>"/tmp/tmp.${random_string}"
         declare -r LOGFILE="/tmp/tmp.${random_string}"
         export LOGFILE
     else
