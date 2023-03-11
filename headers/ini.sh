@@ -3,7 +3,7 @@
 function ini._remove_comments() {
     set -x
     local input="${1}"
-    if [[ -z "${input}" ]]; then
+    if [[ -z ${input} ]]; then
         echo ""
     fi
     echo "${input%#*}"
@@ -13,7 +13,7 @@ function ini._remove_comments() {
 function ini._parse_out_section() {
     local input="${1:?No input given to ini._parse_out_section}"
     # Do we have a valid [section] in terms of []
-    if [[ "${input::1}" != "[" || "${input: -1}" != "]" ]]; then
+    if [[ ${input::1} != "[" || ${input: -1} != "]" ]]; then
         return 1
     fi
     echo "${input:1:-1}"
@@ -36,7 +36,7 @@ function ini.parse() {
     local var_prefix="${2-}"
 
     local default_section="Default"
-    if ! [[ -f "${file}" ]]; then
+    if ! [[ -f ${file} ]]; then
         return 1
     fi
 
@@ -47,7 +47,7 @@ function ini.parse() {
         if [[ -z ${line} ]]; then
             continue
         elif [[ ${line} =~ ${ini_section_regex} ]]; then
-            if ! ini._parse_out_section "${line}" &>/dev/null; then
+            if ! ini._parse_out_section "${line}" &> /dev/null; then
                 echo "Invalid line: ${line}!" 2>&1
                 return 1
             fi
