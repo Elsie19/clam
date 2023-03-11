@@ -41,7 +41,7 @@ function ini.parse() {
 
     local ini_var_regex="^(\w)+\s*=\s*(\"|')?(\w)+(\"|')?\$"
     local ini_section_regex='\[([a-zA-Z0-9_ ])+\]$'
-    local ini_line_comment='^(#|;).*'
+    local ini_line_comment='^(#|;).*$'
 
     local line_counter=0
     while IFS= read -r line; do
