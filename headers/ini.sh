@@ -23,6 +23,10 @@ function ini._convert_var() {
     local input="${1:?No input given to ini._convert_var}"
     local var="${input%% = *}"
     local value="${input#* = }"
+    var="${var#"${var%%[![:space:]]*}"}"
+    var="${var%"${var##*[![:space:]]}"}"
+    value="${value#"${value%%[![:space:]]*}"}"
+    value="${value%"${value##*[![:space:]]}"}"
     declare -Ag "${default_section}[${var}]=${value}"
 }
 
@@ -36,7 +40,7 @@ function ini.parse() {
         return 1
     fi
 
-    local ini_var_regex='^(\w)+ = (\")?(\w)+(\")?$'
+    local ini_var_regex='^(\w)+\s*=\s*(\")?(\w)+(\")?$'
     local ini_section_regex='\[([a-zA-Z0-9_ ])+\]$'
     while IFS= read -r line; do
         # Is blank?
