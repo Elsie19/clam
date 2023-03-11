@@ -39,7 +39,7 @@ function ini.parse() {
         return 1
     fi
 
-    local ini_var_regex='^(\w)+\s*=\s*(\")?(\w)+(\")?$'
+    local ini_var_regex="^(\w)+\s*=\s*(\"|')?(\w)+(\"|')?\$"
     local ini_section_regex='\[([a-zA-Z0-9_ ])+\]$'
 
     local line_counter=0
