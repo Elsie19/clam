@@ -27,18 +27,18 @@ function ini._convert_var() {
     var="${var%"${var##*[![:space:]]}"}"
     value="${value#"${value%%[![:space:]]*}"}"
     value="${value%"${value##*[![:space:]]}"}"
-    declare -Ag "${default_section}[${var}]=${value}"
+    declare -Ag "${opt_prefix:+${opt_prefix}_}${default_section}[${var}]=${value}"
 }
 
 function ini.parse() {
     local file="${1:?No input given to ini.parse}"
-    # shellcheck disable=SC2034
-    local default_section="${2:-Default}"
+    local opt_prefix="${2-}"
 
     if ! [[ -f ${file} ]]; then
         return 1
     fi
 
+    local default_section="Default"
     local ini_var_regex="^(\w)+\s*=\s*(\"|')?(\W|\w)+(\"|')?\$"
     local ini_section_regex='\[([a-zA-Z0-9_ ])+\]$'
     local ini_line_comment='^(#|;).*$'

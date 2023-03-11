@@ -14,6 +14,7 @@ These headers are included with every version of Clam.
 | `use.sh`     | Implements `using` from C++                          |
 | `log.sh`     | Implements logging functionality                     |
 | `types.sh`   | Implements stylized variable creations               |
+| `ini.sh`     | Implements INI file support                          |
 
 ### Header docs
 
@@ -260,4 +261,36 @@ int foo=1
 string foo="lestring"
 array foo=(1 2 3)
 hashmap foo=([foo]=1 [bar]=2 [baz]=3)
+```
+
+#### `ini.sh`
+`ini.sh` is used for turning INI files into native bash variables/arrays.
+
+You now have access to `ini.parse`. It accepts two arguments, the first being the INI file to parse, and a second optional argument for the hashmap prefix. `ini.parse` will not execute any commands inside the INI file (such as `foo = $(rm -rf ~)`), and will be set as is.
+
+If no section is provided, `Default` will be used.
+
+Example:
+
+```ini
+# configuration.ini
+; supports # and ; for comments
+name = "Henry"
+optional_whitespace="yup"
+even_this    =          "quite so"
+
+[settings]
+wallpaper = /home/henry/wallpaper.png
+malicious_maybe = "$(echo doing bad stuff)"
+```
+
+```bash
+if ! ini.parse configuration.ini bla; then
+    error.error "Could not parse properly!" 1
+fi
+
+echo "${bla_Default[name]}" # "Henry"
+echo "${bla_Default[even_this]}" # "quite so"
+echo "${bla_settings[wallpaper]}" # /home/henry/wallpaper.png
+echo "${bla_settings[malicious_maybe]}" # "$(echo doing bad stuff)"
 ```
