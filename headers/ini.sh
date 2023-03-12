@@ -37,7 +37,7 @@ function ini.parse() {
     while IFS= read -r line; do
         ((line_counter++))
         # Is blank?
-        if [[ ${line} =~ ${ini_line_comment} || -z ${line} ]]; then
+        if [[ -z ${line} || ${line} =~ ${ini_line_comment} ]]; then
             continue
         elif [[ ${line} =~ ${ini_section_regex} ]]; then
             if ! ini._parse_out_section "${line}" &> /dev/null; then
