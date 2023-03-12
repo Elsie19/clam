@@ -299,7 +299,7 @@ echo "${bla_settings[malicious_maybe]}" # "$(echo doing bad stuff)"
 
 You now have access to `strings.rev`, `strings.strip_leading`, `strings.string_trailing`, and `strings.strip`.
 
-`strings.rev` accepts any number of arguments.
+`strings.rev` accepts any number of arguments. If you are dealing with large amounts of text, consider using the command `rev` or if that is unavailable, run `LC_ALL=C LANG=C strings.rev your_string` to disable unicode support, which may speed up the reversal.
 
 `strings.strip_leading`, `strings.strip_trailing`, and `strings.strip` accept 1 argument.
 
