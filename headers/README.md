@@ -16,6 +16,7 @@ These headers are included with every version of Clam.
 | `types.sh`   | Implements stylized variable creations               |
 | `ini.sh`     | Implements INI file support                          |
 | `strings.sh` | Implements operations on strings                     |
+| `debug.sh`   | Implements fancy debugging output                    |
 
 ### Header docs
 
@@ -313,4 +314,31 @@ string="a                 "
 strings.strip_trailing "${string}" # a
 string="        a                 "
 strings.strip "${string}" # a
+```
+
+#### `debug.sh`
+`debug.sh` is used to implement a fancier looking `set -x`.
+
+You now have access to `debug.on` and `debug.off`.
+
+Be warned though, that this will slow down output quite a bit, so only use it if you really need to.
+
+Example:
+```bash
+debug.on
+foo=1
+echo "${foo}"
+debug.off
+```
+
+Output:
+```bash
+foo=1
+🔍 [debug:NOFUNC():14] - DEBUG: foo=1
+echo "${foo}"
+🔍 [debug:NOFUNC():15] - DEBUG: echo 1
+1
+debug.off
+🔍 [debug:NOFUNC():16] - DEBUG: debug.off
+🔍 [debug:debug.off():11] - DEBUG: set +vx
 ```
