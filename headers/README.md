@@ -15,6 +15,7 @@ These headers are included with every version of Clam.
 | `log.sh`     | Implements logging functionality                     |
 | `types.sh`   | Implements stylized variable creations               |
 | `ini.sh`     | Implements INI file support                          |
+| `strings.sh` | Implements operations on strings                     |
 
 ### Header docs
 
@@ -253,14 +254,12 @@ log.cleanup
 
 `types.sh` is used for stylized variable declarations. It's important to remember that an integer in Bash is just a string with numbers, and can easily be used like a string (such as `int foo=1 ; foo+="bar" # -> '1bar'`).
 
-You now have access to `int`, `string`, `array`, and `hashmap`.
+You now have access to `int` and `string`.
 
 Example:
 ```bash
 int foo=1
 string foo="lestring"
-array foo=(1 2 3)
-hashmap foo=([foo]=1 [bar]=2 [baz]=3)
 ```
 
 #### `ini.sh`
@@ -293,4 +292,25 @@ echo "${bla_Default[name]}" # "Henry"
 echo "${bla_Default[even_this]}" # "quite so"
 echo "${bla_settings[wallpaper]}" # /home/henry/wallpaper.png
 echo "${bla_settings[malicious_maybe]}" # "$(echo doing bad stuff)"
+```
+
+#### `strings.sh`
+`strings.sh` is used for operating on strings.
+
+You now have access to `strings.rev`, `strings.strip_leading`, `strings.string_trailing`, and `strings.strip`.
+
+`strings.rev` accepts any number of arguments.
+
+`strings.strip_leading`, `strings.strip_trailing`, and `strings.strip` accept 1 argument.
+
+Example:
+```bash
+string="foo bar baz"
+strings.rev "${string}" # zab rab oof
+string="                 a"
+strings.strip_leading "${string}" # a
+string="a                 "
+strings.strip_trailing "${string}" # a
+string="        a                 "
+strings.strip "${string}" # a
 ```
