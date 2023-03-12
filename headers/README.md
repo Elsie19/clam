@@ -321,8 +321,6 @@ strings.strip "${string}" # a
 
 You now have access to `debug.on` and `debug.off`.
 
-Be warned though, that this will slow down output quite a bit, so only use it if you really need to.
-
 Example:
 ```bash
 debug.on
