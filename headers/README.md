@@ -1,6 +1,6 @@
 ### Clam standard headers
 
-These headers are included with every version of Clam.
+These headers are included with every version of Clam. Most if not all of these headers are written in pure bash with no external dependencies, and exceptions will be listed below.
 
 | Name 	       | Usage     |
 |:------------:|-----------|
@@ -17,6 +17,9 @@ These headers are included with every version of Clam.
 | `ini.sh`     | Implements INI file support                          |
 | `strings.sh` | Implements operations on strings                     |
 | `debug.sh`   | Implements fancy debugging output                    |
+
+### Headers with external dependencies
+`log.sh` uses `mktemp` to create a temporary file, but will fallback to using a semi-random string generated for the file name by Bash if `mktemp` is not installed.
 
 ### Header docs
 
