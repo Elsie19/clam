@@ -13,7 +13,7 @@ function prompt.input() {
 function prompt.yes_no() {
     local prompt="${1:?variable for prompt for prompt_yes_no not given}"
     local var_to_store_to="${2:?variable to store output for prompt_yes_no not given}"
-    echo -ne "${prompt} [${BGreen:-}y${NC}/${BRed:-}n${NC}]: "
+    echo -ne "${prompt} [${BGreen-}y${NC}/${BRed-}n${NC}]: "
     IFS= read -r prompt_output
     case "${prompt_output}" in
         [Yy]*)

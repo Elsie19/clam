@@ -4,7 +4,7 @@ function msg() {
     local flags=("-e")
     if [[ ${1} == "-n" ]]; then
         local flags+=("-n")
-    	shift
+        shift
     fi
-    echo "${flags[@]}" "${BGreen:-}>${NC} $*"
+    echo "${flags[@]}" "${BGreen-}>${NC} $*"
 }
