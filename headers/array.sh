@@ -71,3 +71,9 @@ function array.contain() {
     done
     return 1
 }
+
+function array.join() {
+    local IFS="${1:?No IFS given to array.join}"
+    shift
+    echo "$*"
+}
