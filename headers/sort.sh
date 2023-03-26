@@ -22,3 +22,24 @@ function sort.bubble() {
         fi
     done
 }
+
+function sort.gnome() {
+    local arr index tmp n
+    declare -n arr="${1:?No array given to sort.gnome}"
+    n="${#arr[@]}"
+    index=0
+    while ((index < n)); do
+        if ((index == 0)); then
+            ((index++))
+        fi
+        if ((arr[index] >= arr[index - 1])); then
+            ((index++))
+        else
+            tmp=0
+            tmp="${arr[index]}"
+            arr[index]="${arr[index - 1]}"
+            arr[index - 1]="${tmp}"
+            ((index--))
+        fi
+    done
+}
