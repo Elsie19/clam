@@ -17,6 +17,7 @@ These headers are included with every version of Clam. Most if not all of these 
 | `ini.sh`     | Implements INI file support                          |
 | `strings.sh` | Implements operations on strings                     |
 | `debug.sh`   | Implements fancy debugging output                    |
+| `sort.sh`    | Implements different sorting algorithms              |
 
 ### Headers with external dependencies
 `log.sh` uses `mktemp` to create a temporary file, but will fallback to using a semi-random string generated for the file name by Bash if `mktemp` is not installed.
@@ -347,4 +348,19 @@ echo "${foo}"
 debug.off
 🔍 [debug:NOFUNC():16] - DEBUG: debug.off
 🔍 [debug:debug.off():11] - DEBUG: set +vx
+```
+
+#### `sort.sh`
+`sort.sh` is used for different array sorting algorithms.
+
+You now have access to `sort.bubble`, `sort.gnome`, and `sort.insert`.
+
+Example:
+```bash
+for i in {1..1000}; do
+    arra+=("${RANDOM}")
+done
+
+sort.insert "arra"
+echo "${arra[*]}"
 ```
