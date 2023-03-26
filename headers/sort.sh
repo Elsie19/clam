@@ -43,3 +43,20 @@ function sort.gnome() {
         fi
     done
 }
+
+function sort.insert() {
+    local arr i j key length
+    declare -n arr="${1:?No array given to sort.insert}"
+    length="${#arr[@]}"
+
+    for ((i = 1; i < length; i++)); do
+        key="${arr[i]}"
+
+        j="$((i - 1))"
+        while ((j >= 0 && key < arr[j])); do
+            arr[j + 1]="${arr[j]}"
+            ((j--))
+        done
+        arr[j + 1]="${key}"
+    done
+}
