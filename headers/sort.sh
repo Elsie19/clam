@@ -24,10 +24,9 @@ function sort.bubble() {
 }
 
 function sort.gnome() {
-    local arr index tmp n
+    local arr index=0 tmp n
     declare -n arr="${1:?No array given to sort.gnome}"
     n="${#arr[@]}"
-    index=0
     while ((index < n)); do
         if ((index == 0)); then
             ((index++))
@@ -51,7 +50,6 @@ function sort.insert() {
 
     for ((i = 1; i < length; i++)); do
         key="${arr[i]}"
-
         j="$((i - 1))"
         while ((j >= 0 && key < arr[j])); do
             arr[j + 1]="${arr[j]}"
