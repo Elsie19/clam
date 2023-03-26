@@ -1,19 +1,18 @@
 #!/bin/bash
 
 function sort.bubble() {
-    local arr i j
+    local arr flag=1 tmp length i j
     declare -n arr="${1:?No array given to sort.bubble}"
 
-    local length="${#arr[@]}"
+    length="${#arr[@]}"
 
-    local flag=1
     for ((i = 0; i < length - 1; i++)); do
         flag=0
         for ((j = 0; j < length - 1 - i; j++)); do
             if ((arr[j] > arr[j + 1])); then
-                local temp=${arr[j]}
+                tmp=${arr[j]}
                 arr[j]=${arr[j + 1]}
-                arr[j + 1]="${temp}"
+                arr[j + 1]="${tmp}"
                 flag=1
             fi
         done
