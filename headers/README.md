@@ -129,7 +129,7 @@ msg "According to you, the meaning of life is ${fourty_two:?Error explanation}"
 #### `array.sh`
 `array.sh` is used for converting strings to arrays.
 
-You now have access to `array.string_to_array`, `array.pop`, `array.remove`, `array.contain`, and `array.join`.
+You now have access to `array.string_to_array`, `array.pop`, `array.remove`, `array.contain`, `array.join`, and `array.fill`.
 
 > **Note**
 
@@ -146,6 +146,8 @@ Both `pop` and `remove` will `return 1` if an array is `readonly`.
 `array.contain` checks for the existence of a variable inside an array, and if not, return a value of `1`.
 
 `array.join` takes the form of `array.join character_split ${array[@]}`
+
+`array.fill` takes the form of `array.fill start_idx length char array`
 
 Example:
 ```bash
@@ -188,6 +190,10 @@ array.contain "${needle}" "${haystack[@]}"
 
 array.join ',' ${haystack[@]}
 # oats,grains,barley
+
+boo=()
+array.fill 0 10 b boo
+# b b b b b b b b b b
 ```
 
 #### `tuple.sh`

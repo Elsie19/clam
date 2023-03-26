@@ -72,3 +72,19 @@ function array.join() {
     shift
     echo "$*"
 }
+
+function array.fill() {
+    local i arr start_index count value
+    start_index="${1:?No start index given to array.fill}"
+    count="${2:?No count given to array.fill}"
+    value="${3:?No value given to array.fill}"
+    declare -n arr="${4:?No array given to array.fill}"
+    if ! (unset arr 2> /dev/null); then
+        # Is readonly
+        return 1
+    fi
+    for ((i = start_index; i < count; i++)); do
+        # shellcheck disable=SC2034
+        arr[i]="${value}"
+    done
+}
