@@ -1,6 +1,7 @@
 #!/bin/bash
 
 function log.init() {
+    local i
     if [[ -n ${LOGFILE} && -f ${LOGFILE} ]]; then
         return 1
     fi

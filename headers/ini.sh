@@ -21,6 +21,7 @@ function ini._convert_var() {
 }
 
 function ini.parse() {
+    local line
     local file="${1:?No input given to ini.parse}"
     local opt_prefix="${2-}"
 

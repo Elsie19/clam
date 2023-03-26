@@ -1,8 +1,9 @@
 #!/bin/bash
 
 function array.string_to_array() {
-    local input="${1:?No input given to array.string_to_array}"
-    local array_to="${2:?No out array given to array.string_to_array}"
+    local input array_to
+    input="${1:?No input given to array.string_to_array}"
+    array_to="${2:?No out array given to array.string_to_array}"
 
     [[ ${input} =~ ${input//?/(.)} ]]
     declare -ag "${array_to}=(${BASH_REMATCH[*]:1})"
@@ -10,10 +11,10 @@ function array.string_to_array() {
 }
 
 function array.pop() {
+    local to_pop array_name
     # `declare -n` is basically like a pointer to an array
     declare -n array_name="${1:?No array given to array.pop}"
-    # shellcheck disable=SC2034
-    local to_pop="${2:?No index given to array.pop}"
+    to_pop="${2:?No index given to array.pop}"
     if ! (unset array_name 2> /dev/null); then
         # Is readonly
         return 1
@@ -25,9 +26,9 @@ function array.pop() {
 }
 
 function array.remove() {
-    local array_name
+    local array_name to_remove i
     declare -n array_name="${1:?No array given to array.remove}"
-    local to_remove="${2:?No element given to array.remove}"
+    to_remove="${2:?No element given to array.remove}"
 
     if ! (unset array_name 2> /dev/null); then
         # Is readonly
@@ -56,6 +57,7 @@ function array.remove() {
 }
 
 function array.contain() {
+    local i
     local item="${1:?No \$1 input given to array.contain}"
     shift
     local to_search=("${@:?No \$@ given to array.contain}")
