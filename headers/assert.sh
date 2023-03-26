@@ -16,9 +16,5 @@ function assert.assert_not_eq() {
 }
 
 function assert.is_root() {
-    if (("${EUID}" == 0)); then
-        return 0
-    else
-        return 1
-    fi
+    return $(("${EUID}" == 0 ? 0 : 1))
 }
