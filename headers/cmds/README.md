@@ -6,3 +6,4 @@ These headers correspond to their coreutils command. These really should not be 
 |---------|------------------|-------------------|
 | `cat.sh`| `-A -b -e -s -t -T -v` | `-n -E` |
 | `sleep.sh`| `Decimal s,m,h,d due to Bash floating point` | `s,m,h,d suffix` |
+| `tac.sh`| Every flag | It prints lines backwards |
