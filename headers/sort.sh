@@ -3,7 +3,6 @@
 function sort.bubble() {
     local arr flag=1 tmp length i j
     declare -n arr="${1:?No array given to sort.bubble}"
-
     length="${#arr[@]}"
 
     for ((i = 0; i < length - 1; i++)); do
@@ -27,6 +26,7 @@ function sort.gnome() {
     local arr index=0 tmp n
     declare -n arr="${1:?No array given to sort.gnome}"
     n="${#arr[@]}"
+
     while ((index < n)); do
         if ((index == 0)); then
             ((index++))
