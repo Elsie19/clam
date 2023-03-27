@@ -1,6 +1,6 @@
 install: clam
 	sudo rm -rf $(DESTDIR)/usr/include/bash/*.sh
-	sudo install -Dm755 headers/*.sh $(DESTDIR)/usr/include/bash/
+	sudo cp -r headers/* $(DESTDIR)/usr/include/bash/
 	sudo install -Dm755 clam $(DESTDIR)/usr/bin/
 uninstall:
 	sudo rm -v $(DESTDIR)/usr/include/bash/*.sh
