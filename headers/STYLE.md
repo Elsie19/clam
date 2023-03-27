@@ -32,3 +32,15 @@ lib.convert foo
 declare -n arr="${1:?Put an error message here}"
 # arr is now a pointer to foo
 ```
+
+#### Pure Bash alternatives
+
+##### CPU Type
+External: `uname -p`
+
+Internal: `${CPUTYPE}`
+
+##### Replacing text
+External: `sed 's/foo/bar/g'`
+
+Internal: `${var/foo/bar/}`
