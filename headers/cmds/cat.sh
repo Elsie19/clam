@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function cmds.cat() {
-    local files i z end number lineno=1 tabbing
+    local files=() i z end number lineno=1 tabbing
     while getopts 'En' OPTION; do
         case "${OPTION}" in
             E) end='$' ;;
@@ -10,7 +10,13 @@ function cmds.cat() {
         esac
     done
     shift $((OPTIND - 1))
-    readarray -t files < "${@}"
+    for i in "${@}"; do
+        if [[ ${i} != "-" ]]; then
+            mapfile -t -O"${#files[@]}" files < "${i}"
+        else
+            mapfile -t -O"${#files[@]}" files <&0
+        fi
+    done
     for i in "${files[@]}"; do
         # 10 would be 2 chars, 500 would be 3
         tabbing="$((5 - "${#lineno}"))"
