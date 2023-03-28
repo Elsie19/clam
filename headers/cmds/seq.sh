@@ -13,6 +13,7 @@ function cmds.seq() {
     case "${#@}" in
         1)
             for ((i = 1; i <= ${1}; i++)); do
+                # Print newline on last instance
                 if ((i == "${1}")); then
                     printf "%s\n" "${i}"
                 else
@@ -30,13 +31,27 @@ function cmds.seq() {
             done
             ;;
         3)
-            for ((i = "${1}"; i <= ${3}; i += "${2}")); do
-                if ((i == "${3}")); then
-                    printf "%s\n" "${i}"
-                else
-                    printf "%s${separator:-$'\n'}" "${i}"
+            if ((${1} > ${3})); then
+                # If we cannot reach from $1 to $3 using $2
+                if [[ ${2:0:1} != "-" ]]; then
+                    return 1
                 fi
-            done
+                for ((i = "${1}"; i >= ${3}; i += "${2}")); do
+                    if ((i == "${3}")); then
+                        printf "%s\n" "${i}"
+                    else
+                        printf "%s${separator:-$'\n'}" "${i}"
+                    fi
+                done
+            else
+                for ((i = "${1}"; i <= ${3}; i += "${2}")); do
+                    if ((i == "${3}")); then
+                        printf "%s\n" "${i}"
+                    else
+                        printf "%s${separator:-$'\n'}" "${i}"
+                    fi
+                done
+            fi
             ;;
     esac
 }
