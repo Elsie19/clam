@@ -11,10 +11,10 @@ function cmds.cat() {
     done
     shift $((OPTIND - 1))
     for i in "${@}"; do
-        if [[ ${i} != "-" ]]; then
-            mapfile -t -O"${#files[@]}" files < "${i}"
-        else
+        if [[ -p /dev/stdin ]]; then
             mapfile -t -O"${#files[@]}" files <&0
+        else
+            mapfile -t -O"${#files[@]}" files < "${i}"
         fi
     done
     for i in "${files[@]}"; do
