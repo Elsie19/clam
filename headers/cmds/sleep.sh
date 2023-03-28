@@ -16,4 +16,5 @@ function cmds.sleep() {
     esac
     exec {sleep_fd}<> <(:)
     read -r -t "${time}" -u "${sleep_fd}"
+    exec {sleep_fd}>&-
 }
