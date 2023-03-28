@@ -9,3 +9,4 @@ These headers correspond to their coreutils command. These really should not be 
 | `tac.sh`| Every flag | It prints lines backwards |
 | `seq.sh`| `-f -w` | `-s` |
 | `ls.sh` | Every flag | `-b` to print every file with quotes around |
+| `uname.sh` | `-v -i -o -p` | `-a -s -n -r -m` |
