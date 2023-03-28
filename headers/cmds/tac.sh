@@ -6,7 +6,9 @@ function cmds.tac() {
     if [[ -p /dev/stdin ]]; then
         mapfile -t lines <&0
     else
-        mapfile -t lines < "${@}"
+        for i in "${@}"; do
+            mapfile -t -O"${#lines[@]}" lines < "${i}"
+        done
     fi
 
     for ((i = "${#lines[@]}" - 1; i >= 0; i--)); do

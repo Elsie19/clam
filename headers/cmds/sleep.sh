@@ -8,10 +8,11 @@ function cmds.sleep() {
         return 1
     fi
     case "${time: -1}" in
+        s) time="${time::-1}" ;;
         m) time="$((${time::-1} * 60))" ;;
         h) time="$((${time::-1} * 3660))" ;;
         d) time="$((${time::-1} * 86400))" ;;
-        s | *) time="${time::-1}" ;;
+        *) ;;
     esac
     exec {sleep_fd}<> <(:)
     read -r -t "${time}" -u "${sleep_fd}"

@@ -2,7 +2,7 @@
 
 function cmds.seq() {
     # shellcheck disable=SC2034
-    local first increment last separator i
+    local first increment last separator i OPTION
     while getopts ':s:' OPTION; do
         case "${OPTION}" in
             s) separator="${OPTARG}" ;;
@@ -11,6 +11,8 @@ function cmds.seq() {
     done
     shift $((OPTIND - 1))
     case "${#@}" in
+        0)
+            echo "${FUNCNAME[0]}: missing operand" && return 1 ;;
         1)
             for ((i = 1; i <= ${1}; i++)); do
                 # Print newline on last instance
