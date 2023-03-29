@@ -1,12 +1,30 @@
 #!/bin/bash
 
 function cmds.basename() {
-    # Usage: basename "path" ["suffix"]
-    local tmp
+    local tmp ending replace string OPTION
 
-    tmp="${1%"${1##*[!/]}"}"
+    while getopts ':z:' OPTION; do
+        case "${OPTION}" in
+            z) ending=1 ;;
+            ?) echo "Usage: ${FUNCNAME[0]} [-z] NAME" && return 1 ;;
+        esac
+    done
+    shift $((OPTIND - 1))
+
+    if (("${#@}" > 2)); then
+        echo "${FUNCNAME[0]}: extra operand '${3}'" && return 1
+    fi
+
+    replace="${2-}"
+    string="${1}"
+
+    tmp="${string%"${string##*[!/]}"}"
     tmp="${tmp##*/}"
-    tmp="${tmp%"${2/"${tmp}"}"}"
+    tmp="${tmp%"${replace/"${tmp}"/}"}"
 
-    printf '%s\n' "${tmp:-/}"
+    if [[ -n ${ending} ]]; then
+        printf "%s" "${tmp:-/}"
+    else
+        printf "%s\n" "${tmp:-/}"
+    fi
 }
