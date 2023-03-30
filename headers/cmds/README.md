@@ -12,3 +12,4 @@ These headers correspond to their coreutils command. These really should not be 
 | `uname.sh` | `-v -i -o -p` | `-a -s -n -r -m` |
 | `yes.sh` | None | All |
 | `basename.sh` | `-s` | `-z` |
+| `whoami.sh` | None | All |
