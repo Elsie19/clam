@@ -1,8 +1,7 @@
 #!/bin/bash
 
 function cmds.seq() {
-    # shellcheck disable=SC2034
-    local first increment last separator i OPTION
+    local separator i OPTION
     while getopts ':s:' OPTION; do
         case "${OPTION}" in
             s) separator="${OPTARG}" ;;

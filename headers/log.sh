@@ -1,19 +1,16 @@
 #!/bin/bash
 
 function log.init() {
-    local i
     if [[ -n ${LOGFILE} && -f ${LOGFILE} ]]; then
         return 1
     fi
     if ! command -v mktemp &> /dev/null; then
         local chars=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789
         local random_string=
-        # shellcheck disable=SC2034
-        for i in {1..10}; do
+        for _ in {1..10}; do
             random_string+="${chars:RANDOM%${#chars}:1}"
         done
-        # shellcheck disable=SC2188
-        > "/tmp/tmp.${random_string}"
+        :> "/tmp/tmp.${random_string}"
         declare -r LOGFILE="/tmp/tmp.${random_string}"
         export LOGFILE
     else

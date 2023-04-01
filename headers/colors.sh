@@ -14,7 +14,6 @@ export BOLD NORMAL NC BLINK CROSS_OUT ITALIC
 # Courtesy of https://stackoverflow.com/a/28938235/13449010
 
 # https://no-color.org/
-# shellcheck disable=SC2236
 if [[ -z ${NO_COLOR} ]]; then
     # Regular Colors
     declare -r BLACK='\033[0;30m'  # Black
