@@ -18,6 +18,7 @@ These headers are included with every version of Clam. Most if not all of these 
 | `strings.sh` | Implements operations on strings                     |
 | `debug.sh`   | Implements fancy debugging output                    |
 | `sort.sh`    | Implements different sorting algorithms              |
+| `progress.sh`| Implements progress bars                             |
 
 ### Headers with external dependencies
 `log.sh` uses `mktemp` to create a temporary file, but will fallback to using a semi-random string generated for the file name by Bash if `mktemp` is not installed.
@@ -369,4 +370,16 @@ done
 
 sort.insert "arra"
 echo "${arra[*]}"
+```
+
+#### `progress.sh`
+`progress.sh` is used to implement stylish progress bars.
+
+You now have access to `progress.bar`. It takes two arguments: a percent for the bar and an optional sleep time.
+
+Example:
+```bash
+for i in {1..100}; do
+    progress.bar "${i}" 0.1
+done
 ```
