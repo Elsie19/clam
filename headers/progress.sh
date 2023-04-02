@@ -2,7 +2,12 @@
 
 # Used from https://github.com/wick3dr0se/bashbar/blob/main/bashbar (GPLv3)
 function progress.bar() {
-    local width progress color
+    local width progress color clear
+
+    if [[ ${1} =~ ^(-c|--clear) ]]; then
+        clear=1
+        shift
+    fi
     (($1 > 100 || $1 < 1)) && {
         echo "Enter an integer from 1-100 (percent)" >&2
         return 1
@@ -33,5 +38,11 @@ function progress.bar() {
     printf '\r|\e[4%dm%*s\e[m' "${color:-1}" "${progress}"
     printf '\e[%dG|%d%%' "${width}" "${1}"
 
-    (($1 == 100)) && echo
+    (($1 == 100)) && {
+        if ((clear == 1)); then
+            echo -ne "\033[2K\r"
+        else
+            echo
+        fi
+    }
 }

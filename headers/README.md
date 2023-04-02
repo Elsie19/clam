@@ -375,11 +375,16 @@ echo "${arra[*]}"
 #### `progress.sh`
 `progress.sh` is used to implement stylish progress bars.
 
-You now have access to `progress.bar`. It takes two arguments: a percent for the bar and an optional sleep time.
+You now have access to `progress.bar`. It takes two arguments and one optional: a percent for the bar and an optional sleep time, and the optional argument being `-c` or `--clear` to clear the bar after finishing
 
 Example:
 ```bash
 for i in {1..100}; do
     progress.bar "${i}" 0.1
 done
+
+for i in {1..100}; do
+    progress.bar -c "${i}" 0.1
+done
+echo "Done..."
 ```
