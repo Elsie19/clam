@@ -33,6 +33,24 @@ declare -n arr="${1:?Put an error message here}"
 # arr is now a pointer to foo
 ```
 
+If you must operate with `shopt` and changing options but only in a function, trap the shopt to `RETURN` like so:
+```bash
+function foo() {
+    # shellcheck disable=SC2064
+    trap "$(shopt -p checkwinsize)" RETURN
+    shopt -s checkwinsize
+    shopt checkwinsize
+}
+
+shopt -u checkwinsize
+echo "Main:"
+shopt checkwinsize
+echo "Foo:"
+foo
+echo "Main"
+shopt checkwinsize
+```
+
 #### Pure Bash alternatives
 
 ##### CPU Type
