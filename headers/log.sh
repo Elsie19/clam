@@ -6,7 +6,7 @@ function log.init() {
     fi
     if ! command -v mktemp &> /dev/null; then
         local chars=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789
-        local random_string=
+        local random_string
         for _ in {1..10}; do
             random_string+="${chars:RANDOM%${#chars}:1}"
         done
