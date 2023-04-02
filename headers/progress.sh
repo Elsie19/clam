@@ -11,7 +11,6 @@ function progress.bar() {
     shopt -s checkwinsize
     (
         :
-        :
     )
 
     exec {sleep_fd}<> <(:)
