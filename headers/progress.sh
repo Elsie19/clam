@@ -8,10 +8,10 @@ function progress.bar() {
         return 1
     }
 
+    # shellcheck disable=SC2064
+    trap "$(shopt -p checkwinsize)" RETURN
     shopt -s checkwinsize
-    (
-        :
-    )
+    (:)
 
     exec {sleep_fd}<> <(:)
     read -r -t "${2:-0}" -u "${sleep_fd}"
