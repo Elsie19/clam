@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function strings.rev() {
-    local str="" i
+    local str i
     local string="${*:?No input given to strings.rev}"
     for ((i = ${#string} - 1; i >= 0; i--)); do
         str+="${string:i:1}"
