@@ -58,3 +58,23 @@ function sort.insert() {
         arr[j + 1]="${key}"
     done
 }
+
+function sort.select() {
+    local arr min tmp i j
+    declare -n arr="${1:?No array given to sort.select}"
+    length="${#arr[@]}"
+
+    for ((i = 0; i < length; i++)); do
+        min="${i}"
+        for ((j = i + 1; j < length; j++)); do
+            if ((arr[j] < arr[min])); then
+                min="${j}"
+            fi
+        done
+        if ((min != i)); then
+            tmp="${arr[i]}"
+            arr[i]="${arr[min]}"
+            arr[min]="${tmp}"
+        fi
+    done
+}

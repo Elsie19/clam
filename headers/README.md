@@ -360,7 +360,7 @@ debug.off
 #### `sort.sh`
 `sort.sh` is used for different array sorting algorithms.
 
-You now have access to `sort.bubble`, `sort.gnome`, and `sort.insert`.
+You now have access to `sort.bubble`, `sort.gnome`, `sort.insert`, and `sort.select`.
 
 Example:
 ```bash
