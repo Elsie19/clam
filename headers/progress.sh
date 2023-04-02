@@ -14,7 +14,9 @@ function progress.bar() {
         :
     )
 
-    sleep "${2:-0}"
+    exec {sleep_fd}<> <(:)
+    read -r -t "${2:-0}" -u "${sleep_fd}"
+    exec {sleep_fd}>&-
     width="$((COLUMNS - 4))"
     progress="$(($1 * width / 100))"
 
