@@ -6,7 +6,7 @@ function cmds.cat() {
         case "${OPTION}" in
             E) end='$' ;;
             n) number=1 ;;
-            ?) echo "Usage: ${FUNCNAME[0]} [-E] [-n] files" && return 1 ;;
+            ?) echo "Usage: ${FUNCNAME[0]} [-E] [-n] files" >&2 && return 1 ;;
         esac
     done
     shift $((OPTIND - 1))

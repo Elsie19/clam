@@ -5,13 +5,13 @@ function cmds.seq() {
     while getopts ':s:' OPTION; do
         case "${OPTION}" in
             s) separator="${OPTARG}" ;;
-            ?) echo "Usage: ${FUNCNAME[0]} [-s separator] FIRST INCREMENT LAST" && return 1 ;;
+            ?) echo "Usage: ${FUNCNAME[0]} [-s separator] FIRST INCREMENT LAST" >&2 && return 1 ;;
         esac
     done
     shift $((OPTIND - 1))
     case "${#@}" in
         0)
-            echo "${FUNCNAME[0]}: missing operand" && return 1
+            echo "${FUNCNAME[0]}: missing operand" >&2 && return 1
             ;;
         1)
             for ((i = 1; i <= ${1}; i++)); do
@@ -34,7 +34,7 @@ function cmds.seq() {
             ;;
         3)
             if (("${2}" == 0)); then
-                echo "${FUNCNAME[0]}: invalid Zero increment value: '0'" && return 1
+                echo "${FUNCNAME[0]}: invalid Zero increment value: '0'" >&2 && return 1
             fi
             if ((${1} > ${3})); then
                 # If we cannot reach from $1 to $3 using $2

@@ -5,7 +5,7 @@ function cmds.ls() {
     while getopts 'b' OPTION; do
         case "${OPTION}" in
             b) bash=1 ;;
-            ?) echo "Usage: ${FUNCNAME[0]} [-b] PATHS" && return 1 ;;
+            ?) echo "Usage: ${FUNCNAME[0]} [-b] PATHS" >&2 && return 1 ;;
         esac
     done
     shift $((OPTIND - 1))

@@ -6,13 +6,13 @@ function cmds.basename() {
     while getopts ':z:' OPTION; do
         case "${OPTION}" in
             z) ending=1 ;;
-            ?) echo "Usage: ${FUNCNAME[0]} [-z] NAME" && return 1 ;;
+            ?) echo "Usage: ${FUNCNAME[0]} [-z] NAME" >&2 && return 1 ;;
         esac
     done
     shift $((OPTIND - 1))
 
     if (("${#@}" > 2)); then
-        echo "${FUNCNAME[0]}: extra operand '${3}'" && return 1
+        echo "${FUNCNAME[0]}: extra operand '${3}'" >&2 && return 1
     fi
 
     replace="${2-}"
