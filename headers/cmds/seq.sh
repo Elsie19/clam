@@ -17,7 +17,7 @@ function cmds.seq() {
             for ((i = 1; i <= ${1}; i++)); do
                 # Print newline on last instance
                 if ((i == "${1}")); then
-                    printf "%s\n" "${i}"
+                    echo "${i}"
                 else
                     printf "%s${separator:-$'\n'}" "${i}"
                 fi
@@ -43,7 +43,7 @@ function cmds.seq() {
                 fi
                 for ((i = "${1}"; i >= ${3}; i += "${2}")); do
                     if ((i == "${3}")); then
-                        printf "%s\n" "${i}"
+                        echo "${i}"
                     else
                         printf "%s${separator:-$'\n'}" "${i}"
                     fi
@@ -51,7 +51,7 @@ function cmds.seq() {
             else
                 for ((i = "${1}"; i <= ${3}; i += "${2}")); do
                     if ((i == "${3}")); then
-                        printf "%s\n" "${i}"
+                        echo "${i}"
                     else
                         printf "%s${separator:-$'\n'}" "${i}"
                     fi

@@ -2,5 +2,5 @@
 
 function cmds.whoami() {
     : \\u
-    printf '%s\n' "${_@P}"
+    echo "${_@P}"
 }
