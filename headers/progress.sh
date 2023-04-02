@@ -5,7 +5,7 @@ function progress.bar() {
     local width progress color clear
 
     if [[ ${1} =~ ^(-c|--clear) ]]; then
-        clear=1
+        readonly clear=1
         shift
     fi
     (($1 > 100 || $1 < 1)) && {
@@ -45,4 +45,33 @@ function progress.bar() {
             echo
         fi
     }
+}
+
+function progress.spinner() {
+    local pid delay="0.1" temp spinner msg reset i OPTION
+    while getopts ":d:m:" OPTION; do
+        case "${OPTION}" in
+            d) delay="${OPTARG}" ;;
+            m) msg="${OPTARG}" ;;
+            ?) echo "Usage: ${FUNCNAME[0]} [-d delay] [-m msg] pid" >&2 && return 1 ;;
+        esac
+    done
+    shift $((OPTIND - 1))
+    readonly pid="${1:?No pid given to progress.spinner}"
+    # shellcheck disable=SC1003
+    spinner='|/-\'
+    while [[ -L /proc/${pid}/exe ]]; do
+        temp="${spinner#?}"
+        printf "[%c] ${msg}" "${spinner}"
+        spinner="${temp}${spinner%"${temp}"}"
+        exec {sleep_fd}<> <(:)
+        read -r -t "${delay}" -u "${sleep_fd}"
+        exec {sleep_fd}>&-
+        reset="\b\b\b\b\b\b"
+        for ((i = 1; i <= "${#msg}" + 1; i++)); do
+            reset+="\b"
+        done
+        echo -ne "${reset}"
+    done
+    echo -ne "\033[2K\r"
 }

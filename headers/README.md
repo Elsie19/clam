@@ -375,10 +375,15 @@ echo "${arra[*]}"
 #### `progress.sh`
 `progress.sh` is used to implement stylish progress bars.
 
-You now have access to `progress.bar`. It takes two arguments and one optional: a percent for the bar and an optional sleep time, and the optional argument being `-c` or `--clear` to clear the bar after finishing
+You now have access to `progress.bar` and `progress.spinner`.
+
+`progress.bar` takes two arguments and one optional: a percent for the bar and an optional sleep time, and the optional argument being `-c` or `--clear` to clear the bar after finishing.
+
+`progress.spinner` requires one argument: a pid number, however you can specify a delay and a message with the `-d` and `-m` flags, respectively.
 
 Example:
 ```bash
+# progress.bar
 for i in {1..100}; do
     progress.bar "${i}" 0.1
 done
@@ -387,4 +392,9 @@ for i in {1..100}; do
     progress.bar -c "${i}" 0.1
 done
 echo "Done..."
+
+# progress.spinner
+sleep 50
+sleep_pid="${!}"
+progress.spinner -d 0.2 -m "Waiting for command to finish..." "${sleep_pid}"
 ```
