@@ -64,26 +64,7 @@ msg 'hello'
 
 You now have access to the following functions:
 
-`assert.assert_eq`, `assert.assert_not_eq`, and `assert.is_root`.
-
-`assert.assert_eq` will test if two outputs are identical, and if not, return a value of `1`.
-
-Example:
-```bash
-var1="$(( 10 / 2 ))"
-var2="$(bc <<< '10 / 2')"
-assert.assert_eq "${var1}" "${var2}"
-
-# Returns 0
-
-var1="$(( 10 / 2 ))"
-var2="$(( 10 / 3 ))"
-assert.assert_eq "${var1}" "${var2}"
-
-# Returns 1
-```
-
-`assert.assert_not_eq` flips the return value of `assert.assert_eq`.
+`assert.is_root`.
 
 `assert.is_root` checks if the current user has an `$EUID` of `0`, and if so, will return `1`, and if not, will return `0`.
 
