@@ -1,6 +1,22 @@
 #!/bin/bash
+# @file progress.sh
+# @brief A library for showing signs of progress.
+
+# @section Functions
+# @description Functions for outputting progress.
 
 # Used from https://github.com/wick3dr0se/bashbar/blob/main/bashbar (GPLv3)
+
+# @description Outputs a progress bar.
+#
+# @example
+#   for _ in {1..100}; do progress.bar "${_}" 0.01; done
+#
+# @arg $1 optional `-c` to clear the progress bar after finishing.
+# @arg $1 integer A position to set the progress bar.
+# @arg $2 optional A delay time for the bar to continue.
+#
+# @exitcode 1 If position is less than 1 or greater than 100.
 function progress.bar() {
     local width progress color clear
     if [[ ${1} =~ ^(-c|--clear) ]]; then
@@ -46,6 +62,16 @@ function progress.bar() {
     }
 }
 
+# @description Outputs a spinner.
+#
+# @example
+#   sleep 6 &
+#   le_pid="$!"
+#   progress.spinner -d 0.1 -s '←  ↖↑↗→↘↓↙' "${le_pid}"
+#
+# @arg $1 optional `-d delay` to set a delay period for moving to next spinner.
+# @arg $1 optional `-s spinners` A string of characters to use as a spinner.
+# @arg $1 integer A PID to continue running until PID finishes.
 function progress.spinner() {
     # shellcheck disable=SC1003
     local pid delay="0.1" temp spinner='|/-\' msg reset i OPTION
