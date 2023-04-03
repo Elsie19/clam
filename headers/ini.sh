@@ -1,4 +1,9 @@
 #!/bin/bash
+# @file ini.sh
+# @brief A library for parsing INI files.
+
+# @section Functions
+# @description Functions for parsing INI files.
 
 function ini._parse_out_section() {
     local input="${1:?No input given to ini._parse_out_section}"
@@ -20,6 +25,18 @@ function ini._convert_var() {
     declare -Ag "${opt_prefix:+${opt_prefix}_}${default_section}[${var}]=${value}"
 }
 
+# @description Converts an INI file into a hashmap.
+# @set opt-prefix_default-section[var] string Final hashmap
+#
+# @example
+#   ini.parse ~/people.ini
+#   ini.parse ~/people.ini Prefix
+#
+# @arg $1 path An INI file to parse.
+# @arg $2 optional A prefix for all keys.
+#
+# @exitcode 0 If parsed successfully.
+# @exitcode 1 If file does not exist, or unsuccessful parse.
 function ini.parse() {
     local line
     local file="${1:?No input given to ini.parse}"
