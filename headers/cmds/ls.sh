@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function cmds.ls() {
-    local paths=() places=() i z OPTION
+    local paths=() places=() i z bash OPTION
     while getopts 'b' OPTION; do
         case "${OPTION}" in
             b) bash=1 ;;
