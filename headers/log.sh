@@ -1,5 +1,19 @@
 #!/bin/bash
+# @file log.sh
+# @brief A library for logging information.
 
+# @section Functions
+# @description Functions for logging.
+#   If the DEBUG variable is enabled, logs will be printed on screen.
+
+# @description Initializes a logfile.
+# @noargs
+# @set LOGFILE Readonly logfile location
+#
+# @example
+#   log.init
+#
+# @exitcode 1 If LOGFILE var exists or file exists.
 function log.init() {
     if [[ -n ${LOGFILE} && -f ${LOGFILE} ]]; then
         return 1
@@ -19,10 +33,20 @@ function log.init() {
     fi
 }
 
+# @description Cleans the logfile.
+# @noargs
+#
+# @example
+#   log.cleanup
 function log.cleanup() {
     rm "${LOGFILE:?LOGFILE not defined}" || return 1
 }
 
+# @description Base function for logging.
+# @internal
+#
+# @arg $1 string Type of text to log.
+# @arg $@ string Text to be logged.
 function log._base() {
     case "${FUNCNAME[1]}" in
         log.info | log.warn | log.error) ;;
@@ -46,14 +70,32 @@ function log._base() {
     fi
 }
 
+# @description Logs standard debugging text.
+#
+# @example
+#   log.info "Foobar"
+#
+# @arg $@ string Text to log
 function log.info() {
     log._base "info" "${*:?No input given to log.info}"
 }
 
+# @description Logs warning text.
+#
+# @example
+#   log.warn "Foobar"
+#
+# @arg $@ string Text to log
 function log.warn() {
     log._base "warn" "${*:?No input given to log.warn}"
 }
 
+# @description Logs error messages.
+#
+# @example
+#   log.error "Foobar"
+#
+# @arg $@ string Text to log
 function log.error() {
     log._base "error" "${*:?No input given to log.error}"
 }
