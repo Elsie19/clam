@@ -10,7 +10,7 @@ function log.init() {
         for _ in {1..10}; do
             random_string+="${chars:RANDOM%${#chars}:1}"
         done
-        :> "/tmp/tmp.${random_string}"
+        : > "/tmp/tmp.${random_string}"
         declare -r LOGFILE="/tmp/tmp.${random_string}"
         export LOGFILE
     else

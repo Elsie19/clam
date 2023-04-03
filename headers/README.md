@@ -379,7 +379,7 @@ You now have access to `progress.bar` and `progress.spinner`.
 
 `progress.bar` takes two arguments and one optional: a percent for the bar and an optional sleep time, and the optional argument being `-c` or `--clear` to clear the bar after finishing.
 
-`progress.spinner` requires one argument: a pid number, however you can specify a delay and a message with the `-d` and `-m` flags, respectively.
+`progress.spinner` requires one argument: a pid number, however you can specify a delay, a message, and a set of spinners with the `-d`, `-m`, and `-s` flags, respectively.
 
 Example:
 ```bash
@@ -396,5 +396,5 @@ echo "Done..."
 # progress.spinner
 sleep 50
 sleep_pid="${!}"
-progress.spinner -d 0.2 -m "Waiting for command to finish..." "${sleep_pid}"
+progress.spinner -d 0.2 -m "Waiting for command to finish..." -s "←↖↑↗→↘↓↙" "${sleep_pid}"
 ```

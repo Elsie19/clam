@@ -3,7 +3,6 @@
 # Used from https://github.com/wick3dr0se/bashbar/blob/main/bashbar (GPLv3)
 function progress.bar() {
     local width progress color clear
-
     if [[ ${1} =~ ^(-c|--clear) ]]; then
         readonly clear=1
         shift
@@ -48,21 +47,21 @@ function progress.bar() {
 }
 
 function progress.spinner() {
-    local pid delay="0.1" temp spinner msg reset i OPTION
-    while getopts ":d:m:" OPTION; do
+    # shellcheck disable=SC1003
+    local pid delay="0.1" temp spinner='|/-\' msg reset i OPTION
+    while getopts ":d:m:s:" OPTION; do
         case "${OPTION}" in
             d) delay="${OPTARG}" ;;
             m) msg="${OPTARG}" ;;
-            ?) echo "Usage: ${FUNCNAME[0]} [-d delay] [-m msg] pid" >&2 && return 1 ;;
+            s) spinner="${OPTARG//[[:space:]]/}" ;;
+            ?) echo "Usage: ${FUNCNAME[0]} [-d delay] [-m msg] [-s spinners] pid" >&2 && return 1 ;;
         esac
     done
     shift $((OPTIND - 1))
     readonly pid="${1:?No pid given to progress.spinner}"
-    # shellcheck disable=SC1003
-    spinner='|/-\'
     while [[ -L /proc/${pid}/exe ]]; do
         temp="${spinner#?}"
-        printf "[%c] ${msg}" "${spinner}"
+        echo -ne "[${spinner:0:1}] ${msg}"
         spinner="${temp}${spinner%"${temp}"}"
         exec {sleep_fd}<> <(:)
         read -r -t "${delay}" -u "${sleep_fd}"
