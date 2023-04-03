@@ -44,7 +44,7 @@ Contents of `main.sh`:
 
 #include "msg.sh"
 
-msg info 'Hello world!'
+msg 'Hello world!'
 ```
 
 Contents of `msg.sh`:
@@ -64,7 +64,7 @@ function msg() {
     echo -e "> $*"
 }
 
-msg info 'Hello world!'
+msg 'Hello world!'
 ```
 
 #### Doc generation
