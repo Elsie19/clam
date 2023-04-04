@@ -6,6 +6,7 @@
 # @description Functions for asserting information.
 
 # @description Checks for root.
+# @internal
 # @noargs
 #
 # @example

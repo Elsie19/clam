@@ -8,6 +8,7 @@
 
 # @description Initializes a logfile.
 # @noargs
+# @internal
 # @set LOGFILE Readonly logfile location
 #
 # @example
@@ -34,6 +35,7 @@ function log.init() {
 }
 
 # @description Cleans the logfile.
+# @internal
 # @noargs
 #
 # @example
@@ -71,6 +73,7 @@ function log._base() {
 }
 
 # @description Logs standard debugging text.
+# @internal
 #
 # @example
 #   log.info "Foobar"
@@ -81,6 +84,7 @@ function log.info() {
 }
 
 # @description Logs warning text.
+# @internal
 #
 # @example
 #   log.warn "Foobar"
@@ -91,6 +95,7 @@ function log.warn() {
 }
 
 # @description Logs error messages.
+# @internal
 #
 # @example
 #   log.error "Foobar"

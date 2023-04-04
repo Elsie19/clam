@@ -6,6 +6,7 @@
 # @description Functions for enabling stacktraces.
 
 # @description Enable a stacktrace function.
+# @internal
 # @noargs
 #
 # @example

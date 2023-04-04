@@ -6,6 +6,7 @@
 # @description Functions for namespacing imports.
 
 # @description Namespaces imports.
+# @internal
 # Uses `alias` to circuit function to alias name
 #
 # @example

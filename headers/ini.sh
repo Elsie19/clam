@@ -5,6 +5,16 @@
 # @section Functions
 # @description Functions for parsing INI files.
 
+# @description Parses out an INI section.
+# @internal
+#
+# @example
+#   ini._parse_out_section "[foobar]"
+#
+# @arg $1 string An INI section.
+#
+# @exitcode 1 If section is not valid.
+# @stdout A parsed out section
 function ini._parse_out_section() {
     local input="${1:?No input given to ini._parse_out_section}"
     # Do we have a valid [section] in terms of []
@@ -14,6 +24,14 @@ function ini._parse_out_section() {
     echo "${input:1:-1}"
 }
 
+# @description Turns INI variable into a Bash variable.
+# @set opt-prefix_default-section[var] string Final hashmap
+# @internal
+#
+# @example
+#   ini._convert_var "foo = 'bar'"
+#
+# @arg $1 string An INI variable.
 function ini._convert_var() {
     local input="${1:?No input given to ini._convert_var}"
     local var="${input%%=*}"
@@ -26,7 +44,7 @@ function ini._convert_var() {
 }
 
 # @description Converts an INI file into a hashmap.
-# @set opt-prefix_default-section[var] string Final hashmap
+# @internal
 #
 # @example
 #   ini.parse ~/people.ini

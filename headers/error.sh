@@ -6,6 +6,7 @@
 # @description Functions for bash-like error messages.
 
 # @description Displays an error message
+# @internal
 #
 # @example
 #   error.error "'line' not defined"

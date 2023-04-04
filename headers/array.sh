@@ -6,6 +6,7 @@
 # @description Functions for interacting with arrays.
 
 # @description Converts a string to an array.
+# @internal
 #
 # @example
 #   array.string_to_array "foobarbaz" to_array
@@ -23,6 +24,7 @@ function array.string_to_array() {
 }
 
 # @description Pops an array index out
+# @internal
 #
 # @example
 #   array=(1 2 3 4)
@@ -49,6 +51,7 @@ function array.pop() {
 }
 
 # @description Remove a key from an array
+# @internal
 #
 # @example
 #   array=(1 2 3 4)
@@ -91,6 +94,7 @@ function array.remove() {
 }
 
 # @description Check if array contains a key
+# @internal
 #
 # @example
 #   array=(1 2 3 4)
@@ -114,6 +118,7 @@ function array.contain() {
 }
 
 # @description Join array by character
+# @internal
 #
 # @example
 #   array=(1 2 3 4)
@@ -131,6 +136,7 @@ function array.join() {
 }
 
 # @description Fill array with input
+# @internal
 #
 # @example
 #   array.fill 0 50 "blarb" array

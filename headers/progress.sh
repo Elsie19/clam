@@ -8,6 +8,7 @@
 # Used from https://github.com/wick3dr0se/bashbar/blob/main/bashbar (GPLv3)
 
 # @description Outputs a progress bar.
+# @internal
 #
 # @example
 #   for _ in {1..100}; do progress.bar "${_}" 0.01; done
@@ -63,6 +64,7 @@ function progress.bar() {
 }
 
 # @description Outputs a spinner.
+# @internal
 #
 # @example
 #   sleep 6 &

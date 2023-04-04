@@ -6,6 +6,7 @@
 # @description Functions for interacting with the user.
 
 # @description Prompts the user for input.
+# @internal
 # @set var_to_store_to Any Prompt input.
 # @stdin The users input
 #
@@ -25,6 +26,7 @@ function prompt.input() {
 }
 
 # @description Prompts the user for a yes or no question.
+# @internal
 # @set var_to_store_to Any Prompt input.
 # @stdin The users input
 #

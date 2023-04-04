@@ -6,6 +6,7 @@
 # @description Functions for output text.
 
 # @description Prints out text.
+# @internal
 #
 # @example
 #   msg "foobar"

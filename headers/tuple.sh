@@ -6,6 +6,7 @@
 # @description Functions for shortening tuple creation.
 
 # @description Creates a tuple.
+# @internal
 # @set tuple_contents Any Tuple contents
 #
 # @example

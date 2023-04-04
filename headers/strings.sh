@@ -6,6 +6,7 @@
 # @description Functions for interacting with strings.
 
 # @description Reverses a string.
+# @internal
 # @stdout Reversed string.
 #
 # @example
@@ -22,6 +23,7 @@ function strings.rev() {
 }
 
 # @description Strips leading whitespace.
+# @internal
 # @see strings.strip
 # @stdout Stripped input.
 #
@@ -35,6 +37,7 @@ function strings.strip_leading() {
 }
 
 # @description Strips trailing whitespace.
+# @internal
 # @see strings.strip
 # @stdout Stripped input.
 #
@@ -48,6 +51,7 @@ function strings.strip_trailing() {
 }
 
 # @description Strips leading and trailing whitespace.
+# @internal
 # @stdout Stripped input.
 #
 # @example
