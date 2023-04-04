@@ -18,6 +18,7 @@ These headers are included with every version of Clam. Most if not all of these 
 | `debug.sh`   | Implements fancy debugging output                    |
 | `sort.sh`    | Implements different sorting algorithms              |
 | `progress.sh`| Implements progress bars                             |
+| `stacktrace.sh`| Implements stacktraces                             |
 
 ### Headers with external dependencies
 `log.sh` uses `mktemp` to create a temporary file, but will fallback to using a semi-random string generated for the file name by Bash if `mktemp` is not installed.
@@ -362,7 +363,28 @@ done
 echo "Done..."
 
 # progress.spinner
-sleep 50
+sleep 50 &
 sleep_pid="${!}"
 progress.spinner -d 0.2 -m "Waiting for command to finish..." -s "←↖↑↗→↘↓↙" "${sleep_pid}"
+```
+
+#### `stacktrace.sh`
+`stacktrace.sh` is used to create fancy stacktraces on errors.
+
+You now have access to `errexit`.
+
+Example:
+```bash
+trap 'errexit' ERR
+set -o errtrace -o nounset -o pipefail -o errexit
+
+function bar() {
+    false
+}
+
+function foo() {
+    bar
+}
+
+foo
 ```
