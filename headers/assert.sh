@@ -13,8 +13,8 @@
 #       echo "I am root"
 #   fi
 #
-# @exitcode 0 If is not root.
-# @exitcode 1 If is root.
+# @exitcode 0 If is root.
+# @exitcode 1 If is not root.
 function assert.is_root() {
     return $(("${EUID}" == 0 ? 0 : 1))
 }

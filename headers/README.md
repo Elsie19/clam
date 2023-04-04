@@ -65,7 +65,7 @@ You now have access to the following functions:
 
 `assert.is_root`.
 
-`assert.is_root` checks if the current user has an `$EUID` of `0`, and if so, will return `1`, and if not, will return `0`.
+`assert.is_root` checks if the current user has an `$EUID` of `0`, and if so, will return `0`, and if not, will return `1`.
 
 Example:
 ```bash
