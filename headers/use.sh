@@ -1,5 +1,18 @@
 #!/bin/bash
+# @file use.sh
+# @brief A library for namespacing imports.
 
+# @section Functions
+# @description Functions for namespacing imports.
+
+# @description Namespaces imports.
+# Uses `alias` to circuit function to alias name
+#
+# @example
+#   use strings.rev
+#   use prompt.yes_no as yesno
+#
+# @arg $1 string A function to shorten.
 function use() {
     shopt -s expand_aliases
     local full_name="${1:?No input given for use}"
