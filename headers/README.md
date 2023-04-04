@@ -13,7 +13,6 @@ These headers are included with every version of Clam. Most if not all of these 
 | `error.sh`   | Implements standard error messages                   |
 | `use.sh`     | Implements `using` from C++                          |
 | `log.sh`     | Implements logging functionality                     |
-| `types.sh`   | Implements stylized variable creations               |
 | `ini.sh`     | Implements INI file support                          |
 | `strings.sh` | Implements operations on strings                     |
 | `debug.sh`   | Implements fancy debugging output                    |
@@ -246,18 +245,6 @@ DEBUG=1
 log.warn "Debugging mode was enabled!!"
 # 2023-03-09_22:11:10 [warn]: Debugging mode was enabled!!
 log.cleanup
-```
-
-#### `types.sh`
-
-`types.sh` is used for stylized variable declarations. It's important to remember that an integer in Bash is just a string with numbers, and can easily be used like a string (such as `int foo=1 ; foo+="bar" # -> '1bar'`).
-
-You now have access to `int` and `string`.
-
-Example:
-```bash
-int foo=1
-string foo="lestring"
 ```
 
 #### `ini.sh`
