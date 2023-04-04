@@ -13,6 +13,7 @@
 #   use prompt.yes_no as yesno
 #
 # @arg $1 string A function to shorten.
+# @exitcode 1 If alias is already set or is a declared function
 function use() {
     shopt -s expand_aliases
     local full_name="${1:?No input given for use}"
