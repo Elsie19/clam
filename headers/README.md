@@ -19,6 +19,7 @@ These headers are included with every version of Clam. Most if not all of these 
 | `sort.sh`    | Implements different sorting algorithms              |
 | `progress.sh`| Implements progress bars                             |
 | `stacktrace.sh`| Implements stacktraces                             |
+| `conversion.sh`| Implements conversions between different formats   |
 
 ### Headers with external dependencies
 `log.sh` uses `mktemp` to create a temporary file, but will fallback to using a semi-random string generated for the file name by Bash if `mktemp` is not installed.
@@ -388,3 +389,12 @@ function foo() {
 
 foo
 ```
+
+#### `conversion.sh`
+`conversion.sh` is used to convert formats.
+
+You now have access to `conversion.{hex_to_rgb,rgb_to_hex}`.
+
+`conversion.hex_to_rgb` accepts a hex code and will return the RGB code, space delimited between each color.
+
+`conversion.rgb_to_hex` accepts an RGB code and will return a hex code without the `#` symbol.
