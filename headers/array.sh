@@ -124,8 +124,8 @@ function array.contain() {
 #   array=(1 2 3 4)
 #   array.join arr ','
 #
-# @arg $1 string An array name
-# @arg $2 string A character to split IFS
+# @arg $1 string An array name.
+# @arg $2 string A character to split IFS.
 #
 # @stdout An array with IFS split by supplied character
 function array.join() {
@@ -141,10 +141,10 @@ function array.join() {
 # @example
 #   array.fill 0 50 "blarb" array
 #
-# @arg $1 integer A starting index for the array
-# @arg $2 integer Length of array fill
-# @arg $3 Any Text to fill array elements with
-# @arg $4 string Array to fill
+# @arg $1 integer A starting index for the array.
+# @arg $2 integer Length of array fill.
+# @arg $3 Any Text to fill array elements with.
+# @arg $4 string Array to fill.
 #
 # @exitcode 0 If array was successfully filled.
 # @exitcode 1 If array is readonly.
