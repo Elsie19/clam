@@ -76,7 +76,7 @@ function progress.bar() {
 # @arg $1 integer A PID to continue running until PID finishes.
 function progress.spinner() {
     # shellcheck disable=SC1003
-    local pid delay="0.1" temp spinner='|/-\' msg reset i OPTION
+    local pid delay="0.1" temp spinner='|/-\' msg reset="\b\b\b\b\b\b" i OPTION
     while getopts ":d:m:s:" OPTION; do
         case "${OPTION}" in
             d) delay="${OPTARG}" ;;
@@ -87,18 +87,17 @@ function progress.spinner() {
     done
     shift $((OPTIND - 1))
     readonly pid="${1:?No pid given to progress.spinner}"
+    for ((i = 1; i <= "${#msg}" + 1; i++)); do
+        reset+="\b"
+    done
+    exec {sleep_fd}<> <(:)
     while [[ -L /proc/${pid}/exe ]]; do
         temp="${spinner#?}"
         echo -ne "[${spinner:0:1}] ${msg}"
         spinner="${temp}${spinner%"${temp}"}"
-        exec {sleep_fd}<> <(:)
         read -r -t "${delay}" -u "${sleep_fd}"
-        exec {sleep_fd}>&-
-        reset="\b\b\b\b\b\b"
-        for ((i = 1; i <= "${#msg}" + 1; i++)); do
-            reset+="\b"
-        done
         echo -ne "${reset}"
     done
     echo -ne "\033[2K\r"
+    exec {sleep_fd}>&-
 }
