@@ -67,14 +67,15 @@ conversion.octal_to_perm() {
     octal=("${BASH_REMATCH[@]:1}")
     for char in "${octal[@]}"; do
         case "${char}" in
-            7) perm_str+="rwx" ;;
-            6) perm_str+="rw-" ;;
-            5) perm_str+="r-x" ;;
-            4) perm_str+="r--" ;;
-            2) perm_str+="-w-" ;;
-            1) perm_str+="--x" ;;
-            0) ;;
+            7) : "rwx" ;;
+            6) : "rw-" ;;
+            5) : "r-x" ;;
+            4) : "r--" ;;
+            2) : "-w-" ;;
+            1) : "--x" ;;
+            0) : "---" ;;
         esac
+        perm_str+="${_}"
     done
     echo "${perm_str}"
 }
