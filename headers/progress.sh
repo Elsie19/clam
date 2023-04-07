@@ -71,6 +71,7 @@ function progress.bar() {
 #   le_pid="$!"
 #   progress.spinner -d 0.1 -s '←  ↖↑↗→↘↓↙' "${le_pid}"
 #
+# @exitcode 1 If delay is not a number or decimal.
 # @arg $1 optional `-d delay` to set a delay period for moving to next spinner.
 # @arg $1 optional `-s spinners` A string of characters to use as a spinner.
 # @arg $1 integer A PID to continue running until PID finishes.
@@ -90,6 +91,9 @@ function progress.spinner() {
     for ((i = 1; i <= "${#msg}" + 1; i++)); do
         reset+="\b"
     done
+    if ! [[ ${delay} =~ ^[0-9]+(\.[0-9]+)?$ ]]; then
+        return 1
+    fi
     exec {sleep_fd}<> <(:)
     while [[ -L /proc/${pid}/exe ]]; do
         temp="${spinner#?}"
