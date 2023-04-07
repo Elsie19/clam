@@ -23,11 +23,11 @@ function sort.bubble() {
 }
 
 function sort.gnome() {
-    local arr index=0 tmp n
+    local arr index=0 tmp length
     declare -n arr="${1:?No array given to sort.gnome}"
-    n="${#arr[@]}"
+    length="${#arr[@]}"
 
-    while ((index < n)); do
+    while ((index < length)); do
         if ((index == 0)); then
             ((index++))
         fi
@@ -60,7 +60,7 @@ function sort.insert() {
 }
 
 function sort.select() {
-    local arr min tmp i j
+    local arr min tmp length i j
     declare -n arr="${1:?No array given to sort.select}"
     length="${#arr[@]}"
 
