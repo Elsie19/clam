@@ -88,7 +88,7 @@ function progress.spinner() {
     done
     shift $((OPTIND - 1))
     readonly pid="${1:?No pid given to progress.spinner}"
-    for ((i = 1; i <= "${#msg}" + 1; i++)); do
+    for ((i = 0; i <= "${#msg}"; i++)); do
         reset+="\b"
     done
     if ! [[ ${delay} =~ ^[0-9]+(\.[0-9]+)?$ ]]; then
