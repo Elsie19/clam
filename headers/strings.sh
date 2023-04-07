@@ -61,7 +61,7 @@ function strings.strip_trailing() {
 function strings.strip() {
     local string
     local input="${1:?No input given to strings.strip}"
-    string=$(strings.strip_leading "${input}")
-    string=$(strings.strip_trailing "${string}")
+    string="$(strings.strip_leading "${input}")"
+    string="$(strings.strip_trailing "${string}")"
     echo "${string}"
 }
