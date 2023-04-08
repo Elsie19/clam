@@ -10,7 +10,7 @@
 # @noargs
 #
 # @example
-#   if ! assert.is_root; then
+#   if assert.is_root; then
 #       echo "I am root"
 #   fi
 #
