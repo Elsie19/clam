@@ -43,42 +43,61 @@ conversion.rgb_to_hex() {
 # @arg $1 string A permission string.
 # @stdout The octal.
 conversion.perm_to_octal() {
-    local LC_COLLATE=C ls_out extra=0 perms=0 i this_char input
+    local LC_COLLATE=C i j input part=0 special final_part counter split_arr=()
     input="${1:?No input given to conversion.perm_to_octal}"
-    # Assume that if string does not have a size of 10
-    # The first char is a `-`.
-    if (("${#input}" <= 9)); then
-        input="-${input}"
+    # Check for size of string
+    if ! [[ "${#input}" =~ ^(9|10) ]]; then
+        return 1
+    fi
+    # Remove leading `-`
+    if (("${#input}" == 10)); then
+        input="${input:1}"
     fi
     for ((i = 1; i <= "${#input}" - 1; i++)); do
         if ! [[ ${input:i:1} =~ ^(-|r|w|x|d|S|s|L|l|T|t) ]]; then
             return 1
         fi
     done
-    while IFS= read -r ls_out; do
-        extra=0
-        perms=0
-        for i in {1..9}; do
-            # Shift $perms to the left one bit, so we can always just add the LSB.
-            ((perms *= 2))
-            this_char=${ls_out:i:1}
-            # If it's different from its upper case equivalent,
-            # it's a lower case letter, so the bit is set.
-            # Unless it's "l" (lower case L), which is special.
-            if [[ ${this_char} != "${this_char^}" && ${this_char} != "l" ]]; then
-                ((perms++))
-            fi
-            # If it's not "r", "w", "x", or "-", it indicates that
-            # one of the high-order (S/s=4000, S/s/L/l=2000, or T/t=1000) bits
-            # is set.
-            case "${this_char}" in
-                [^rwx-])
-                    ((extra += 2 ** (3 - i / 3)))
+    [[ ${input} =~ ${input//?/(.)} ]]
+    input=("${BASH_REMATCH[@]:1}")
+    split_arr=("${input[*]:0:3}")
+    split_arr+=("${input[*]:3:3}")
+    split_arr+=("${input[*]:6:3}")
+    for i in "${split_arr[@]}"; do
+        ((counter++))
+        for j in ${i}; do
+            case "${j}" in
+                r) ((part += 4)) ;;
+                w) ((part += 2)) ;;
+                -) ;;
+                t | T) ((special += 1, part += 1)) ;;
+                S)
+                    case "${counter}" in
+                        # SID
+                        1) ((special += 4)) ;;
+                        # GID
+                        2) ((special += 2)) ;;
+                    esac
                     ;;
+                s)
+                    case "${counter}" in
+                        # SID
+                        1) ((special += 4)) ;;
+                        # GID
+                        2) ((special += 2)) ;;
+                    esac
+                    ;&
+                x) ((part += 1)) ;;
             esac
         done
-        printf "%o%.3o\n" "${extra}" "${perms}"
-    done <<< "${input}"
+        final_part+="${part}"
+        part=0
+    done
+    if [[ -n ${special} ]]; then
+        echo "${special}${final_part}"
+    else
+        echo "${final_part}"
+    fi
 }
 
 # @description Converts an octal to permission string.
