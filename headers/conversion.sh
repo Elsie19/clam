@@ -115,6 +115,31 @@ conversion.perm_to_octal() {
     echo "${special:-0}${final_part}"
 }
 
+# @description Sets correct case for special bits on string.
+# @internal
+#
+# @example
+#   conversion._octal_to_perm_swap my_arr 9 T
+#
+# @arg $1 string An array.
+# @arg $2 integer A position in the array.
+# @arg $3 char A character to place in.
+function conversion._octal_to_perm_swap() {
+    case "${FUNCNAME[1]}" in
+        conversion.octal_to_perm) ;;
+        *) echo "Do not call 'conversion._octal_to_perm_swap' directly!" >&2 ;;
+    esac
+    local arr letter pos
+    declare -n arr="${1:?No input given to conversion._octal_to_perm_swap}"
+    pos="${2:?No position given to conversion._octal_to_perm_swap}"
+    letter="${3:?No letter given to conversion._octal_to_perm_swap}"
+    if [[ ${arr[pos]} == "-" ]]; then
+        arr[pos]="${letter^^}"
+    else
+        arr[pos]="${letter,,}"
+    fi
+}
+
 # @description Converts an octal to permission string.
 # @internal
 #
@@ -152,84 +177,36 @@ conversion.octal_to_perm() {
         case "${special}" in
             # Sticky bit
             1)
-                if [[ ${perm_str[9]} == "-" ]]; then
-                    perm_str[9]="T"
-                else
-                    perm_str[9]="t"
-                fi
+                conversion._octal_to_perm_swap perm_str 9 T
                 ;;
             # GID
             2)
-                if [[ ${perm_str[6]} == "-" ]]; then
-                    perm_str[6]="S"
-                else
-                    perm_str[6]="s"
-                fi
+                conversion._octal_to_perm_swap perm_str 6 S
                 ;;
             # UID
             4)
-                if [[ ${perm_str[3]} == "-" ]]; then
-                    perm_str[3]="S"
-                else
-                    perm_str[3]="s"
-                fi
+                conversion._octal_to_perm_swap perm_str 3 S
                 ;;
             # Sticky+GID
             3)
-                if [[ ${perm_str[9]} == "-" ]]; then
-                    perm_str[9]="T"
-                else
-                    perm_str[9]="t"
-                fi
-                if [[ ${perm_str[2]} == "-" ]]; then
-                    perm_str[2]="S"
-                else
-                    perm_str[2]="s"
-                fi
+                conversion._octal_to_perm_swap perm_str 9 T
+                conversion._octal_to_perm_swap perm_str 2 S
                 ;;
             # Sticky+UID
             5)
-                if [[ ${perm_str[9]} == "-" ]]; then
-                    perm_str[9]="T"
-                else
-                    perm_str[9]="t"
-                fi
-                if [[ ${perm_str[3]} == "-" ]]; then
-                    perm_str[3]="S"
-                else
-                    perm_str[3]="s"
-                fi
+                conversion._octal_to_perm_swap perm_str 9 T
+                conversion._octal_to_perm_swap perm_str 3 S
                 ;;
             # GID+UID
             6)
-                if [[ ${perm_str[6]} == "-" ]]; then
-                    perm_str[6]="S"
-                else
-                    perm_str[6]="s"
-                fi
-                if [[ ${perm_str[3]} == "-" ]]; then
-                    perm_str[3]="S"
-                else
-                    perm_str[3]="s"
-                fi
+                conversion._octal_to_perm_swap perm_str 6 S
+                conversion._octal_to_perm_swap perm_str 3 S
                 ;;
             # GID+UID+Sticky
             7)
-                if [[ ${perm_str[9]} == "-" ]]; then
-                    perm_str[9]="T"
-                else
-                    perm_str[9]="t"
-                fi
-                if [[ ${perm_str[6]} == "-" ]]; then
-                    perm_str[6]="S"
-                else
-                    perm_str[6]="s"
-                fi
-                if [[ ${perm_str[3]} == "-" ]]; then
-                    perm_str[3]="S"
-                else
-                    perm_str[3]="s"
-                fi
+                conversion._octal_to_perm_swap perm_str 9 T
+                conversion._octal_to_perm_swap perm_str 6 S
+                conversion._octal_to_perm_swap perm_str 3 S
                 ;;
         esac
     fi
