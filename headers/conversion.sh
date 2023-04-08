@@ -43,7 +43,18 @@ conversion.rgb_to_hex() {
 # @arg $1 string A permission string.
 # @stdout The octal.
 conversion.perm_to_octal() {
-    local LC_COLLATE=C ls_out extra=0 perms=0 i this_char
+    local LC_COLLATE=C ls_out extra=0 perms=0 i this_char input
+    input="${1:?No input given to conversion.perm_to_octal}"
+    # Assume that if string does not have a size of 10
+    # The first char is a `-`.
+    if (("${#input}" <= 9)); then
+        input="-${input}"
+    fi
+    for ((i = 1; i <= "${#input}" - 1; i++)); do
+        if ! [[ ${input:i:1} =~ ^(-|r|w|x|d) ]]; then
+            return 1
+        fi
+    done
     while IFS= read -r ls_out; do
         extra=0
         perms=0
@@ -67,7 +78,7 @@ conversion.perm_to_octal() {
             esac
         done
         printf "%o%.3o\n" "${extra}" "${perms}"
-    done <<< "${1:?No input given to conversion.perm_to_octal}"
+    done <<< "${input}"
 }
 
 # @description Converts an octal to permission string.
