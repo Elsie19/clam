@@ -142,6 +142,7 @@ conversion.octal_to_perm() {
             6) perm_str+=(r w -) ;;
             5) perm_str+=(r - x) ;;
             4) perm_str+=(r - -) ;;
+            3) perm_str+=(- w x) ;;
             2) perm_str+=(- w -) ;;
             1) perm_str+=(- - x) ;;
             0) perm_str+=(- - -) ;;
@@ -150,31 +151,85 @@ conversion.octal_to_perm() {
     if ((special)); then
         case "${special}" in
             # Sticky bit
-            1) perm_str[9]="T" ;;
+            1)
+                if [[ ${perm_str[9]} == "-" ]]; then
+                    perm_str[9]="T"
+                else
+                    perm_str[9]="t"
+                fi
+                ;;
             # GID
-            2) perm_str[6]="s" ;;
+            2)
+                if [[ ${perm_str[6]} == "-" ]]; then
+                    perm_str[6]="S"
+                else
+                    perm_str[6]="s"
+                fi
+                ;;
             # UID
-            4) perm_str[3]="s" ;;
+            4)
+                if [[ ${perm_str[3]} == "-" ]]; then
+                    perm_str[3]="S"
+                else
+                    perm_str[3]="s"
+                fi
+                ;;
             # Sticky+GID
             3)
-                perm_str[9]="T"
-                perm_str[2]="s"
+                if [[ ${perm_str[9]} == "-" ]]; then
+                    perm_str[9]="T"
+                else
+                    perm_str[9]="t"
+                fi
+                if [[ ${perm_str[2]} == "-" ]]; then
+                    perm_str[2]="S"
+                else
+                    perm_str[2]="s"
+                fi
                 ;;
             # Sticky+UID
             5)
-                perm_str[9]="T"
-                perm_str[3]="s"
+                if [[ ${perm_str[9]} == "-" ]]; then
+                    perm_str[9]="T"
+                else
+                    perm_str[9]="t"
+                fi
+                if [[ ${perm_str[3]} == "-" ]]; then
+                    perm_str[3]="S"
+                else
+                    perm_str[3]="s"
+                fi
                 ;;
             # GID+UID
             6)
-                perm_str[6]="s"
-                perm_str[3]="s"
+                if [[ ${perm_str[6]} == "-" ]]; then
+                    perm_str[6]="S"
+                else
+                    perm_str[6]="s"
+                fi
+                if [[ ${perm_str[3]} == "-" ]]; then
+                    perm_str[3]="S"
+                else
+                    perm_str[3]="s"
+                fi
                 ;;
             # GID+UID+Sticky
             7)
-                perm_str[9]="T"
-                perm_str[6]="s"
-                perm_str[3]="s"
+                if [[ ${perm_str[9]} == "-" ]]; then
+                    perm_str[9]="T"
+                else
+                    perm_str[9]="t"
+                fi
+                if [[ ${perm_str[6]} == "-" ]]; then
+                    perm_str[6]="S"
+                else
+                    perm_str[6]="s"
+                fi
+                if [[ ${perm_str[3]} == "-" ]]; then
+                    perm_str[3]="S"
+                else
+                    perm_str[3]="s"
+                fi
                 ;;
         esac
     fi
