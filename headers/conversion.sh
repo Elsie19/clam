@@ -43,10 +43,10 @@ conversion.rgb_to_hex() {
 # @arg $1 string A permission string.
 # @stdout The octal.
 conversion.perm_to_octal() {
-    local LC_COLLATE=C i j input part=0 special final_part counter split_arr=()
+    local LC_COLLATE=C i char input part=0 special final_part counter pos=0 regex split_arr=()
     input="${1:?No input given to conversion.perm_to_octal}"
     # Check for size of string
-    if ! [[ "${#input}" =~ ^(9|10) ]]; then
+    if ! [[ ${#input} =~ ^(9|10) ]]; then
         return 1
     fi
     # Remove leading `-`
@@ -63,6 +63,24 @@ conversion.perm_to_octal() {
     split_arr=("${input[*]:0:3}")
     split_arr+=("${input[*]:3:3}")
     split_arr+=("${input[*]:6:3}")
+
+    # Order checking
+    for i in "${split_arr[@]}"; do
+        # Special exception for the last set (Tt)
+        if ((pos == 2)); then
+            regex='^(r|-) (w|-) (x|T|t|-)'
+            if ! [[ ${i} =~ ${regex} ]]; then
+                return 1
+            fi
+        else
+            regex='^(r|-) (w|-) (x|S|s|-)'
+            if ! [[ ${i} =~ ${regex} ]]; then
+                return 1
+            fi
+        fi
+        ((pos++))
+    done
+
     for i in "${split_arr[@]}"; do
         ((counter++))
         for j in ${i}; do
