@@ -393,8 +393,21 @@ foo
 #### `conversion.sh`
 `conversion.sh` is used to convert formats.
 
-You now have access to `conversion.{hex_to_rgb,rgb_to_hex}`.
+You now have access to `conversion.{hex_to_rgb,rgb_to_hex}` and `conversion.{octal_to_perm,perm_to_octal}`.
 
 `conversion.hex_to_rgb` accepts a hex code and will return the RGB code, space delimited between each color.
 
 `conversion.rgb_to_hex` accepts an RGB code and will return a hex code without the `#` symbol.
+
+`conversion.octal_to_perm` accepts an octal and will return a permission string.
+
+`conversion.perm_to_octal` accepts a permission string and will return an octal.
+
+Example:
+```bash
+conversion.hex_to_rgb "#ffdab9" # -> 255 218 185
+conversion.rgb_to_hex 255 218 185 # -> FFDAB9
+
+conversion.octal_to_perm 1775 # -> -rwxrwxr-t
+conversion.perm_to_octal '-rwxrwxr-t' # -> 1775
+```
