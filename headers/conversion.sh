@@ -51,7 +51,7 @@ conversion.perm_to_octal() {
         input="-${input}"
     fi
     for ((i = 1; i <= "${#input}" - 1; i++)); do
-        if ! [[ ${input:i:1} =~ ^(-|r|w|x|d) ]]; then
+        if ! [[ ${input:i:1} =~ ^(-|r|w|x|d|S|s|L|l|T|t) ]]; then
             return 1
         fi
     done
@@ -90,21 +90,60 @@ conversion.perm_to_octal() {
 # @arg $1 integer An octal.
 # @stdout The permission string.
 conversion.octal_to_perm() {
-    local input octal char perm_str="-"
+    local input octal char special perm_str=("-")
     input="${1:?No input given to conversion.octal_to_perm}"
+    if (("${#input}" == 4)); then
+        special="${input:0:1}"
+        # Check for num
+        if ! [[ ${special} =~ ^[0-9]+$ ]]; then
+            return 1
+        fi
+        input="${input:1}"
+    fi
     [[ ${input} =~ ${input//?/(.)} ]]
     octal=("${BASH_REMATCH[@]:1}")
     for char in "${octal[@]}"; do
         case "${char}" in
-            7) : "rwx" ;;
-            6) : "rw-" ;;
-            5) : "r-x" ;;
-            4) : "r--" ;;
-            2) : "-w-" ;;
-            1) : "--x" ;;
-            0) : "---" ;;
+            7) perm_str+=(r w x) ;;
+            6) perm_str+=(r w -) ;;
+            5) perm_str+=(r - x) ;;
+            4) perm_str+=(r - -) ;;
+            2) perm_str+=(- w -) ;;
+            1) perm_str+=(- - x) ;;
+            0) perm_str+=(- - -) ;;
         esac
-        perm_str+="${_}"
     done
-    echo "${perm_str}"
+    if ((special)); then
+        case "${special}" in
+            # Sticky bit
+            1) perm_str[9]="T" ;;
+            # GID
+            2) perm_str[6]="s" ;;
+            # UID
+            4) perm_str[3]="s" ;;
+            # Sticky+GID
+            3)
+                perm_str[9]="T"
+                perm_str[2]="s"
+                ;;
+            # Sticky+UID
+            5)
+                perm_str[9]="T"
+                perm_str[3]="s"
+                ;;
+            # GID+UID
+            6)
+                perm_str[6]="s"
+                perm_str[3]="s"
+                ;;
+            # GID+UID+Sticky
+            7)
+                perm_str[9]="T"
+                perm_str[6]="s"
+                perm_str[3]="s"
+                ;;
+        esac
+    fi
+    local IFS=
+    echo "${perm_str[*]}"
 }
