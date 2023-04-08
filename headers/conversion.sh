@@ -29,7 +29,7 @@ conversion.hex_to_rgb() {
 # @arg $2 integer A green to convert.
 # @arg $3 integer A blue to convert.
 conversion.rgb_to_hex() {
-    printf '%02x%02x%02x\n' "${1:?}" "${2:?}" "${3:?}"
+    printf '%02X%02X%02X\n' "${1:?}" "${2:?}" "${3:?}"
 }
 
 conversion.perm_to_octal() {
