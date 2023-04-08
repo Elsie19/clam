@@ -128,7 +128,7 @@ Both `pop` and `remove` will `return 1` if an array is `readonly`.
 
 `array.contain` checks for the existence of a variable inside an array, and if not, return a value of `1`.
 
-`array.join` takes the form of `array.join character_split ${array[@]}`
+`array.join` takes the form of `array.join character_split array`
 
 `array.fill` takes the form of `array.fill start_idx length char array`
 
@@ -171,7 +171,7 @@ array.contain "${needle}" "${haystack[@]}"
 
 # Returns 1
 
-array.join ',' ${haystack[@]}
+array.join ',' haystack
 # oats,grains,barley
 
 boo=()
