@@ -12,6 +12,7 @@
 #   conversion.hex_to_rgb "#FFFFFF"
 #
 # @arg $1 hex A hex to convert.
+# @stdout RGB color code space delimited by R, G, and B.
 conversion.hex_to_rgb() {
     local r g b
     : "${1/\#/}"
@@ -28,10 +29,19 @@ conversion.hex_to_rgb() {
 # @arg $1 integer A red to convert.
 # @arg $2 integer A green to convert.
 # @arg $3 integer A blue to convert.
+# @stdout Hex code.
 conversion.rgb_to_hex() {
     printf '%02X%02X%02X\n' "${1:?}" "${2:?}" "${3:?}"
 }
 
+# @description Converts a permission string to an octal.
+# @internal
+#
+# @example
+#   conversion.perm_to_octal "-rwxr-xr-x"
+#
+# @arg $1 string A permission string.
+# @stdout The octal.
 conversion.perm_to_octal() {
     local LC_COLLATE=C ls_out extra=0 perms=0 i this_char
     while IFS= read -r ls_out; do
@@ -60,6 +70,14 @@ conversion.perm_to_octal() {
     done <<< "${1:?No input given to conversion.perm_to_octal}"
 }
 
+# @description Converts an octal to permission string.
+# @internal
+#
+# @example
+#   conversion.octal_to_perm 0755
+#
+# @arg $1 integer An octal.
+# @stdout The permission string.
 conversion.octal_to_perm() {
     local input octal char perm_str="-"
     input="${1:?No input given to conversion.octal_to_perm}"
