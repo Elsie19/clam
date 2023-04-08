@@ -43,7 +43,7 @@ conversion.rgb_to_hex() {
 # @arg $1 string A permission string.
 # @stdout The octal.
 conversion.perm_to_octal() {
-    local LC_COLLATE=C i char input part=0 special final_part counter pos=0 regex split_arr=()
+    local LC_COLLATE=C i j input part=0 special final_part counter pos=0 regex split_arr=()
     input="${1:?No input given to conversion.perm_to_octal}"
     # Check for size of string
     if ! [[ ${#input} =~ ^(9|10) ]]; then
@@ -88,8 +88,8 @@ conversion.perm_to_octal() {
                 r) ((part += 4)) ;;
                 w) ((part += 2)) ;;
                 -) ;;
-                t) ((special += 1)) ;;
-                T) ((special += 1, part += 1)) ;;
+                T) ((special += 1)) ;;
+                t) ((special += 1, part += 1)) ;;
                 S)
                     case "${counter}" in
                         # SID
