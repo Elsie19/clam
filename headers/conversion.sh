@@ -88,7 +88,8 @@ conversion.perm_to_octal() {
                 r) ((part += 4)) ;;
                 w) ((part += 2)) ;;
                 -) ;;
-                t | T) ((special += 1, part += 1)) ;;
+                t) ((special += 1)) ;;
+                T) ((special += 1, part += 1)) ;;
                 S)
                     case "${counter}" in
                         # SID
@@ -111,11 +112,7 @@ conversion.perm_to_octal() {
         final_part+="${part}"
         part=0
     done
-    if [[ -n ${special} ]]; then
-        echo "${special}${final_part}"
-    else
-        echo "${final_part}"
-    fi
+    echo "${special:-0}${final_part}"
 }
 
 # @description Converts an octal to permission string.
