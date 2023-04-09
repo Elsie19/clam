@@ -68,14 +68,19 @@ case "${1}" in
         fi
         if [[ ${1} == "--release" ]]; then
             BUILDDIR="build/release/"
+            shift
         else
             BUILDDIR="build/debug/"
+            shift
         fi
+
         mkdir -p "${BUILDDIR}"
         rm -rf "${BUILDDIR:?}"/*
         cp -f src/main.sh "${BUILDDIR}/main.sh"
         BASH_PREPROC_LOCAL="$PWD/src" bash_preproc "${BUILDDIR}/main.sh" > /dev/null || exit 1
-        shellcheck "${BUILDDIR}/main.sh" || { msg "Failed checks found!" && exit 1; }
+        if [[ ${1} != "--unsafe" ]]; then
+            shellcheck "${BUILDDIR}/main.sh" || { msg "Failed checks found!" && exit 1; }
+        fi
         if [[ ${1} == "--release" ]]; then
             shfmt -mn -w "${BUILDDIR}/main.sh"
             shc -r -f "${BUILDDIR}/main.sh" -o "${BUILDDIR}/${PWD##*/}" || { msg "Failed to compile binary!" && exit 1; }
@@ -95,7 +100,7 @@ case "${1}" in
         msg "Done formatting" src/*.sh
         ;;
     run)
-        "$0" compile || exit $?
+        "$0" compile "${@}" || exit $?
         echo -e "\n===[ Running ${PWD##*/} ]===\n"
         time ./build/debug/"${PWD##*/}"
         err=$?
