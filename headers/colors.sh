@@ -1,10 +1,7 @@
 #!/bin/bash
 
 # Colors
-BOLD=$(tput bold)
-declare -r BOLD
-NORMAL=$(tput sgr0)
-declare -r NORMAL
+declare -r BOLD='\033[1m'
 declare -r NC='\033[0m'
 declare -r BLINK='\e[5m'
 declare -r CROSS_OUT='\e[9m'
