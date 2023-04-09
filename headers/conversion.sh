@@ -14,8 +14,9 @@
 # @arg $1 hex A hex to convert.
 # @stdout RGB color code space delimited by R, G, and B.
 conversion.hex_to_rgb() {
-    local r g b
-    : "${1/\#/}"
+    local r g b input
+    input="${1:?No input given to conversion.hex_to_rgb}"
+    : "${input/\#/}"
     ((r = 16#${_:0:2}, g = 16#${_:2:2}, b = 16#${_:4:2}))
     echo "${r} ${g} ${b}"
 }
