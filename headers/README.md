@@ -20,6 +20,7 @@ These headers are included with every version of Clam. Most if not all of these 
 | `progress.sh`| Implements progress bars                             |
 | `stacktrace.sh`| Implements stacktraces                             |
 | `conversion.sh`| Implements conversions between different formats   |
+| `file.sh`    | Implements bash conditional file expression abstractions|
 
 ### Headers with external dependencies
 `log.sh` uses `mktemp` to create a temporary file, but will fallback to using a semi-random string generated for the file name by Bash if `mktemp` is not installed.
@@ -410,4 +411,18 @@ conversion.rgb_to_hex 255 218 185 # -> FFDAB9
 
 conversion.octal_to_perm 1775 # -> -rwxrwxr-t
 conversion.perm_to_octal '-rwxrwxr-t' # -> 1775
+```
+
+#### `file.sh`
+`file.sh` is used for abstracting confusing bash file conditionals.
+
+You now have access to `file.{file_exists,exists,is_directory,is_readable,is_symlink,is_writable,is_executable,is_non_zero_size,is_same,is_special,is_socket}`.
+
+`file.is_same` accepts two arguments while the rest accept one.
+
+Example:
+```bash
+if file.is_special /dev/urandom; then
+    ...
+fi
 ```
