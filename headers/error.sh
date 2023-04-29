@@ -24,7 +24,7 @@ function error.error() {
     else
         echo "${0}: line ${lines[0]// /}: ${err_msg}" 1>&2
     fi
-    if (( err )); then
+    if ((err)); then
         exit "${err}"
     fi
 }
