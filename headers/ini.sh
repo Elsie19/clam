@@ -65,7 +65,7 @@ function ini.parse() {
     fi
 
     local default_section="Default"
-    local ini_var_regex="^(\w)+\s*=\s*(\"|')?(\W|\w)+(\"|')?\$"
+    local ini_var_regex="^(\w|-)+\s*=\s*(\"|')?(\W|\w)+(\"|')?\$"
     local ini_section_regex='\[([a-zA-Z0-9_ ])+\]$'
     local ini_line_comment='^(\s*)?(#|;).*$'
 
