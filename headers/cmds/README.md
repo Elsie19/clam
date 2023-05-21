@@ -13,3 +13,4 @@ These headers correspond to their coreutils command. These really should not be 
 | `yes.sh` | None | All |
 | `basename.sh` | `-s` | `-z` |
 | `whoami.sh` | None | All |
+| `fold.sh` | `-b -s` | `-w` |
