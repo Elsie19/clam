@@ -11,7 +11,7 @@ function cmds.tac() {
         done
     fi
 
-    for ((i = "${#lines[@]}" - 1; i >= 0; i--)); do
+    for ((i = ${#lines[@]} - 1; i >= 0; i--)); do
         echo "${lines[i]}"
     done
 }

@@ -3,7 +3,7 @@
 function cmds.yes() {
     local text
     text="${1:-y}"
-    while true; do
+    while :; do
         echo "${text}"
     done
 }

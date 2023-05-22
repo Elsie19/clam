@@ -11,7 +11,7 @@ function cmds.basename() {
     done
     shift $((OPTIND - 1))
 
-    if (("${#@}" > 2)); then
+    if ((${#@} > 2)); then
         echo "${FUNCNAME[0]}: extra operand '${3}'" >&2 && return 1
     fi
 

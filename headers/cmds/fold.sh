@@ -11,7 +11,7 @@ function cmd.fold() {
     shift $((OPTIND - 1))
     file="${1:?No file given to cmd.fold}"
     while IFS= read -r line; do
-        if (("${#line}" > size)); then
+        if ((${#line} > size)); then
             echo "${line:0:size}"
             echo "${line:size}"
         else

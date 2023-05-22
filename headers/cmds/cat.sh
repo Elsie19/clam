@@ -19,7 +19,7 @@ function cmds.cat() {
     done
     for i in "${files[@]}"; do
         # 10 would be 2 chars, 500 would be 3
-        tabbing="$((5 - "${#lineno}"))"
+        tabbing="$((5 - ${#lineno}))"
         if [[ -n ${number} ]]; then
             for ((z = 0; z <= tabbing; z++)); do
                 echo -n ' '
