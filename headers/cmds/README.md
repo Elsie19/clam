@@ -14,3 +14,4 @@ These headers correspond to their coreutils command. These really should not be 
 | `basename.sh` | `-s` | `-z` |
 | `whoami.sh` | None | All |
 | `fold.sh` | `-b -s` | `-w` |
+| `tee.sh` | `-i -p` | `-a` |
