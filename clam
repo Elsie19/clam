@@ -46,7 +46,7 @@ function create_application() {
     local name="$1"
     mkdir -p "${name}"
     cd "${name}"
-    echo -e "enable=require-variable-braces" >> .shellcheckrc
+    echo -e "enable=require-variable-braces\nenable=require-double-brackets" >> .shellcheckrc
     echo -e "build/" >> .gitignore
     mkdir -p src/
     echo -e "#!/bin/bash\n\necho 'Hello world!'\n\n# vim:set ft=sh ts=4 sw=4 et:" >> src/main.sh
