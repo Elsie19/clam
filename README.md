@@ -7,14 +7,14 @@
 <p align="center"><b>A programming environment for shell scripts</b></p>
 
 ### Features
-* Header files with [bash_preproc](https://github.com/Henryws/bash_preproc)
+* Header files with [bash_preproc](https://github.com/Elsie19/bash_preproc)
 * Documentation generation with [shdoc](https://github.com/reconquest/shdoc)
 * Enforced, objective formatting with `shfmt`
 * Shellcheck to prevent potentially broken code from running
 * Creates binaries from your code with `shc`
 
 ### Getting started
-First, download [bash_preproc](https://github.com/Henryws/bash_preproc) and [shdoc](https://github.com/reconquest/shdoc). Then download Clam with `sudo make install`. To create a project, run `clam new {name}`. You can edit `src/main.sh` as you want, and when you want to compile your project, run `clam compile` in the root of your project. You can also use `clam run` to run your project after compiling.
+First, download [bash_preproc](https://github.com/Elsie19/bash_preproc) and [shdoc](https://github.com/reconquest/shdoc). Then download Clam with `sudo make install`. To create a project, run `clam new {name}`. You can edit `src/main.sh` as you want, and when you want to compile your project, run `clam compile` in the root of your project. You can also use `clam run` to run your project after compiling.
 
 If your code ever gets too messy, and you want to format it, run `clam fmt`.
 
