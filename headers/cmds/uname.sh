@@ -19,7 +19,10 @@ function cmds.uname() {
             m)
                 output+=('machine')
                 ;;
-            ?) echo "Usage: ${FUNCNAME[0]} [-a] [-s] [-n] [-r] [-m]" >&2 && return 1 ;;
+            o)
+                output+=('operating_system')
+                ;;
+            ?) echo "Usage: ${FUNCNAME[0]} [-a] [-s] [-n] [-r] [-m] [-o]" >&2 && return 1 ;;
         esac
     done
     shift $((OPTIND - 1))
@@ -27,7 +30,7 @@ function cmds.uname() {
     mapfile -t -d " " proc_version < /proc/version
 
     if (("${#output[@]}" == 0)); then
-        echo "Usage: ${FUNCNAME[0]} [-a] [-s] [-n] [-r] [-m]" >&2 && return 1
+        echo "Usage: ${FUNCNAME[0]} [-a] [-s] [-n] [-r] [-m] [-o]" >&2 && return 1
     fi
     for i in "${output[@]}"; do
         case "${i}" in
@@ -46,6 +49,11 @@ function cmds.uname() {
                 ;;
             machine)
                 out_arr+=("${HOSTTYPE}")
+                ;;
+            operating_system)
+                if [[ $OSTYPE == "linux-gnu" ]]; then
+                    out_arr+=("GNU/Linux")
+                fi
                 ;;
             *) ;;
         esac
