@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function cmds.cat() {
-    local files=() i z end number lineno=1 tabbing OPTION
+    local files=() i z end number lineno=1 tabbing OPTION OPTIND
     while getopts 'En' OPTION; do
         case "${OPTION}" in
             E) end='$' ;;

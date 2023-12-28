@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function cmds.seq() {
-    local separator i OPTION
+    local separator i OPTION OPTIND
     while getopts ':s:' OPTION; do
         case "${OPTION}" in
             s) separator="${OPTARG}" ;;

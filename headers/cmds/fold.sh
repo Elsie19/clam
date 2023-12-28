@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function cmd.fold() {
-    local file line OPTION size=80
+    local file line OPTION OPTIND size=80
     while getopts ':w:' OPTION; do
         case "${OPTION}" in
             w) size="${OPTARG}" ;;

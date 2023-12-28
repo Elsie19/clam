@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function cmds.basename() {
-    local tmp ending replace string OPTION
+    local tmp ending replace string OPTION OPTIND
 
     while getopts ':z:' OPTION; do
         case "${OPTION}" in

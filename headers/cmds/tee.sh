@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function cmds.tee() {
-    local append=0 text input=() file OPTION
+    local append=0 text input=() file OPTION OPTIND
     while getopts 'a' OPTION; do
         case "${OPTION}" in
             a) append=1 ;;

@@ -5,7 +5,6 @@ function cmds.cp() {
     # echo **/* to get all recursive files but we can't because bash can't
     # do mkdir, oh well
     # shopt -s globstar nullglob dotglob
-    shift $((OPTIND - 1))
     file="${1:?cmds.cp: missing file name}"
     target="${2:?cmds.cp: missing target file name}"
     if ! [[ -f ${file} ]]; then

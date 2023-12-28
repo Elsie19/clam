@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function cmds.uname() {
-    local OPTION i proc_version=() output=() out_arr=()
+    local OPTION OPTIND i proc_version=() output=() out_arr=()
     while getopts 'asnrmo' OPTION; do
         case "${OPTION}" in
             a)
