@@ -17,3 +17,4 @@ These headers correspond to their coreutils command. These really should not be 
 | `tee.sh`      | `-i -p`                                      | `-a`                |
 | `cp.sh`       | `-r`                                         | Copies file         |
 | `clear.sh`    | `-T -V`                                      | `-x`                |
+| `uniq.sh`     | `-s -c -f -D --group -u -w -z`               | `-i`                |

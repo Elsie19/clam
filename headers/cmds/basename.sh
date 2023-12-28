@@ -23,7 +23,7 @@ function cmds.basename() {
     tmp="${tmp%"${replace/"${tmp}"/}"}"
 
     if [[ -n ${ending} ]]; then
-       echo -n "${tmp:-/}"
+        echo -n "${tmp:-/}"
     else
         echo "${tmp:-/}"
     fi
