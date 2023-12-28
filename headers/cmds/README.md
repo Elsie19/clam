@@ -16,3 +16,4 @@ These headers correspond to their coreutils command. These really should not be 
 | `fold.sh`     | `-b -s`                                      | `-w`                |
 | `tee.sh`      | `-i -p`                                      | `-a`                |
 | `cp.sh`       | `-r`                                         | Copies file         |
+| `clear.sh`    | `-T -V`                                      | `-x`                |
