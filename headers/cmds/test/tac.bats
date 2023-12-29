@@ -9,17 +9,12 @@ setup() {
     PATH="$DIR/../src:$PATH"
 }
 
-@test "cat" {
-    source cat.sh
-    assert_equal "$(cmds.cat cat.sh)" "$(cat cat.sh)"
+@test "tac with file argument" {
+    source tac.sh
+    assert_equal "$(cmds.tac tac.sh)" "$(tac tac.sh)"
 }
 
-@test "cat -E (ending with \$ symbol)" {
-    source cat.sh
-    assert_equal "$(cmds.cat -E cat.sh)" "$(cat -E cat.sh)"
-}
-
-@test "cat -n (numbers lines)" {
-    source cat.sh
-    assert_equal "$(cmds.cat -n cat.sh)" "$(cat -n cat.sh)"
+@test "tac with stdin" {
+    source tac.sh
+    assert_equal "$(cat tac.sh | cmds.tac)" "$(cat tac.sh | tac)"
 }

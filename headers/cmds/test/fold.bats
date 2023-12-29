@@ -9,17 +9,7 @@ setup() {
     PATH="$DIR/../src:$PATH"
 }
 
-@test "cat" {
-    source cat.sh
-    assert_equal "$(cmds.cat cat.sh)" "$(cat cat.sh)"
-}
-
-@test "cat -E (ending with \$ symbol)" {
-    source cat.sh
-    assert_equal "$(cmds.cat -E cat.sh)" "$(cat -E cat.sh)"
-}
-
-@test "cat -n (numbers lines)" {
-    source cat.sh
-    assert_equal "$(cmds.cat -n cat.sh)" "$(cat -n cat.sh)"
+@test "fold" {
+    source fold.sh
+    assert_equal "$(cmds.fold test/fold.sample)" "$(fold test/fold.sample)"
 }

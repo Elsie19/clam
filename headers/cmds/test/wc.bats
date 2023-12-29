@@ -1,4 +1,6 @@
 setup() {
+    load 'test_helper/bats-support/load'
+    load 'test_helper/bats-assert/load'
     # get the containing directory of this file
     # use $BATS_TEST_FILENAME instead of ${BASH_SOURCE[0]} or $0,
     # as those will point to the bats executable's location or the preprocessed file respectively
@@ -9,15 +11,15 @@ setup() {
 
 @test "wc lines" {
     source wc.sh
-    [[ $(cat wc.sh | cmds.wc -l) == "$(cat wc.sh | wc -l)" ]]
+    assert_equal "$(cat wc.sh | cmds.wc -l)" "$(cat wc.sh | wc -l)"
 }
 
 @test "wc words" {
     source wc.sh
-    [[ $(cat wc.sh | cmds.wc -w) == "$(cat wc.sh | wc -w)" ]]
+    assert_equal "$(cat wc.sh | cmds.wc -w)" "$(cat wc.sh | wc -w)"
 }
 
 @test "wc chars" {
     source wc.sh
-    [[ $(cat wc.sh | cmds.wc -c) == "$(cat wc.sh | wc -c)" ]]
+    assert_equal "$(cat wc.sh | cmds.wc -c)" "$(cat wc.sh | wc -c)"
 }
