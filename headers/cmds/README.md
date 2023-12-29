@@ -18,3 +18,11 @@ These headers correspond to their coreutils command. These really should not be 
 | `clear.sh`    | `-T -V`                                      | `-x`                |
 | `uniq.sh`     | `-s -c -f -D --group -u -z`                  | `-i -w`             |
 | `wc.sh`       | `-c -L --total --files0-from`                | `-m -w -l`          |
+
+## Pure Bash builtins
+
+Please don't use these they are only to see if I can.
+
+| Builtin       | Missing features                             | Included features   |
+|---------------|----------------------------------------------|---------------------|
+| `cd.sh`       | `-L -P -e -@`                                | `cd` base           |
