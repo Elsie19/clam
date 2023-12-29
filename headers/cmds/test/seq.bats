@@ -26,7 +26,7 @@ setup() {
 
 @test "seq with negative lower and upper limit" {
     source seq.sh
-    assert_equal "$(cmds.seq -3 42)" "$(seq -3 42)"
+    assert_equal "$(cmds.seq -- -3 42)" "$(seq -3 42)"
 }
 
 @test "seq with limit and custom increment" {
@@ -55,7 +55,7 @@ setup() {
 # bats test_tags=flag
 @test "seq with negative lower and upper limit with seperator" {
     source seq.sh
-    assert_equal "$(cmds.seq -s "^" -3 42)" "$(seq -s "^" -3 42)"
+    assert_equal "$(cmds.seq -s "^" -- -3 42)" "$(seq -s "^" -3 42)"
 }
 
 # bats test_tags=flag
