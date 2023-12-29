@@ -1,13 +1,13 @@
 #!/bin/bash
 
 function cmds.wc() {
-    local input=() arrayindexes=() byte_show=1 chars words_show=1 words lines_show=1 line lines tmp_line last_idx format_sp OPTION OPTIND
-    while getopts 'cmwl' OPTION; do
+    local input=() arrayindexes=() char_show=1 chars words_show=1 words lines_show=1 line lines tmp_line last_idx format_sp OPTION OPTIND
+    while getopts 'mwl' OPTION; do
         case "${OPTION}" in
-            c | m) byte_show=0 ;;
+            m) char_show=0 ;;
             w) words_show=0 ;;
             l) lines_show=0 ;;
-            ?) echo "Usage: ${FUNCNAME[0]} [-c] [-m] [-w] [-l] [file]…" >&2 && return 1 ;;
+            ?) echo "Usage: ${FUNCNAME[0]} [-m] [-w] [-l] [file]…" >&2 && return 1 ;;
         esac
     done
     shift $((OPTIND - 1))
@@ -42,13 +42,13 @@ function cmds.wc() {
     words="${words:-0}"
 
 
-    if ((byte_show == 1 && words_show == 1 && lines_show == 1)); then
-        ((byte_show = 0, words_show = 0, lines_show = 0))
+    if ((char_show == 1 && words_show == 1 && lines_show == 1)); then
+        ((char_show = 0, words_show = 0, lines_show = 0))
     fi
 
     # If one flag has been passed, because if all flags have been passed,
     # only 1 flag has been turned to 0, so 1 + 1 + 0 = 2
-    if ((lines_show + words_show + byte_show == 2)); then
+    if ((lines_show + words_show + char_show == 2)); then
         format_sp="%s"
     else
         format_sp=" %s"
@@ -62,7 +62,7 @@ function cmds.wc() {
         # shellcheck disable=SC2059
         printf "${format_sp}" "${words}"
     fi
-    if ((byte_show == 0)); then
+    if ((char_show == 0)); then
         # shellcheck disable=SC2059
         printf "${format_sp}" "${chars}"
     fi

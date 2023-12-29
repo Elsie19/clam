@@ -58,3 +58,8 @@ setup() {
     source basename.sh
     assert_equal "$(cmds.basename /$'\n')" "$(basename /$'\n')"
 }
+
+@test "basename on weird data (./)" {
+    source basename.sh
+    assert_equal "$(cmds.basename ./)" "$(basename ./)"
+}

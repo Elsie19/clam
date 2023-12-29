@@ -42,13 +42,13 @@ setup() {
 # bats test_tags=flag, stdin
 @test "wc chars on self" {
     source wc.sh
-    assert_equal "$(cat wc.sh | cmds.wc -c)" "$(cat wc.sh | wc -c)"
+    assert_equal "$(cat wc.sh | cmds.wc -m)" "$(cat wc.sh | wc -m)"
 }
 
 # bats test_tags=flag
 @test "wc chars" {
     source wc.sh
-    assert_equal "$(cmds.wc -c wc.sh)" "$(wc -c wc.sh)"
+    assert_equal "$(cmds.wc -m wc.sh)" "$(wc -m wc.sh)"
 }
 
 # bats test_tags=flag, stdin
@@ -66,13 +66,13 @@ setup() {
 # bats test_tags=flag, stdin
 @test "wc no newline single char with stdin" {
     source wc.sh
-    assert_equal "$(echo -n 'k' | cmds.wc -c)" "$(echo -n 'k' | wc -c)"
+    assert_equal "$(echo -n 'k' | cmds.wc -m)" "$(echo -n 'k' | wc -m)"
 }
 
 # bats test_tags=flag, stdin
 @test "wc no newline empty char with stdin" {
     source wc.sh
-    assert_equal "$(echo -n '' | cmds.wc -c)" "$(echo -n '' | wc -c)"
+    assert_equal "$(echo -n '' | cmds.wc -m)" "$(echo -n '' | wc -m)"
 }
 
 # bats test_tags=flag, stdin
@@ -96,11 +96,11 @@ setup() {
 # bats test_tags=flag, stdin
 @test "wc single char with stdin" {
     source wc.sh
-    assert_equal "$(echo 'k' | cmds.wc -c)" "$(echo 'k' | wc -c)"
+    assert_equal "$(echo 'k' | cmds.wc -m)" "$(echo 'k' | wc -m)"
 }
 
 # bats test_tags=flag, stdin
 @test "wc empty char with stdin" {
     source wc.sh
-    assert_equal "$(echo '' | cmds.wc -c)" "$(echo '' | wc -c)"
+    assert_equal "$(echo '' | cmds.wc -m)" "$(echo '' | wc -m)"
 }
