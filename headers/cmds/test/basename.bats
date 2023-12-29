@@ -14,7 +14,7 @@ setup() {
     assert_equal "$(cmds.basename /home/user/data/filename.txt)" "$(basename /home/user/data/filename.txt)"
 }
 
-@test "basename without but with path" {
+@test "basename without extension but with path" {
     source basename.sh
     assert_equal "$(cmds.basename /home/user/data/filename)" "$(basename /home/user/data/filename)"
 }
