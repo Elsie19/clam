@@ -13,7 +13,6 @@ These headers correspond to their coreutils command. These really should not be 
 | `yes.sh`      | None                                         | All                 |
 | `basename.sh` | `-s`                                         | `-z`                |
 | `whoami.sh`   | None                                         | All                 |
-| `fold.sh`     | `-b -s`                                      | `-w`                |
 | `tee.sh`      | `-i -p`                                      | `-a`                |
 | `cp.sh`       | `-r`                                         | Copies file         |
 | `clear.sh`    | `-T -V`                                      | `-x`                |
