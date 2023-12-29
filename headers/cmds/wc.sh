@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function cmds.wc() {
-    local input=() byte_show=1 chars words_show=1 words lines_show=1 line lines tmp_line format_sp OPTION OPTIND
+    local input=() arrayindexes=() byte_show=1 chars words_show=1 words lines_show=1 line lines tmp_line last_idx format_sp OPTION OPTIND
     while getopts 'cmwl' OPTION; do
         case "${OPTION}" in
             c | m) byte_show=0 ;;
@@ -12,21 +12,35 @@ function cmds.wc() {
     done
     shift $((OPTIND - 1))
     if [[ -p /dev/stdin ]]; then
-        mapfile input <&0
+        mapfile -d$'\n' input <&0
     else
-        mapfile input < "${1}"
+        mapfile -d$'\n' input < "${1}"
     fi
 
     for line in "${input[@]}"; do
         ((chars += "${#line}"))
     done
-    for line in "${input[@]}"; do
-        ((lines++))
-    done
+    lines="${#input[@]}"
+    # We need to adjust lines now because if there is input with no newline,
+    # the index of input will be 0 but #input[@] is 1, but we can't just
+    # subtract by 1 because that messes with other things, so we need to check
+    # if #input[@] is 1 and the only index in input is [0].
+    # An example of this is `echo -n 'x y' | wc -l`, where `array=([0]="x y")`
+    # but bash says has a length of 1.
+    arrayindexes=("${!input[@]}")
+    last_idx="${arrayindexes[-1]}"
+    if ((${#input[@]} == 1 && last_idx == 0 )) && [[ ${input[0]} != $'\n' ]]; then
+        lines=0
+    fi
+
     for line in "${input[@]}"; do
         IFS=" " read -ra tmp_line <<< "${line}"
         ((words += "${#tmp_line[@]}"))
     done
+    chars="${chars:-0}"
+    lines="${lines:-0}"
+    words="${words:-0}"
+
 
     if ((byte_show == 1 && words_show == 1 && lines_show == 1)); then
         ((byte_show = 0, words_show = 0, lines_show = 0))
