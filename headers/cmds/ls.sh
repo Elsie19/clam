@@ -28,7 +28,8 @@ function cmds.ls() {
             places=("${tmp_places[@]}")
         fi
         for z in "${places[@]}"; do
-            if ((line_by_line == 0)); then
+            # `ls -1m` will override the `-1` and only function as `-m` so do that lol
+            if ((line_by_line == 0 && comma != 0)); then
                 echo "${z##*/}"
             elif ((comma == 0)); then
                 if ((end_ctr == ${#places[@]})); then
