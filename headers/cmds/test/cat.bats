@@ -25,3 +25,9 @@ setup() {
     source cat.sh
     assert_equal "$(cmds.cat -n cat.sh)" "$(cat -n cat.sh)"
 }
+
+# bats test_tags=flag
+@test "cat -En" {
+    source cat.sh
+    assert_equal "$(cmds.cat -En cat.sh)" "$(cat -En cat.sh)"
+}
