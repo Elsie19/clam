@@ -14,7 +14,7 @@ function cmds.wc() {
     if [[ -p /dev/stdin ]]; then
         mapfile -d$'\n' input <&0
     else
-        mapfile -d$'\n' input < "${1}"
+        mapfile -d$'\n' input < "${1:-/dev/stdin}"
     fi
 
     for line in "${input[@]}"; do
@@ -29,7 +29,7 @@ function cmds.wc() {
     # but bash says has a length of 1.
     arrayindexes=("${!input[@]}")
     last_idx="${arrayindexes[-1]}"
-    if ((${#input[@]} == 1 && last_idx == 0 )) && [[ ${input[0]} != $'\n' ]]; then
+    if ((${#input[@]} == 1 && last_idx == 0)) && [[ ${input[0]} != $'\n' ]]; then
         lines=0
     fi
 
@@ -40,7 +40,6 @@ function cmds.wc() {
     chars="${chars:-0}"
     lines="${lines:-0}"
     words="${words:-0}"
-
 
     if ((char_show == 1 && words_show == 1 && lines_show == 1)); then
         ((char_show = 0, words_show = 0, lines_show = 0))
@@ -69,6 +68,7 @@ function cmds.wc() {
     if [[ -p /dev/stdin ]]; then
         echo
     else
-        printf ' %s\n' "${1}"
+        # Do we have $1, if so, print ` $1\n`, and if not, just echo
+        echo "${1:+ $1}"
     fi
 }

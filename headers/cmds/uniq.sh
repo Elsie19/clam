@@ -13,7 +13,7 @@ function cmds.uniq() {
     if [[ -p /dev/stdin ]]; then
         mapfile -t input <&0
     else
-        mapfile -t input < "${1}"
+        mapfile -t input < "${1:-/dev/stdin}"
     fi
 
     if ((ignore_case == 0)); then

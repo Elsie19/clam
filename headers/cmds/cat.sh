@@ -14,7 +14,7 @@ function cmds.cat() {
         if [[ -p /dev/stdin ]]; then
             mapfile -t -O"${#files[@]}" files <&0
         else
-            mapfile -t -O"${#files[@]}" files < "${i}"
+            mapfile -t -O"${#files[@]}" files < "${i:-/dev/stdin}"
         fi
     done
     for i in "${files[@]}"; do
