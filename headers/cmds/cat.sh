@@ -25,11 +25,19 @@ function cmds.cat() {
                 echo -n ' '
             done
             if [[ -z ${i} ]]; then
-                echo "${lineno}  ${end-}" && ((lineno++)) && continue
+                if [[ -n ${end} ]]; then
+                    echo "${lineno}${end-}" && ((lineno++)) && continue
+                else
+                    echo "${lineno}	" && ((lineno++)) && continue
+                fi
             fi
-            echo "${lineno}  ${i}${end-}"
+            echo "${lineno}	${i}${end-}"
         else
-            echo "${i}${end-}"
+            if [[ -n ${end} ]]; then
+                echo "${i}${end-}"
+            else
+                echo "${i}"
+            fi
         fi
         ((lineno++))
     done
