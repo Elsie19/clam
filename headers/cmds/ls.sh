@@ -1,10 +1,10 @@
 #!/bin/bash
 
 function cmds.ls() {
-    local paths=() places=() tmp_places=() i z end_ctr=1 comma line_by_line=1 OPTION OPTIND
+    local paths=() places=() tmp_places=() i z end_ctr=1 comma=1 line_by_line=1 OPTION OPTIND
     while getopts 'm1' OPTION; do
         case "${OPTION}" in
-            m) comma=, ;;
+            m) comma=0 ;;
             1) line_by_line=0 ;;
             ?) echo "Usage: ${FUNCNAME[0]} [-b] PATHS" >&2 && return 1 ;;
         esac
@@ -30,7 +30,7 @@ function cmds.ls() {
         for z in "${places[@]}"; do
             if ((line_by_line == 0)); then
                 echo "${z##*/}"
-            elif [[ -n ${comma} ]]; then
+            elif ((comma == 0)); then
                 if ((end_ctr == ${#places[@]})); then
                     echo "${z}"
                 else

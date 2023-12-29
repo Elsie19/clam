@@ -9,7 +9,7 @@ setup() {
     PATH="$DIR/../src:$PATH"
 }
 
-@test "ls" {
+@test "ls interactive" {
     # We have to do that so we trick ls into thinking it's in a tty and
     # not in a terminal
     assert_equal "$(unbuffer bash -c 'source ls.sh && cmds.ls')" "$(unbuffer ls)"
@@ -22,11 +22,11 @@ setup() {
 }
 
 # bats test_tags=flag
-@test "ls -m" {
+@test "ls -m interactive" {
     assert_equal "$(unbuffer bash -c 'source ls.sh && cmds.ls -m')" "$(unbuffer ls -m)"
 }
 
 # bats test_tags=flag
-@test "ls -1m" {
+@test "ls -1m interactive" {
     assert_equal "$(unbuffer bash -c 'source ls.sh && cmds.ls -1m')" "$(unbuffer ls -1m)"
 }
