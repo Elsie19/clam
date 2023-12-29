@@ -16,7 +16,17 @@ setup() {
 }
 
 # bats test_tags=flag
-@test "cat -1" {
+@test "ls -1" {
     source ls.sh
     assert_equal "$(cmds.ls -1)" "$(ls -1)"
+}
+
+# bats test_tags=flag
+@test "ls -m" {
+    assert_equal "$(unbuffer bash -c 'source ls.sh && cmds.ls -m')" "$(unbuffer ls -m)"
+}
+
+# bats test_tags=flag
+@test "ls -1m" {
+    assert_equal "$(unbuffer bash -c 'source ls.sh && cmds.ls -1m')" "$(unbuffer ls -1m)"
 }
