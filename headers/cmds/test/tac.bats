@@ -14,6 +14,7 @@ setup() {
     assert_equal "$(cmds.tac tac.sh)" "$(tac tac.sh)"
 }
 
+# bats test_tags=stdin
 @test "tac with stdin" {
     source tac.sh
     assert_equal "$(cat tac.sh | cmds.tac)" "$(cat tac.sh | tac)"

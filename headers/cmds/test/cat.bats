@@ -14,11 +14,13 @@ setup() {
     assert_equal "$(cmds.cat cat.sh)" "$(cat cat.sh)"
 }
 
+# bats test_tags=flag
 @test "cat -E (ending with \$ symbol)" {
     source cat.sh
     assert_equal "$(cmds.cat -E cat.sh)" "$(cat -E cat.sh)"
 }
 
+# bats test_tags=flag
 @test "cat -n (numbers lines)" {
     source cat.sh
     assert_equal "$(cmds.cat -n cat.sh)" "$(cat -n cat.sh)"

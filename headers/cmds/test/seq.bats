@@ -34,26 +34,31 @@ setup() {
     assert_equal "$(cmds.seq 0 5 20)" "$(seq 0 5 20)"
 }
 
+# bats test_tags=flag
 @test "seq with one argument with seperator" {
     source seq.sh
     assert_equal "$(cmds.seq -s "!" 4)" "$(seq -s "!" 4)"
 }
 
+# bats test_tags=flag
 @test "seq with one argument (0) with seperator" {
     source seq.sh
     assert_equal "$(cmds.seq -s ':' 0)" "$(seq -s ':' 0)"
 }
 
+# bats test_tags=flag
 @test "seq with lower and upper limit with seperator" {
     source seq.sh
     assert_equal "$(cmds.seq -s "*" 3 42)" "$(seq -s "*" 3 42)"
 }
 
+# bats test_tags=flag
 @test "seq with negative lower and upper limit with seperator" {
     source seq.sh
     assert_equal "$(cmds.seq -s "^" -3 42)" "$(seq -s "^" -3 42)"
 }
 
+# bats test_tags=flag
 @test "seq with limit and custom increment with seperator with seperator" {
     source seq.sh
     assert_equal "$(cmds.seq -s "$" 0 5 20)" "$(seq -s "$" 0 5 20)"

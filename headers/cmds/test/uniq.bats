@@ -19,17 +19,20 @@ setup() {
     assert_equal "$(cat test/uniq.sample | cmds.uniq)" "$(cat test/uniq.sample | uniq)"
 }
 
+# bats test_tags=flag
 @test "uniq with -i" {
     source uniq.sh
     assert_equal "$(cmds.uniq -i test/uniq.sample)" "$(uniq -i test/uniq.sample)"
 }
 
+# bats test_tags=flag
 @test "uniq with -w" {
     source uniq.sh
     assert_equal "$(cmds.uniq -w 2 test/uniq.sample)" "$(uniq -w 2 test/uniq.sample)"
     assert_equal "$(cmds.uniq -w 3 test/uniq.sample)" "$(uniq -w 3 test/uniq.sample)"
 }
 
+# bats test_tags=flag
 @test "uniq with -i and -w" {
     source uniq.sh
     assert_equal "$(cmds.uniq -i -w 2 test/uniq.sample)" "$(uniq -i -w 2 test/uniq.sample)"
