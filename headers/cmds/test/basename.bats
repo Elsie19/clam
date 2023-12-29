@@ -24,6 +24,21 @@ setup() {
     assert_equal "$(cmds.basename .foo)" "$(basename .foo)"
 }
 
+@test "basename with partial extension and path" {
+    source basename.sh
+    assert_equal "$(cmds.basename dir/something thing)" "$(basename dir/something thing)"
+}
+
+@test "basename with path (/)" {
+    source basename.sh
+    assert_equal "$(cmds.basename /)" "$(basename /)"
+}
+
+@test "basename with path (/) and extension" {
+    source basename.sh
+    assert_equal "$(cmds.basename / thing)" "$(basename / thing)"
+}
+
 @test "basename removing suffix" {
     source basename.sh
     assert_equal "$(cmds.basename /home/user/data/filename.txt .txt)" "$(basename /home/user/data/filename.txt .txt)"
@@ -37,4 +52,9 @@ setup() {
 @test "basename removing suffix when none exists on directory" {
     source basename.sh
     assert_equal "$(cmds.basename /home/user/data/ .txt)" "$(basename /home/user/data/ .txt)"
+}
+
+@test "basename on weird data (/$'\\n')" {
+    source basename.sh
+    assert_equal "$(cmds.basename /$'\n')" "$(basename /$'\n')"
 }
