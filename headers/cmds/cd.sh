@@ -26,7 +26,7 @@ function builtin.cd() {
         if [[ ${1:0:1} != '/' ]]; then
             constructed_path="${PWD}/${1%/}"
         # Fancy stuff for '..'
-        elif [[ ${1} == *'..'* ]] || [[ ${1} == '..' ]]; then
+        elif [[ ${1} == *'..'* || ${1} == '..' ]]; then
             if [[ ${1} == '..' ]]; then
                 pathy="${PWD}/.."
             else
