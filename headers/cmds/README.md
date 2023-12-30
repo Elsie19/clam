@@ -8,7 +8,6 @@ These headers correspond to their coreutils command. These really should not be 
 | `sleep.sh`    | Decimal `s,m,h,d` due to Bash floating point | `s,m,h,d` suffix    |
 | `tac.sh`      | Every flag                                   | All                 |
 | `seq.sh`      | `-f -w`                                      | `-s`                |
-| `ls.sh`       | Every flag                                   | `-b`                |
 | `uname.sh`    | `-v -i -p`                                   | `-a -s -n -r -m -o` |
 | `yes.sh`      | None                                         | All                 |
 | `basename.sh` | `-s`                                         | `-z`                |
