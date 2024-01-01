@@ -16,7 +16,7 @@ These headers correspond to their coreutils command. These really should not be 
 | `cp.sh`       | `-r`                                         | Copies file         |
 | `clear.sh`    | `-T -V`                                      | `-x`                |
 | `uniq.sh`     | `-s -c -f -D --group -u -z`                  | `-i -w`             |
-| `wc.sh`       | `-c -L --total --files0-from`                | `-m -w -l`          |
+| `wc.sh`       | `-c -L --total --files0-from` multiple files | `-m -w -l`          |
 
 ## Pure Bash builtins
 
