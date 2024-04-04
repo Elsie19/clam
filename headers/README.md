@@ -115,8 +115,7 @@ msg "According to you, the meaning of life is ${fourty_two:?Error explanation}"
 
 You now have access to `array.string_to_array`, `array.pop`, `array.remove`, `array.contain`, `array.join`, and `array.fill`.
 
-> **Note**
-
+> [!NOTE]
 > `array.pop` and `array.remove` are functional with associated arrays
 
 `array.string_to_array` takes the form of `array.string_to_array "mystring" array_to_save_to`. Whitespace will be counted and added to the array as an empty element.
