@@ -126,13 +126,17 @@ function array.contain() {
 #
 # @arg $1 string An array name.
 # @arg $2 string A character to split IFS.
+# @arg $3 string Optional beginning character
+# @arg $4 string Optional ending character
 #
 # @stdout An array with IFS split by supplied character
 function array.join() {
-    local IFS array_name
+    local IFS array_name beginning ending
     declare -n array_name="${1:?No array given to to array.join}"
     local IFS="${2:?No IFS given to array.join}"
-    echo "${array_name[*]}"
+    local beginning="${3:-}"
+    local ending="${4:-}"
+    echo "${beginning}${array_name[*]}${ending}"
 }
 
 # @description Fill array with input
