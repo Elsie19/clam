@@ -38,6 +38,8 @@ function help_print() {
     echo -e "Options:"
     echo -e "\tnew [name] -- create project called 'name'"
     echo -e "\tcompile -- compile project"
+    echo -e "\t\t--release -- with release"
+    echo -e "\t\t--debug -- with debug (default)"
     echo -e "\trun -- compile project, then run it"
     echo -e "\tfmt -- format project files"
 }
