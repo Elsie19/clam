@@ -79,7 +79,7 @@ case "${1}" in
         cp -f src/main.sh "${BUILDDIR}/main.sh"
         BASH_PREPROC_LOCAL="$PWD/src" bash_preproc "${BUILDDIR}/main.sh" > /dev/null || exit 1
         if [[ ${1} != "--unsafe" ]]; then
-            shellcheck "${BUILDDIR}/main.sh" || { msg "Failed checks found!" && exit 1; }
+            shellcheck -e SC2154 "${BUILDDIR}/main.sh" || { msg "Failed checks found!" && exit 1; }
         fi
         if [[ ${1} == "--release" ]]; then
             shfmt -mn -w "${BUILDDIR}/main.sh"

@@ -23,13 +23,13 @@ function assign.assign() {
         echo "Invalid syntax: '${2}' should be '='" >&2
         return 1
     fi
-    fifo="/tmp/assign_$var"
+    fifo="/tmp/assign_${var}"
     shift 2
-    mkfifo "$fifo"
-    exec {fd}<> "$fifo"
-    { "$@"; printf '\0'; } >&$fd &
-    IFS= read -r -d '' text <&$fd
+    mkfifo "${fifo}"
+    exec {fd}<> "${fifo}"
+    { "$@"; printf '\0'; } >&${fd} &
+    IFS= read -r -d '' text <&${fd}
     printf -v "${var}" "%s" "${text%$'\n'}"
     exec {fd}>&-
-    unlink "$fifo" 2>/dev/null
+    unlink "${fifo}" 2>/dev/null
 }
