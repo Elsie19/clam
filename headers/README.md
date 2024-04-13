@@ -21,9 +21,12 @@ These headers are included with every version of Clam. Most if not all of these 
 | `stacktrace.sh`| Implements stacktraces                             |
 | `conversion.sh`| Implements conversions between different formats   |
 | `file.sh`    | Implements bash conditional file expression abstractions|
+| `assign.sh`    | Implements variable assignments without subshells |
 
 ### Headers with external dependencies
 `log.sh` uses `mktemp` to create a temporary file, but will fallback to using a semi-random string generated for the file name by Bash if `mktemp` is not installed.
+
+`assign.sh` uses `mkfifo` and `unlink` to create an fd.
 
 ### Header docs
 
@@ -424,4 +427,17 @@ Example:
 if file.is_special /dev/urandom; then
     ...
 fi
+```
+
+#### `assign.sh`
+`assign.sh` is used for variable assignments without using subshells (and it looks prettier!).
+
+You now have access to `assign.assign`.
+
+`assign.assign` needs three arguments.
+
+Example:
+```bash
+assign.assign foo = ls
+echo "${foo}"
 ```
