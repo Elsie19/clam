@@ -178,13 +178,16 @@ conversion.octal_to_perm() {
         case "${special}" in
             # Sticky bit
             1)
-                conversion._octal_to_perm_swap perm_str 9 T ;;
+                conversion._octal_to_perm_swap perm_str 9 T
+                ;;
             # GID
             2)
-                conversion._octal_to_perm_swap perm_str 6 S ;;
+                conversion._octal_to_perm_swap perm_str 6 S
+                ;;
             # UID
             4)
-                conversion._octal_to_perm_swap perm_str 3 S ;;
+                conversion._octal_to_perm_swap perm_str 3 S
+                ;;
             # Sticky+GID
             3)
                 conversion._octal_to_perm_swap perm_str 9 T

@@ -27,9 +27,12 @@ function assign.assign() {
     shift 2
     mkfifo "${fifo}"
     exec {fd}<> "${fifo}"
-    { "$@"; printf '\0'; } >&${fd} &
+    {
+        "$@"
+        printf '\0'
+    } >&${fd} &
     IFS= read -r -d '' text <&${fd}
     printf -v "${var}" "%s" "${text%$'\n'}"
     exec {fd}>&-
-    unlink "${fifo}" 2>/dev/null
+    unlink "${fifo}" 2> /dev/null
 }

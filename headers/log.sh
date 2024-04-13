@@ -50,6 +50,7 @@ function log.cleanup() {
 # @arg $1 string Type of text to log.
 # @arg $@ string Text to be logged.
 function log._base() {
+    local datetime
     case "${FUNCNAME[1]}" in
         log.info | log.warn | log.error) ;;
         *) echo "Do not call 'log._base' directly!" >&2 ;;
@@ -64,7 +65,7 @@ function log._base() {
         *) ;;
     esac
     # shellcheck disable=SC2155
-    local datetime="$(printf '%(%F_%T)T')"
+    printf -v datetime "%s" '%(%F_%T)T'
     if [[ -n ${DEBUG} ]]; then
         echo -e "${datetime} [${color-}${type}${NC-}]: ${color-}${rest}${NC-}" | tee -a "${LOGFILE:?LOGFILE not defined}"
     else
