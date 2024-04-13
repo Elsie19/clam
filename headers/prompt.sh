@@ -18,7 +18,7 @@
 function prompt.input() {
     local prompt var_to_store_to prompt_output
     prompt="${1:?variable for prompt for prompt_input not given}"
-    var_to_store_to="${2:?variable to store output for prompt_input not given}"
+    var_to_store_to="${2:-REPLY}"
     echo -ne "${1}: "
     IFS= read -r prompt_output
     declare -g "${var_to_store_to}=${prompt_output}"
@@ -40,7 +40,7 @@ function prompt.input() {
 function prompt.yes_no() {
     local prompt var_to_store_to prompt_output
     prompt="${1:?variable for prompt for prompt_yes_no not given}"
-    var_to_store_to="${2:?variable to store output for prompt_yes_no not given}"
+    var_to_store_to="${2:-REPLY}"
     echo -ne "${prompt} [${BGreen-}y${NC}/${BRed-}n${NC}]: "
     IFS= read -r prompt_output
     case "${prompt_output}" in
