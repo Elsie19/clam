@@ -133,9 +133,9 @@ function array.contain() {
 function array.join() {
     local IFS array_name beginning ending
     declare -n array_name="${1:?No array given to to array.join}"
-    local IFS="${2:?No IFS given to array.join}"
-    local beginning="${3:-}"
-    local ending="${4:-}"
+    IFS="${2:?No IFS given to array.join}"
+    beginning="${3:-}"
+    ending="${4:-}"
     echo "${beginning}${array_name[*]}${ending}"
 }
 

@@ -65,3 +65,21 @@ function strings.strip() {
     string="$(strings.strip_trailing "${string}")"
     echo "${string}"
 }
+
+# @description Split string by delimeter
+# @internal
+# @stdout Split output
+#
+# @example
+#   strings.split "foo:bar:baz" ':'
+#
+# @arg $1 string A string to split.
+# @arg $2 char IFS character.
+function strings.split() {
+    local input IFS split_string_loop
+    input="${1:?No input given to strings.split}"
+    IFS="${2:?No char given to strings.split}"
+    for split_string_loop in ${input}; do
+        echo "${split_string_loop}"
+    done
+}
