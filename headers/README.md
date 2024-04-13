@@ -418,16 +418,7 @@ conversion.perm_to_octal '-rwxrwxr-t' # -> 1775
 #### `file.sh`
 `file.sh` is used for abstracting confusing bash file conditionals.
 
-You now have access to `file.{file_exists,exists,is_directory,is_readable,is_symlink,is_writable,is_executable,is_non_zero_size,is_same,is_special,is_socket}`.
-
-`file.is_same` accepts two arguments while the rest accept one.
-
-Example:
-```bash
-if file.is_special /dev/urandom; then
-    ...
-fi
-```
+You now have access to `is`.
 
 #### `assign.sh`
 `assign.sh` is used for variable assignments without using subshells (and it looks prettier!).
