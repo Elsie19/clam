@@ -43,11 +43,11 @@ function foo() {
 }
 
 shopt -u checkwinsize
-echo "Main:"
+echo -n "Main: "
 shopt checkwinsize
-echo "Foo:"
+echo -n "Foo: "
 foo
-echo "Main"
+echo -n "Main: "
 shopt checkwinsize
 ```
 
