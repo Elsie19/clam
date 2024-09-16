@@ -1,5 +1,7 @@
 #!/bin/bash
 
+CLAM_VERSION="0.0.1"
+
 # Colors
 BOLD=$(tput bold)
 export BOLD
@@ -78,8 +80,10 @@ case "${1}" in
 
         mkdir -p "${BUILDDIR}"
         rm -rf "${BUILDDIR:?}"/*
-        cp -f src/main.sh "${BUILDDIR}/main.sh"
-        BASH_PREPROC_LOCAL="$PWD/src" bash_preproc "${BUILDDIR}/main.sh" > /dev/null || exit 1
+        (
+            cd "src/"
+            bash_preproc "main.sh" "../${BUILDDIR}/main.sh" "${CLAM_VERSION}"
+        ) || exit 1
         if [[ ${1} != "--unsafe" ]]; then
             shellcheck -e SC2154 "${BUILDDIR}/main.sh" || { msg "Failed checks found!" && exit 1; }
         fi

@@ -1,13 +1,14 @@
 # Clam
 
 <p align="center">
-<a href="https://github.com/Henryws/clam"><img align="center" src="https://webstockreview.net/images/clam-clipart-svg-10.png" width="200" height="200"></a>
+<a href="https://github.com/Elsie19/clam"><img align="center" src="https://webstockreview.net/images/clam-clipart-svg-10.png" width="200" height="200"></a>
 </p>
 
 <p align="center"><b>A programming environment for shell scripts</b></p>
 
 ### Features
 * Header files with [bash_preproc](https://github.com/Elsie19/bash_preproc)
+* Macro system
 * Documentation generation with [shdoc](https://github.com/reconquest/shdoc)
 * Enforced, objective formatting with `shfmt`
 * Shellcheck to prevent potentially broken code from running
@@ -66,6 +67,56 @@ function msg() {
 
 msg 'Hello world!'
 ```
+
+<details>
+
+<summary>Click for more info on what you can do with the preprocessor!</summary>
+
+##### Defining constants
+
+You can define constants with the `#define` header just as you can in C/C++, however in Clam, you cannot use a `$` to prefix something, as in this example:
+
+```bash
+#define FOO bar
+
+echo $FOO
+# Prints: $bar
+```
+
+So make sure your chosen names will absolutely not clash with anything. You can also `#undef` something.
+
+##### Conditionals
+
+Everything from C/C++ applies here.
+
+##### Compile-time
+
+You may run commands during "compilation" with the `#exec` header.
+
+You may also hardcode the filename with `#file` and any given line number with `#line`.
+
+##### Errors and warnings
+
+You may issue warnings and errors with the `#warning` and `#error` headers.
+
+</details>
+
+
+
+#### Macros
+
+Clam utilizes `bash_preproc` which features a macro system. Initialize a macro like so:
+
+```bash
+#define MULT{x y} $((x * y))
+
+echo MULT{5 6}
+# Prints 30
+```
+
+More advanced features for the macro system include:
+
+* Named arguments with `$<num>`
 
 #### Doc generation
 Familiarize yourself with how to use [shdoc](https://github.com/reconquest/shdoc#features) first. When you are done creating your definitions, run `clam docs` to create markdown files with all your definitions in `docs/${file}.md`.
