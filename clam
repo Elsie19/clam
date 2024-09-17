@@ -107,10 +107,15 @@ case "${1}" in
         ;;
     run)
         "$0" compile "${@}" || exit $?
-        echo -e "\n===[ Running ${PWD##*/} ]===\n"
+        echo -e "\n===[ ${GREEN}Running ${PWD##*/}${NC} ]===\n"
         time ./build/debug/"${PWD##*/}"
         err=$?
-        echo -e "\n===[ Finished ${PWD##*/} ]===\n"
+        if ((err == 0)); then
+            COLOR="${GREEN}"
+        else
+            COLOR="${RED}"
+        fi
+        echo -e "\n===[ ${COLOR}Finished ${PWD##*/}${NC} ]===\n"
         echo -e "Exited with error code: $err"
         exit "$err"
         ;;
