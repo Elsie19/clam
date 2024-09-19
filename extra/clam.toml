@@ -1,0 +1,5 @@
+name = "clam"
+
+[dependencies]
+foo = "bar"
+bang = { url = "https://github.com/pacstall/pacstall", ver = "2.0.0" }
