@@ -3,13 +3,14 @@ mod flags;
 mod msg;
 mod modes {
     pub mod compile;
+    pub mod fmt;
     pub mod new;
 }
 
 use clap::Parser;
 use config::Config;
 use flags::Args;
-use modes::new::new_project;
+use modes::{compile::compile, fmt::format_project, new::new_project};
 
 fn main() {
     let cli = Args::parse();
@@ -20,22 +21,22 @@ fn main() {
             msg!("Created application `{}`", name);
         }
         flags::Commands::Compile { release } => {
-            let conf = match std::fs::read_to_string("clam.toml") {
-                Ok(o) => o,
-                Err(e) => {
-                    eprintln!("{e}");
-                    std::process::exit(1);
-                }
+            let Ok(conf) = std::fs::read_to_string("clam.toml") else {
+                emsg!("Could not read file `clam.toml`");
+                std::process::exit(1);
             };
 
             let config: Config = match toml::from_str(&conf) {
                 Ok(o) => o,
                 Err(e) => {
-                    eprintln!("{e}");
+                    emsg!("{e}");
                     std::process::exit(1);
                 }
             };
-            dbg!(config);
+            compile(release, &config, env!("CARGO_PKG_VERSION")).unwrap();
+        }
+        flags::Commands::Fmt {} => {
+            format_project().unwrap();
         }
     };
 }

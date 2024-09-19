@@ -7,3 +7,4 @@ edition = "2021"
 clap = { version = "4.5.17", features = ["derive"] }
 serde = { version = "1.0.210", features = ["derive", "serde_derive"] }
 toml = "0.8.19"
+which = "6.0.3"

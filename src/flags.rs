@@ -26,4 +26,9 @@ pub enum Commands {
         #[clap(short, long)]
         release: bool,
     },
+
+    /// Format project
+    ///
+    /// Format project files with sane defaults.
+    Fmt {},
 }
