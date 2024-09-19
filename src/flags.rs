@@ -23,6 +23,9 @@ pub enum Commands {
     /// Compile a project to a single executable.
     Compile {
         /// Compile as release build
+        ///
+        /// This will inject your project into a statically compiled bash binary, so be weary of
+        /// the output size.
         #[clap(short, long)]
         release: bool,
     },
@@ -31,4 +34,39 @@ pub enum Commands {
     ///
     /// Format project files with sane defaults.
     Fmt {},
+
+    /// Generate docs
+    ///
+    /// Generate docs using shdoc.
+    Docs {},
+
+    #[command(subcommand)]
+    Dep(DepCommands),
+}
+
+#[derive(Subcommand, Debug)]
+/// Handle dependencies
+///
+/// Add, remove, update, or pull down dependencies.
+pub enum DepCommands {
+    /// Add a dependency
+    Add {
+        /// URL to add
+        url: String,
+        /// Name to add as
+        #[clap(short, long)]
+        name: Option<String>,
+        /// Version to add
+        #[clap(short, long)]
+        version: Option<String>,
+    },
+    /// Remove a dependency by name
+    Remove {
+        /// Name of package to remove
+        name: String,
+    },
+    /// Pull dependencies
+    Pull {},
+    /// List dependencies of project
+    List {},
 }
