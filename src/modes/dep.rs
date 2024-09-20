@@ -1,36 +1,22 @@
+use cmd_lib::{run_cmd, run_fun};
 use core::str;
+use fs_extra::dir::{move_dir, CopyOptions};
 use std::{
+    env,
+    fs::{self, create_dir_all, File},
+    io::Write,
     path::Path,
     process::{Command, Stdio},
 };
 
-use crate::config::{Config, Dependency};
+use crate::config::{Config, Dependency, Lock, Package};
 
 pub fn add_dep<S: AsRef<str>>(url: &S, name: &Option<S>, version: &Option<S>, config: &mut Config) {
     let actual_version = if let Some(o) = version.as_ref() {
         o.as_ref()
     } else {
-        let git_output = Command::new("git")
-            .stdout(Stdio::piped())
-            .args([
-                "-c",
-                "versionsort.suffix=-",
-                "ls-remote",
-                "--tags",
-                "--refs",
-                "--sort=version:refname",
-                url.as_ref(),
-            ])
-            .spawn()
-            .unwrap();
-        let output = Command::new("awk")
-            .stdin(git_output.stdout.unwrap())
-            .stdout(Stdio::piped())
-            .args(["-F/", "END{print$NF}"])
-            .spawn()
-            .unwrap();
-        let out = output.wait_with_output().unwrap();
-        &str::from_utf8(&out.stdout).unwrap().to_string()
+        let url_str = url.as_ref();
+        &run_fun!(git -c versionsort.suffix=- ls-remote --tags --refs --sort=version:refname ${url_str} | awk -F/ r#"END{print$NF}"#).unwrap()
     };
 
     config.dependencies.insert(
@@ -40,13 +26,74 @@ pub fn add_dep<S: AsRef<str>>(url: &S, name: &Option<S>, version: &Option<S>, co
             let path = Path::new(url.as_ref());
             path.file_name().unwrap().to_str().unwrap().to_string()
         },
-        if version.is_some() {
-            Dependency::Versioned {
-                url: url.as_ref().to_string(),
-                ver: Some(actual_version.to_string()),
-            }
-        } else {
-            Dependency::Simple(url.as_ref().to_string())
+        Dependency::Versioned {
+            url: url.as_ref().to_string(),
+            ver: Some(actual_version.to_string()),
         },
     );
+}
+
+pub fn pull_deps(conf: &Config) -> std::io::Result<()> {
+    create_dir_all(".deps/")?;
+
+    let mut lockfile = Lock {
+        version: 1,
+        packages: vec![],
+    };
+
+    for (depname, co) in &conf.dependencies {
+        println!("Downloading '{}'...", &depname);
+
+        let args: Vec<String> = match co {
+            Dependency::Simple(u) => [u.to_string()].to_vec(),
+            Dependency::Versioned { url, ver } => [
+                "--branch".to_string(),
+                ver.as_ref().unwrap().to_string(),
+                url.to_string(),
+            ]
+            .to_vec(),
+        };
+
+        match run_cmd!(
+            cd .deps/;
+            rm -rf tmp_dl;
+            git clone -q --depth=1 $[args] tmp_dl 2>/dev/null
+        ) {
+            Ok(o) => o,
+            Err(e) => {
+                eprintln!(
+                    ">>> Could not download dependency for reason '{}'. Skipping...",
+                    e
+                );
+                continue;
+            }
+        };
+        println!("    >> Retrieving version...");
+        let commit = run_fun!(
+            cd .deps/tmp_dl;
+            git rev-parse HEAD
+        )
+        .unwrap()
+        .trim()
+        .to_string();
+
+        let new_dir = format!(".deps/{}-{}", depname, commit);
+
+        fs::remove_dir_all(&new_dir).unwrap();
+        std::fs::rename(".deps/tmp_dl", new_dir).unwrap();
+
+        lockfile.packages.push(Package {
+            name: depname.into(),
+            version: commit,
+            source: co.get_url(),
+        })
+    }
+
+    let mut lockfile_file = File::create("clam.lock").unwrap();
+
+    lockfile_file
+        .write_all(toml::to_string_pretty(&lockfile).unwrap().as_bytes())
+        .unwrap();
+
+    Ok(())
 }

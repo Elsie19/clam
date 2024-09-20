@@ -14,7 +14,9 @@ use std::{fs::File, io::Write};
 use clap::Parser;
 use config::Config;
 use flags::{Args, DepCommands};
-use modes::{compile::compile, dep::add_dep, fmt::format_project, new::new_project};
+use modes::{
+    compile::compile, dep::add_dep, dep::pull_deps, fmt::format_project, new::new_project,
+};
 
 fn main() {
     let cli = Args::parse();
@@ -61,6 +63,7 @@ fn main() {
                     .unwrap();
                 msg!("Added '{}'", url);
             }
+            DepCommands::Pull {} => pull_deps(&config).unwrap(),
             _ => todo!(),
         },
     };
