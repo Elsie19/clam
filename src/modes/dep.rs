@@ -6,7 +6,10 @@ use std::{
     path::Path,
 };
 
-use crate::config::{Config, Dependency, Lock, Package};
+use crate::{
+    config::{Config, Dependency, Lock, Package},
+    emsg,
+};
 
 pub fn add_dep<S: AsRef<str>>(url: &S, name: &Option<S>, version: &Option<S>, config: &mut Config) {
     let actual_version = if let Some(o) = version.as_ref() {
@@ -74,7 +77,11 @@ pub fn pull_deps(conf: &Config) -> std::io::Result<()> {
         .trim()
         .to_string();
 
-        let new_dir = format!(".deps/{}-{}", depname, commit);
+        let new_dir = format!(".deps/{depname}-{commit}/{depname}");
+        if let Err(e) = fs::create_dir_all(&new_dir) {
+            emsg!("Could not create '{new_dir}': '{e}'");
+            std::process::exit(1);
+        }
 
         // We don't care if it exists already, we yoink it either way.
         let _ = fs::remove_dir_all(&new_dir);
