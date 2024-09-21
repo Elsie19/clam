@@ -12,7 +12,7 @@ mod modes {
 use std::{fs::File, io::Write};
 
 use clap::Parser;
-use config::Config;
+use config::{Config, Lock};
 use flags::{Args, DepCommands};
 use modes::{
     compile::compile, dep::add_dep, dep::pull_deps, fmt::format_project, new::new_project,
@@ -39,7 +39,18 @@ fn main() {
             msg!("Created application `{}`", name);
         }
         flags::Commands::Compile { release } => {
-            compile(release, &config, env!("CARGO_PKG_VERSION")).unwrap();
+            let Ok(lock) = std::fs::read_to_string("clam.lock") else {
+                emsg!("Run `clam dep pull` first!");
+                std::process::exit(1);
+            };
+            let lock: Lock = match toml::from_str(&lock) {
+                Ok(o) => o,
+                Err(e) => {
+                    emsg!("{e}");
+                    std::process::exit(1);
+                }
+            };
+            compile(release, &config, &lock, env!("CARGO_PKG_VERSION")).unwrap();
         }
         flags::Commands::Fmt {} => {
             format_project().unwrap();

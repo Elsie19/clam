@@ -1,10 +1,19 @@
+use cmd_lib::run_cmd;
 use std::{fs, path::Path, process::Command};
 use which::which;
 
-use crate::{config::Config, emsg, msg};
+use crate::{
+    config::{Config, Lock, Package},
+    emsg, msg,
+};
 
 /// Compile a project
-pub fn compile<S: AsRef<str>>(release: bool, conf: &Config, version: S) -> std::io::Result<()> {
+pub fn compile<S: AsRef<str>>(
+    release: bool,
+    conf: &Config,
+    lock: &Lock,
+    version: S,
+) -> std::io::Result<()> {
     if !Path::new("src").join("main.sh").exists() {
         emsg!("No file `src/main.sh` found!");
         std::process::exit(1);
@@ -18,18 +27,23 @@ pub fn compile<S: AsRef<str>>(release: bool, conf: &Config, version: S) -> std::
 
     fs::create_dir_all(&builddir)?;
 
-    Command::new("bash_preproc")
-        .current_dir("src/")
-        .args([
-            "main.sh",
-            format!("../{}/main.sh", builddir.to_str().unwrap()).as_str(),
-            version.as_ref(),
-        ])
-        .output()?;
+    let include_paths: Vec<String> = lock
+        .packages
+        .iter()
+        .map(|pkg| format!("-I../.deps/{}-{}", pkg.name, pkg.version))
+        .collect();
+
+    let ver_to_str = version.as_ref();
+
+    if let Err(e) = run_cmd!(cd src/; bash_preproc -n main.sh -o ../$builddir/main.sh -v $ver_to_str -- $[include_paths])
+    {
+        emsg!("Could not run preprocessor: `{}`", e);
+        std::process::exit(2);
+    }
 
     let name = Path::new(&conf.name).with_extension("bin");
 
-    fs::rename(builddir.join("main.sh"), builddir.join(&name))?;
+    fs::rename(builddir.join("main.sh"), builddir.join(&name)).unwrap();
 
     if release {
         Command::new("shfmt")
