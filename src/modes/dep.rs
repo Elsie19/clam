@@ -76,7 +76,8 @@ pub fn pull_deps(conf: &Config) -> std::io::Result<()> {
 
         let new_dir = format!(".deps/{}-{}", depname, commit);
 
-        fs::remove_dir_all(&new_dir).unwrap();
+        // We don't care if it exists already, we yoink it either way.
+        let _ = fs::remove_dir_all(&new_dir);
         std::fs::rename(".deps/tmp_dl", new_dir).unwrap();
 
         lockfile.packages.push(Package {
