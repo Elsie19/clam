@@ -1,12 +1,9 @@
 use cmd_lib::{run_cmd, run_fun};
 use core::str;
-use fs_extra::dir::{move_dir, CopyOptions};
 use std::{
-    env,
     fs::{self, create_dir_all, File},
     io::Write,
     path::Path,
-    process::{Command, Stdio},
 };
 
 use crate::config::{Config, Dependency, Lock, Package};
