@@ -1,4 +1,5 @@
 use cmd_lib::run_cmd;
+use std::os::unix::fs::PermissionsExt;
 use std::{fs, path::Path, process::Command};
 use which::which;
 
@@ -50,14 +51,21 @@ pub fn compile<S: AsRef<str>>(
             .current_dir(&builddir)
             .args(["-mn", "-w", name.to_str().unwrap()])
             .output()?;
+        //FIX: This is a problem with bashc where it will explode on itself unless called from it's
+        //absolute path, sooooooooo...
         let res = which("bashc").expect("Could not find bashc binary");
         Command::new(res)
             .current_dir(&builddir)
             .args([name.to_str().unwrap(), &conf.name])
             .output()?;
-        fs::remove_file(builddir.join(name))?;
+        fs::remove_file(builddir.join(&name))?;
     } else {
         fs::rename(builddir.join(&name), builddir.join(&conf.name))?;
+        let meta = fs::metadata(builddir.join(&conf.name)).unwrap();
+        let mut perms = meta.permissions();
+
+        perms.set_mode(perms.mode() | 0o100);
+        fs::set_permissions(builddir.join(&conf.name), perms).unwrap();
     };
 
     msg!("Compiled `{}`", &conf.name);

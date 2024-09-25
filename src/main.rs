@@ -12,6 +12,8 @@ mod modes {
 use std::{fs::File, io::Write};
 
 use clap::Parser;
+use cmd_lib::{run_cmd, run_fun, spawn_with_output};
+use colored::Colorize;
 use config::{Config, Lock};
 use flags::{Args, DepCommands};
 use modes::{
@@ -19,12 +21,14 @@ use modes::{
 };
 
 fn main() {
+    // I dislike [`cmd_lib`] and it's stupidness
+    std::env::set_var("RUST_LOG", "OFF");
     let cli = Args::parse();
 
     let Ok(conf) = std::fs::read_to_string("clam.toml") else {
-                emsg!("Could not read file `clam.toml`");
-                std::process::exit(1);
-            };
+        emsg!("Could not read file `clam.toml`");
+        std::process::exit(1);
+    };
     let mut config: Config = match toml::from_str(&conf) {
         Ok(o) => o,
         Err(e) => {
@@ -56,6 +60,36 @@ fn main() {
             format_project().unwrap();
         }
         flags::Commands::Docs {} => todo!(),
+        flags::Commands::Run {} => {
+            let Ok(lock) = std::fs::read_to_string("clam.lock") else {
+                emsg!("Run `clam dep pull` first!");
+                std::process::exit(1);
+            };
+            let lock: Lock = match toml::from_str(&lock) {
+                Ok(o) => o,
+                Err(e) => {
+                    emsg!("{e}");
+                    std::process::exit(1);
+                }
+            };
+            compile(false, &config, &lock, env!("CARGO_PKG_VERSION")).unwrap();
+            println!(
+                "\n===[ {} {} ]===\n",
+                "Running".green(),
+                config.name.green()
+            );
+
+            let form = format!("time ./build/debug/{}", config.name);
+            let out = run_cmd!(bash -c $form);
+            println!(
+                "Exited with error code: {}",
+                match out {
+                    Ok(o) => "0".to_string(),
+                    Err(e) => format!("{}", e),
+                }
+            );
+            println!("\n===[ Finished {} ]===\n", config.name);
+        }
         flags::Commands::Dep(o) => match o {
             DepCommands::Remove { name } => {
                 if config.dependencies.remove(&name).is_some() {

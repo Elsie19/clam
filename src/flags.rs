@@ -35,6 +35,11 @@ pub enum Commands {
     /// Format project files with sane defaults.
     Fmt {},
 
+    /// Run project
+    ///
+    /// Compile and run project.
+    Run {},
+
     /// Generate docs
     ///
     /// Generate docs using shdoc.
