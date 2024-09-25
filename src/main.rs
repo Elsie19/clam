@@ -72,7 +72,13 @@ fn main() {
                     std::process::exit(1);
                 }
             };
-            compile(false, &config, &lock, env!("CARGO_PKG_VERSION")).unwrap();
+            match compile(false, &config, &lock, env!("CARGO_PKG_VERSION")) {
+                Ok(()) => {}
+                Err(e) => {
+                    eprintln!("{e}");
+                    std::process::exit(1);
+                }
+            }
             println!(
                 "\n===[ {} {} ]===\n",
                 "Running".green(),
@@ -84,7 +90,7 @@ fn main() {
             println!(
                 "Exited with error code: {}",
                 match out {
-                    Ok(o) => "0".to_string(),
+                    Ok(()) => "0".to_string(),
                     Err(e) => format!("{}", e),
                 }
             );
@@ -109,7 +115,21 @@ fn main() {
                 msg!("Added '{}'", url);
             }
             DepCommands::Pull {} => pull_deps(&config).unwrap(),
-            _ => todo!(),
+            DepCommands::List {} => {
+                for pkg in config.dependencies {
+                    println!(
+                        "{} ~ {}",
+                        pkg.0,
+                        match pkg.1 {
+                            config::Dependency::Simple(_) => "null".to_string(),
+                            config::Dependency::Versioned { url, ver } => match ver {
+                                Some(o) => o,
+                                None => "null".to_string(),
+                            },
+                        }
+                    );
+                }
+            }
         },
     };
 }

@@ -4,7 +4,7 @@ use std::{fs, path::Path, process::Command};
 use which::which;
 
 use crate::{
-    config::{Config, Lock, Package},
+    config::{Config, Lock},
     emsg, msg,
 };
 
@@ -44,7 +44,9 @@ pub fn compile<S: AsRef<str>>(
 
     let name = Path::new(&conf.name).with_extension("bin");
 
-    fs::rename(builddir.join("main.sh"), builddir.join(&name)).unwrap();
+    let final_out = builddir.join(&name);
+
+    fs::rename(builddir.join("main.sh"), &final_out).unwrap();
 
     if release {
         Command::new("shfmt")
@@ -58,9 +60,9 @@ pub fn compile<S: AsRef<str>>(
             .current_dir(&builddir)
             .args([name.to_str().unwrap(), &conf.name])
             .output()?;
-        fs::remove_file(builddir.join(&name))?;
+        fs::remove_file(&final_out)?;
     } else {
-        fs::rename(builddir.join(&name), builddir.join(&conf.name))?;
+        fs::rename(final_out, builddir.join(&conf.name))?;
         let meta = fs::metadata(builddir.join(&conf.name)).unwrap();
         let mut perms = meta.permissions();
 
