@@ -82,7 +82,7 @@ case "${1}" in
         rm -rf "${BUILDDIR:?}"/*
         (
             cd "src/"
-            bash_preproc "main.sh" "../${BUILDDIR}/main.sh" "${CLAM_VERSION}"
+            bash_preproc -n "main.sh" -o "../${BUILDDIR}/main.sh" -v "${CLAM_VERSION}"
         ) || exit 1
         if [[ ${1} != "--unsafe" ]]; then
             shellcheck -e SC2154 "${BUILDDIR}/main.sh" || { msg "Failed checks found!" && exit 1; }
